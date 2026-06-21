@@ -2334,7 +2334,8 @@
 
   <!-- ===== PASSWORD GATE ===== -->
   <style>
-    .pw-overlay{position:fixed;inset:0;z-index:9000;background:rgba(255,255,255,0.6);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);display:flex;align-items:center;justify-content:center;transition:opacity 0.3s ease;}
+    .pw-overlay{position:fixed;inset:0;z-index:9000;background:rgba(255,255,255,0.6);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);display:flex;align-items:center;justify-content:center;transition:opacity 0.3s ease;opacity:0;pointer-events:none;}
+    .pw-overlay.is-visible{opacity:1;pointer-events:auto;}
     .pw-overlay.is-gone{opacity:0;pointer-events:none;}
     .pw-modal{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:24px;padding:48px 44px 40px;max-width:420px;width:calc(100% - 48px);box-shadow:0 24px 80px rgba(0,0,0,0.1);text-align:center;position:relative;}
     .pw-modal__lock{width:44px;height:44px;background:#f7f5f2;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;}
@@ -2379,12 +2380,13 @@
       var error   = document.getElementById('pw-error');
       var closeBtn = document.getElementById('pw-close');
 
-      // Already unlocked this session — dismiss immediately
+      // Already unlocked this session — stay hidden
       if (sessionStorage.getItem(SESSION_KEY) === '1') {
-        overlay.classList.add('is-gone');
         return;
       }
 
+      // Needs password — show the overlay
+      overlay.classList.add('is-visible');
       setTimeout(function () { input.focus(); }, 100);
 
       function attempt() {
