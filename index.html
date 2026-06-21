@@ -3224,6 +3224,9 @@
       var href = link.getAttribute('href');
       if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
       link.addEventListener('click', function(e) {
+        // Don't navigate if password modal is intercepting this click
+        var overlay = document.getElementById('pw-overlay');
+        if (overlay && overlay.classList.contains('is-open')) return;
         e.preventDefault();
         document.body.style.transition = 'opacity 0.25s ease';
         document.body.style.opacity = '0';

@@ -2334,14 +2334,14 @@
 
   <!-- ===== PASSWORD GATE ===== -->
   <style>
-    .pw-overlay{position:fixed;inset:0;z-index:9000;background:rgba(255,255,255,0.6);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);display:flex;align-items:center;justify-content:center;transition:opacity 0.3s ease;opacity:0;pointer-events:none;}
-    .pw-overlay.is-visible{opacity:1;pointer-events:auto;}
-    .pw-overlay.is-gone{opacity:0;pointer-events:none;}
-    .pw-modal{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:24px;padding:48px 44px 40px;max-width:420px;width:calc(100% - 48px);box-shadow:0 24px 80px rgba(0,0,0,0.1);text-align:center;position:relative;}
+    .pw-overlay{position:fixed;inset:0;z-index:9000;background:rgba(255,255,255,0.6);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s ease;}
+    .pw-overlay.is-open{opacity:1;pointer-events:all;}
+    .pw-modal{background:#fff;border:1px solid rgba(255,255,255,0.6);border-radius:24px;padding:48px 44px 40px;max-width:420px;width:calc(100% - 48px);box-shadow:0 24px 80px rgba(0,0,0,0.1),inset 0 1px 1px rgba(255,255,255,0.9),inset 0 -1px 2px rgba(0,0,0,0.04);text-align:center;position:relative;transform:translateY(12px);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);}
+    .pw-overlay.is-open .pw-modal{transform:translateY(0);}
     .pw-modal__lock{width:44px;height:44px;background:#f7f5f2;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;}
     .pw-modal__lock svg{width:20px;height:20px;color:#5c574f;}
     .pw-modal__title{font-family:'DM Sans',sans-serif;font-size:1.25rem;font-weight:600;letter-spacing:-0.02em;color:#1a1814;margin-bottom:10px;}
-    .pw-modal__sub{font-family:'DM Sans',sans-serif;font-size:0.875rem;color:#5c574f;line-height:1.55;margin-bottom:28px;}
+    .pw-modal__sub{font-family:'DM Sans',sans-serif;font-size:0.875rem;color:#8b8780;line-height:1.55;margin-bottom:28px;}
     .pw-modal__sub a{color:#1a1814;font-weight:500;text-decoration:underline;text-underline-offset:2px;}
     .pw-modal__field{display:flex;gap:10px;margin-bottom:12px;}
     .pw-modal__input{flex:1;font-family:'DM Sans',sans-serif;font-size:0.9375rem;padding:12px 16px;border:1px solid rgba(0,0,0,0.08);border-radius:12px;background:#f7f5f2;color:#1a1814;outline:none;transition:border-color 0.2s;}
@@ -2408,8 +2408,8 @@
     .code-cm { color: #5c6370; font-style: italic; } /* comment */
 
   </style>
-  <div class="pw-overlay" id="pw-overlay" role="dialog" aria-modal="true">
-    <div class="pw-modal">
+  <div class="pw-overlay" id="pw-overlay" role="dialog" aria-modal="true" aria-label="Password required">
+    <div class="pw-modal" style="position:relative;">
       <button class="pw-modal__close" id="pw-close" aria-label="Close">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
@@ -2418,6 +2418,7 @@
       </div>
       <h2 class="pw-modal__title">This project is protected</h2>
       <p class="pw-modal__sub">These case studies are kept private. To request access, get in touch at <a href="mailto:ngvictor11@gmail.com">ngvictor11@gmail.com</a></p>
+      <p class="pw-modal__sub">If you received my CV, the password is included there.</p>
       <div class="pw-modal__field">
         <input class="pw-modal__input" id="pw-input" type="password" placeholder="Enter password" autocomplete="off">
         <button class="pw-modal__submit" id="pw-submit">Unlock</button>
@@ -2440,14 +2441,16 @@
         return;
       }
 
-      // Needs password — show the overlay
-      overlay.classList.add('is-visible');
+      // Needs password — show overlay and lock scroll
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
       setTimeout(function () { input.focus(); }, 100);
 
       function attempt() {
         if (input.value.trim().toLowerCase() === PASS) {
           sessionStorage.setItem(SESSION_KEY, '1');
-          overlay.classList.add('is-gone');
+          overlay.classList.remove('is-open');
+          document.body.style.overflow = '';
         } else {
           input.classList.add('is-error');
           error.textContent = 'Incorrect password. Try again.';
@@ -2457,7 +2460,6 @@
       }
 
       function dismiss() {
-        // Go back to homepage if they close without unlocking
         window.location.href = 'index.html';
       }
 
