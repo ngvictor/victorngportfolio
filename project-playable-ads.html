@@ -1,0 +1,2789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Victor Ng — Playable Ads Case Study</title>
+  <meta name="description" content="Case study: Playable Ads — A New Post-Click Ad Format for Meta. Redesigned from scratch, shipped globally across Facebook and Instagram.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================
+       DESIGN TOKENS — Light Premium
+       ======================================== */
+    :root {
+      --ink: #1a1814;
+      --ink-secondary: #5c574f;
+      --ink-muted: #8b8780;
+      --ink-faint: #d8d4cc;
+      --surface: #ffffff;
+      --surface-raised: #f7f5f2;
+      --surface-card: #f5f3ef;
+      --surface-card-hover: #efece6;
+      --border: rgba(0,0,0,0.08);
+      --border-hover: rgba(0,0,0,0.15);
+      --accent-craft: #2c4a3e;
+      --accent-gold: #2d6a4f;
+      --accent-blue: #2f6fd6;
+      --serif: 'DM Sans', system-ui, sans-serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+      --header-height: 80px;
+      --content-max: 1400px;
+      --content-narrow: 720px;
+    }
+
+    /* ========================================
+       RESET & BASE
+       ======================================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; font-size: 16px; scrollbar-width: none; -ms-overflow-style: none; }
+    html::-webkit-scrollbar { display: none; }
+    body { font-family: var(--sans); background-color: var(--surface); color: var(--ink); line-height: 1.6; overflow-x: clip; }
+    a { color: inherit; text-decoration: none; }
+    img, video { display: block; max-width: 100%; height: auto; border-radius: 12px; }
+
+    /* ========================================
+       NAVIGATION — with section label slot
+       ======================================== */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 48px;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.5s ease, border-color 0.5s ease;
+    }
+    .top-nav.is-light {
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom-color: var(--border);
+    }
+
+    /* Section label — centered in nav */
+    .nav-section-label {
+      font-family: var(--sans);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo), color 0.4s ease;
+    }
+
+    .nav-section-label.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Back button — left-aligned */
+    .back-link {
+      position: absolute;
+      left: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 50%;
+      transition: var(--transition-smooth);
+    }
+    .back-link:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.28);
+    }
+    .top-nav.is-light .back-link {
+      color: var(--ink-secondary);
+      background: var(--surface-card);
+      border-color: var(--border);
+    }
+    .top-nav.is-light .back-link:hover {
+      color: var(--ink);
+      background: var(--surface-card-hover);
+      border-color: var(--border-hover);
+    }
+    .top-nav.is-light .nav-section-label { color: var(--ink-muted); }
+
+    .back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ========================================
+       LAYOUT
+       ======================================== */
+    .case-wrapper {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 48px 120px;
+      padding-top: var(--header-height);
+    }
+
+    /* ========================================
+       TYPOGRAPHY
+       ======================================== */
+    .body-text {
+      font-family: var(--sans);
+      font-size: 1.125rem;
+      font-weight: 400;
+      color: var(--ink-secondary);
+      margin-bottom: 24px;
+      max-width: var(--content-narrow);
+      line-height: 1.7;
+    }
+
+    .body-text strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .subsection-title {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 16px;
+      margin-top: 56px;
+    }
+
+    /* ========================================
+       HERO
+       ======================================== */
+    .hero-stage {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      margin-bottom: 120px;
+    }
+
+    .hero-sticky {
+      position: sticky;
+      top: var(--header-height);
+      z-index: 1;
+      min-height: calc(100vh - var(--header-height));
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      will-change: opacity, transform;
+      overflow: hidden;
+    }
+
+    /* Full-bleed background behind hero text */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .hero-bg img,
+    .hero-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+    }
+
+    /* Placeholder state for hero bg */
+    .hero-bg-placeholder {
+      width: 100%;
+      height: 100%;
+      background: var(--surface-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--ink-muted);
+      font-size: 0.8125rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* Scrim — fades to full white before the metadata border line */
+    .hero-bg::after {
+      content: none;
+    }
+
+    /* Hero text sits above the bg */
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 0 48px 64px;
+      max-width: var(--content-max);
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-content__text { width: 100%; }
+    .hero-content__top {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      margin-bottom: 0;
+    }
+    .hero-content__left { flex: 1; min-width: 0; }
+    .hero-content__video {
+      flex: 0 0 auto;
+      width: 293px;
+      margin-top: 48px;
+    }
+    .hero-content__video video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 20px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.45), 0 8px 24px rgba(0,0,0,0.3);
+      margin-bottom: 32px;
+    }
+    @media (max-width: 768px) {
+      .hero-content__top { flex-direction: column; gap: 24px; }
+      .hero-content__video { width: 160px; }
+    }
+
+    /* Dark hero overrides — text on black bg */
+    .hero-sticky .cs-hero__title { color: #ffffff; }
+    .hero-sticky .cs-hero__tldr { color: rgba(255,255,255,0.65); }
+    .hero-sticky .metadata-matrix {
+      background: transparent;
+      border-top-color: rgba(255,255,255,0.12);
+      border-bottom-color: rgba(255,255,255,0.12);
+    }
+    .hero-sticky .meta-item__label { color: rgba(255,255,255,0.4); }
+    .hero-sticky .meta-item__value { color: rgba(255,255,255,0.85); }
+
+    .hero-reveal {
+      position: relative;
+      z-index: 2;
+      background: var(--surface);
+      border-radius: 24px 24px 0 0;
+      box-shadow: 0 -40px 80px -20px rgba(0,0,0,0.12);
+      margin: 0 24px;
+    }
+
+    /* H1 full row of surfaces */
+    .hero-row {
+      background: #000 !important;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 40px 32px;
+      max-height: 90vh;
+    }
+    .hero-row__logo {
+      flex: 0 0 auto;
+      width: 64px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+    .hero-row__logo svg { width: 100%; height: auto; }
+    .hero-row__frames {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .hero-row__frames--compare {
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+    .hero-row__compare-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+    }
+    .hero-row__compare-label {
+      flex: 0 0 auto;
+      width: 20px;
+      color: rgba(255,255,255,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-row__compare-label svg {
+      width: 18px;
+      height: 18px;
+    }
+    .hero-row__frame {
+      flex: 1 1 0;
+      min-width: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: heroFrameIn 0.6s var(--ease-out-expo) forwards;
+    }
+    .hero-row__compare-row .hero-row__frame {
+      height: 100%;
+    }
+    @keyframes heroFrameIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-row__frame img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      border-radius: 6px;
+      filter: drop-shadow(0 0 18px rgba(255,255,255,0.05));
+    }
+    .hero-row__frame--ph {
+      width: 100%;
+      height: 80%;
+      flex-direction: column;
+      gap: 8px;
+      background: linear-gradient(145deg, #16140f 0%, #0b0a08 100%);
+      color: rgba(255,255,255,0.5);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      text-align: center;
+      padding: 16px;
+      border-radius: 10px;
+    }
+
+    /* Toggle — top-left */
+    .hero-row__toggle-wrap {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .hero-row__toggle {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px;
+      gap: 0;
+      position: relative;
+      background: rgba(30,30,30,0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 100px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    }
+    .hero-row__hint {
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 14px);
+      transform: translateY(-50%);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #fff;
+      background: #2f6fd6;
+      border-radius: 10px;
+      padding: 7px 11px;
+      white-space: nowrap;
+      pointer-events: none;
+      animation: hintFadeOut 0.4s ease 3.5s forwards;
+      box-shadow: 0 4px 14px rgba(47,111,214,0.45);
+    }
+    .hero-row__hint::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 100%;
+      transform: translateY(-50%);
+      border: 6px solid transparent;
+      border-right-color: #2f6fd6;
+    }
+    @keyframes hintFadeOut {
+      to { opacity: 0; pointer-events: none; }
+    }
+    .hero-row__indicator {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      bottom: 3px;
+      width: 0;
+      background: rgba(255,255,255,0.95);
+      border-radius: 100px;
+      transition: transform 0.45s var(--ease-out-expo), width 0.45s var(--ease-out-expo);
+      z-index: 0;
+    }
+    .hero-row__btn {
+      position: relative;
+      z-index: 1;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      background: none;
+      border: none;
+      padding: 0;
+      width: 38px;
+      height: 38px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.35s ease;
+    }
+    .hero-row__btn:hover { color: #fff; }
+    .hero-row__btn.is-active { color: #0a0a0a; }
+    @media (max-width: 768px) {
+      .hero-row { gap: 12px; padding: 20px 16px; }
+      .hero-row__logo { width: 32px; }
+      .hero-row__frames { gap: 6px; }
+      .hero-row__toggle { top: 12px; left: 12px; }
+      .hero-row__btn { padding: 6px 11px; font-size: 0.72rem; }
+    }
+
+    .cs-hero__title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 1.05;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      max-width: 900px;
+      margin-bottom: 32px;
+    }
+
+    .cs-hero__tldr {
+      font-family: var(--sans);
+      font-size: clamp(1.125rem, 2vw, 1.375rem);
+      font-weight: 400;
+      color: var(--ink-secondary);
+      max-width: 800px;
+      margin-bottom: 60px;
+      line-height: 1.5;
+    }
+
+    .metadata-matrix {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 0;
+      position: relative;
+      background: var(--surface);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .meta-item__label {
+      font-family: var(--sans);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    .meta-item__value {
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* ========================================
+       SECTIONS — full width, no sidebar
+       ======================================== */
+    .cs-section {
+      margin-bottom: 120px;
+      scroll-margin-top: var(--header-height);
+    }
+
+    .cs-section__header {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: var(--sans);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.1;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--accent-gold);
+    }
+
+    /* ========================================
+       SCROLL PROGRESS — thin bar, right edge
+       ======================================== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 5px;
+      height: 100vh;
+      z-index: 200;
+      pointer-events: none;
+      background: rgba(0,0,0,0.05);
+    }
+
+    .scroll-progress__fill {
+      width: 100%;
+      height: 0%;
+      background: var(--accent-gold);
+      border-radius: 0 0 2px 2px;
+      box-shadow: 0 0 12px rgba(184,134,11,0.55);
+      transition: height 0.15s linear;
+    }
+
+    /* ========================================
+       CONTEXT INTRO — orientation primer
+       ======================================== */
+    .cs-intro {
+      margin-bottom: 120px;
+    }
+
+    /* Stakes stat — the business war, up top for skimmers */
+    .stakes-stat {
+      margin: 0 0 120px;
+      padding: 56px 48px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      gap: 56px;
+      flex-wrap: wrap;
+    }
+    .stakes-stat__num {
+      font-family: var(--serif);
+      font-size: clamp(3.25rem, 7vw, 5.5rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--accent-gold);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .stakes-stat__arrow {
+      width: clamp(28px, 4vw, 44px);
+      height: auto;
+      color: var(--ink-faint);
+      flex: 0 0 auto;
+    }
+    .stakes-stat__body {
+      flex: 1;
+      min-width: 300px;
+    }
+    .stakes-stat__body p {
+      font-family: var(--serif);
+      font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+      line-height: 1.4;
+      color: var(--ink);
+      margin: 0;
+    }
+    @media (max-width: 768px) {
+      .stakes-stat { padding: 36px 28px; gap: 28px; margin-bottom: 80px; }
+    }
+
+    .cs-intro__label {
+      font-family: var(--sans);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .cs-intro__lead {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+      line-height: 1.35;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      max-width: 900px;
+      margin-bottom: 20px;
+    }
+
+    .cs-intro__sub {
+      font-family: var(--sans);
+      font-size: 1.125rem;
+      color: var(--ink-secondary);
+      max-width: 760px;
+      margin-bottom: 56px;
+      line-height: 1.7;
+    }
+
+    .primer {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .primer__term {
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .primer__def {
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      color: var(--ink-secondary);
+      line-height: 1.6;
+    }
+
+    /* ========================================
+       LAYOUT BLOCKS — flexible content
+       ======================================== */
+
+    /* Two-column: text + media (or reversed) */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+      margin: 48px 0;
+    }
+
+    .split--text-left .split__text { order: 1; }
+    .split--text-left .split__media { order: 2; }
+    .split--text-right .split__text { order: 2; }
+    .split--text-right .split__media { order: 1; }
+
+    .split__text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .split__text .body-text {
+      max-width: 100%;
+    }
+
+    .split__media {
+      width: 100%;
+    }
+
+    /* One-third / two-thirds */
+    .split--narrow-left {
+      grid-template-columns: 1fr 2fr;
+    }
+
+    .split--narrow-right {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    /* ========================================
+       MEDIA CONTAINERS
+       ======================================== */
+    .media-container {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .media-container--full {
+      aspect-ratio: 16/9;
+    }
+
+    .media-container--tall {
+      aspect-ratio: 4/3;
+    }
+
+    .media-container--inline {
+      margin: 40px 0;
+    }
+
+    .media-placeholder {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.01) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-muted);
+      font-family: var(--sans);
+      font-size: 0.8125rem;
+      letter-spacing: 0.03em;
+      gap: 8px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .media-placeholder__id {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .media-item {
+      aspect-ratio: 4/3;
+      border-radius: 12px;
+      background: var(--surface-raised);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ========================================
+       CONTENT BLOCKS
+       ======================================== */
+    .callout {
+      border-left: 2px solid var(--accent-gold);
+      padding: 24px 0 24px 32px;
+      margin: 48px 0;
+      background: linear-gradient(90deg, rgba(184,134,11,0.04) 0%, transparent 100%);
+      max-width: var(--content-narrow);
+    }
+
+    .callout__text {
+      font-family: var(--serif);
+      font-size: 1.375rem;
+      color: var(--ink);
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    /* Concept list */
+    .concept-list {
+      list-style: none;
+      margin: 32px 0;
+      max-width: var(--content-narrow);
+    }
+
+    .concept-list li {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 1rem;
+      color: var(--ink-secondary);
+      line-height: 1.5;
+    }
+
+    .concept-list li:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .concept-list li strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .concept-list li .concept-risk {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--ink-muted);
+      margin-top: 4px;
+    }
+
+    /* ========================================
+       ALSO DESIGNED — tabbed gallery
+       ======================================== */
+    .also-designed {
+      margin-top: 64px;
+      border-top: 1px solid var(--border);
+      padding-top: 40px;
+    }
+
+    .also-designed__label {
+      font-family: var(--sans);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .also-designed__lead {
+      font-family: var(--sans);
+      font-size: 1.125rem;
+      color: var(--ink-secondary);
+      margin-bottom: 32px;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      font-family: var(--sans);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      background: none;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--ink-secondary);
+    }
+
+    .tab-btn.is-active {
+      color: var(--ink);
+    }
+
+    .tab-btn.is-active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--ink);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.is-active {
+      display: block;
+    }
+
+    /* ========================================
+       CONCEPT EXPLORER — interactive comparison matrix
+       ======================================== */
+    .concept-explorer {
+      margin: 28px 0 48px;
+      position: relative;
+    }
+
+    /* Criteria intro — explains the four trade-off axes before the matrix */
+    .concept-criteria {
+      margin-top: 32px;
+    }
+
+    .concept-criteria__lead {
+      font-size: 1.0625rem;
+      color: var(--ink-secondary);
+      line-height: 1.6;
+      max-width: 720px;
+      margin-bottom: 24px;
+    }
+
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .criteria-item {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: background 0.4s var(--ease-out-expo), border-color 0.4s var(--ease-out-expo);
+    }
+
+    .criteria-item::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(115deg, transparent, rgba(255,255,255,0.35), transparent);
+      transform: translateX(-160%) skewX(-20deg);
+      animation: criteria-shine 5s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .criteria-item:nth-child(2)::after { animation-delay: 0.6s; }
+    .criteria-item:nth-child(3)::after { animation-delay: 1.2s; }
+    .criteria-item:nth-child(4)::after { animation-delay: 1.8s; }
+
+    .criteria-item[data-status]::after {
+      animation: none;
+      opacity: 0;
+    }
+
+    @keyframes criteria-shine {
+      0% { transform: translateX(-160%) skewX(-20deg); }
+      50% { transform: translateX(160%) skewX(-20deg); }
+      100% { transform: translateX(-160%) skewX(-20deg); }
+    }
+
+    /* Bubble fill — expands from bottom-center to cover the card */
+    .criteria-item__fill {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 250%;
+      padding-bottom: 250%;
+      border-radius: 50%;
+      transform: translate(-50%, 50%) scale(0);
+      transition: transform 0.5s var(--ease-out-expo), background-color 0.2s;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .criteria-item[data-status] .criteria-item__fill {
+      transform: translate(-50%, 50%) scale(1);
+    }
+
+    .criteria-item:nth-child(1)[data-status] .criteria-item__fill { transition-delay: 0s; }
+    .criteria-item:nth-child(2)[data-status] .criteria-item__fill { transition-delay: 0.1s; }
+    .criteria-item:nth-child(3)[data-status] .criteria-item__fill { transition-delay: 0.2s; }
+    .criteria-item:nth-child(4)[data-status] .criteria-item__fill { transition-delay: 0.3s; }
+
+    .criteria-item[data-status="good"] .criteria-item__fill { background: #2f9e5e; }
+    .criteria-item[data-status="warn"] .criteria-item__fill { background: #c98a1f; }
+    .criteria-item[data-status="na"] .criteria-item__fill { background: #6b6862; }
+
+    .criteria-item[data-status="good"], .criteria-item[data-status="warn"], .criteria-item[data-status="na"] {
+      border-color: transparent;
+    }
+
+    .criteria-item__icon,
+    .criteria-item__term,
+    .criteria-item__def {
+      position: relative;
+      z-index: 1;
+    }
+
+    .criteria-item__icon {
+      width: 26px;
+      height: 26px;
+      color: var(--accent-blue);
+      margin-bottom: 32px;
+      transition: color 0.4s var(--ease-out-expo);
+    }
+
+    .criteria-item__icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .criteria-item__term {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+      transition: color 0.4s var(--ease-out-expo);
+    }
+
+    .criteria-item__def {
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: var(--ink-secondary);
+      transition: color 0.4s var(--ease-out-expo);
+    }
+
+    .criteria-item[data-status] .criteria-item__icon,
+    .criteria-item[data-status] .criteria-item__term {
+      color: #fff;
+    }
+    .criteria-item[data-status] .criteria-item__def {
+      color: rgba(255,255,255,0.78);
+    }
+
+    @media (max-width: 768px) {
+      .criteria-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+    }
+
+    /* Stage: matrix + detail are stacked layers; height animates between them
+       so the detail expands in place with no page reflow or scroll jump */
+    .concept-stage {
+      position: relative;
+      transition: height 0.5s var(--ease-out-expo), background-color 0.55s var(--ease-out-expo);
+      overflow: hidden;
+      border-radius: 16px;
+      background: transparent;
+    }
+
+    .concept-stage.is-detail {
+      background: #0e0d0b;
+    }
+
+    .concept-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: opacity 0.4s var(--ease-out-expo);
+    }
+
+    .concept-matrix-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .concept-stage.is-detail .concept-matrix-scroll {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .concept-details {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .concept-stage.is-detail .concept-details {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .concept-matrix {
+      display: grid;
+      grid-template-columns: minmax(96px, 0.72fr) repeat(5, minmax(150px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      min-width: 820px;
+    }
+
+    .cm-corner,
+    .cm-rowlabel,
+    .cm-cell,
+    .cm-head {
+      background: var(--surface);
+      padding: 14px 16px;
+    }
+
+    .cm-corner {
+      display: flex;
+      align-items: flex-end;
+    }
+    .cm-corner__hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--ink-muted);
+    }
+    .cm-corner__hint svg {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 15px;
+      color: var(--accent-gold);
+    }
+
+    .cm-rowlabel {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+    }
+
+    .cm-head {
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      font-family: var(--sans);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: background 0.25s ease;
+    }
+
+    .cm-head:hover,
+    .cm-head:focus-visible {
+      background: var(--surface-card-hover);
+      outline: none;
+    }
+
+    .cm-head__name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+
+    .cm-head__desc {
+      font-size: 0.72rem;
+      line-height: 1.4;
+      color: var(--ink-muted);
+    }
+
+    .cm-head__badge {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .cm-head__badge--rec { color: var(--accent-craft); }
+    .cm-head__badge--test { color: var(--accent-gold); }
+
+    .cm-head__cta {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      margin-top: 2px;
+      transition: color 0.25s ease;
+    }
+
+    .cm-head:hover .cm-head__cta { color: var(--accent-blue); }
+
+    .cm-cell {
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: var(--ink-secondary);
+      display: flex;
+      gap: 9px;
+      transition: background 0.25s ease;
+    }
+
+    .cm-cell { cursor: pointer; }
+    .cm-cell.is-hot,
+    .cm-head.is-hot { background: var(--surface-card-hover); }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex: 0 0 9px;
+      margin-top: 5px;
+    }
+
+    .dot--good { background: #2f9e5e; }
+    .dot--warn { background: #e0a82e; }
+    .dot--na { background: var(--ink-faint); }
+
+    @keyframes dotFillIn {
+      from { clip-path: circle(0% at 50% 50%); }
+      to   { clip-path: circle(50% at 50% 50%); }
+    }
+    .concept-detail.is-animating .concept-ratings .crate:nth-child(1) .dot { animation: dotFillIn 0.38s var(--ease-out-expo) 0.05s both; }
+    .concept-detail.is-animating .concept-ratings .crate:nth-child(2) .dot { animation: dotFillIn 0.38s var(--ease-out-expo) 0.13s both; }
+    .concept-detail.is-animating .concept-ratings .crate:nth-child(3) .dot { animation: dotFillIn 0.38s var(--ease-out-expo) 0.21s both; }
+    .concept-detail.is-animating .concept-ratings .crate:nth-child(4) .dot { animation: dotFillIn 0.38s var(--ease-out-expo) 0.29s both; }
+
+    /* Floating prototype preview on column hover */
+    .concept-peek {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 6;
+      width: 188px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(8px) scale(0.97);
+      transition: opacity 0.28s var(--ease-out-expo), transform 0.28s var(--ease-out-expo);
+      will-change: transform, opacity;
+    }
+    .concept-peek.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .concept-peek__phone {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 748 / 1558;
+      background: #000;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.12);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.28), 0 4px 14px rgba(0,0,0,0.18);
+    }
+    .concept-peek__video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    @media (hover: none), (max-width: 768px) {
+      .concept-peek { display: none; }
+    }
+
+    .concept-hint {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      transition: opacity 0.25s ease;
+    }
+
+    /* Detail view */
+    .concept-detail {
+      display: none;
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      background: #0e0d0b;
+      color: #f2efe9;
+    }
+
+    .concept-detail.is-active {
+      display: flex;
+      gap: 48px;
+      align-items: flex-start;
+    }
+
+    .concept-detail__main {
+      flex: 0 1 560px;
+      min-width: 0;
+    }
+
+    .concept-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #f2efe9;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px;
+      cursor: pointer;
+      padding: 9px 18px 9px 14px;
+      margin-bottom: 24px;
+      transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .concept-back svg {
+      width: 15px;
+      height: 15px;
+      transition: transform 0.25s var(--ease-out-expo);
+    }
+
+    .concept-back:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.28);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+
+    .concept-back:hover svg { transform: translateX(-3px); }
+
+    /* Prev / next concept arrows, parked in the side padding */
+    .concept-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      color: #f2efe9;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.16);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s var(--ease-out-expo), background 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease-out-expo);
+    }
+    .concept-nav svg { width: 20px; height: 20px; }
+    .concept-nav--prev { left: 18px; }
+    .concept-nav--next { right: 18px; }
+
+    .concept-stage.is-detail .concept-nav {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .concept-nav:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.3);
+    }
+    .concept-nav--prev:hover { transform: translateY(-50%) translateX(-2px); }
+    .concept-nav--next:hover { transform: translateY(-50%) translateX(2px); }
+
+    @media (max-width: 768px) {
+      .concept-nav { width: 38px; height: 38px; }
+      .concept-nav--prev { left: 6px; }
+      .concept-nav--next { right: 6px; }
+    }
+
+    .concept-detail__num {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(242,239,233,0.55);
+    }
+
+    .concept-detail__title {
+      font-family: var(--sans);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 600;
+      color: #ffffff;
+      margin: 8px 0 0;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .concept-detail__title .cm-head__badge { align-self: center; }
+    .concept-detail__title .cm-head__badge--rec { color: #5fbf8a; }
+    .concept-detail__title .cm-head__badge--test { color: #e6b54a; }
+
+    .concept-detail__lead {
+      font-size: 1.05rem;
+      color: rgba(242,239,233,0.78);
+      margin-top: 14px;
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    .concept-detail__risk {
+      font-size: 0.95rem;
+      color: rgba(242,239,233,0.9);
+      margin-top: 14px;
+      max-width: 620px;
+    }
+
+    .concept-detail__risk strong {
+      color: #e6b54a;
+      font-weight: 600;
+    }
+
+    .concept-ratings {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 32px;
+    }
+
+    .crate { display: flex; gap: 11px; }
+
+    .crate__body { display: flex; flex-direction: column; gap: 3px; }
+    .crate__dim {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .crate__text {
+      font-size: 0.85rem;
+      color: rgba(242,239,233,0.72);
+      line-height: 1.5;
+    }
+
+    .concept-shots {
+      flex: 0 0 auto;
+      display: flex;
+      gap: 18px;
+      flex-wrap: nowrap;
+    }
+
+    .concept-shot { width: 240px; flex: 0 0 auto; }
+
+    .media-container--phone {
+      aspect-ratio: 748 / 1558;
+      background: #000;
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .media-container--phone video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    .concept-shot__cap {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: rgba(242,239,233,0.6);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    @media (min-width: 769px) {
+      .concept-detail { padding: 28px 84px; }
+    }
+
+    @media (max-width: 768px) {
+      .concept-detail.is-active { flex-direction: column; gap: 28px; }
+      .concept-shots { flex-wrap: wrap; }
+      .concept-shot { width: 240px; max-width: 47%; }
+    }
+
+    /* ========================================
+       METRICS GRID
+       ======================================== */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .metric-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .metric-card__value {
+      font-family: var(--serif);
+      font-size: 3rem;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .metric-card__label {
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--ink-secondary);
+    }
+
+    /* ========================================
+       NEXT PROJECT FOOTER
+       ======================================== */
+    .next-project {
+      margin-top: 120px;
+      padding-top: 80px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .next-project__label {
+      font-family: var(--sans);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .next-project__title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--ink);
+      display: inline-block;
+      transition: color 0.3s ease;
+    }
+
+    .next-project__title:hover {
+      color: var(--accent-gold);
+    }
+
+    /* ========================================
+       RESPONSIVE
+       ======================================== */
+    @media (max-width: 1024px) {
+      .split { grid-template-columns: 1fr; }
+      .split--text-left .split__media,
+      .split--text-right .split__media { order: 2; }
+      .split--text-left .split__text,
+      .split--text-right .split__text { order: 1; }
+      .split--narrow-left,
+      .split--narrow-right { grid-template-columns: 1fr; }
+      .media-grid { grid-template-columns: 1fr; }
+      .primer { grid-template-columns: 1fr; gap: 24px; }
+      .metrics-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .case-wrapper { padding: calc(var(--header-height) + 40px) 24px 80px; }
+      .top-nav { padding: 0 24px; }
+      .cs-hero__title { font-size: 2.5rem; }
+      .hero-sticky {
+        min-height: 70vh;
+        position: static;
+        margin-bottom: 0;
+      }
+      .hero-reveal {
+        box-shadow: none;
+        margin: 0;
+        border-radius: 0;
+      }
+      .hero-content {
+        padding: 0 24px 48px;
+      }
+      .nav-section-label { display: none; }
+      .top-nav { padding: 0 24px; }
+    }
+    @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    body { animation: pageFadeIn 0.35s ease forwards; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION — with section label slot -->
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress__fill" id="scrollProgressFill"></div>
+  </div>
+
+  <nav class="top-nav">
+    <span class="nav-section-label" id="navSectionLabel"></span>
+    <a href="index.html" class="back-link" aria-label="Back to Home">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    </a>
+  </nav>
+
+  <main class="case-wrapper">
+
+    <!-- ============================================
+         HERO STAGE
+         ============================================ -->
+    <div class="hero-stage" id="heroStage">
+
+      <header class="hero-sticky" id="heroSticky">
+
+        <!-- H0: Full-bleed background -->
+        <div class="hero-bg" style="background: #000;"></div>
+
+        <!-- Text + video side by side -->
+        <div class="hero-content">
+          <div class="hero-content__text">
+            <div class="hero-content__top">
+              <div class="hero-content__left">
+                <h1 class="cs-hero__title">Playable Ads — A new ad format for Meta</h1>
+                <p class="cs-hero__tldr">
+                  Meta's gaming ad revenue fell from 21% to 13.6% in two years, losing to a format Meta had already tried and failed to ship. I started with one engineer, no PM, and no roadmap slot, and rebuilt playable ads from a dead experiment into a live format across Feed, Stories, and Reels on iOS and Android.
+                </p>
+              </div>
+              <div class="hero-content__video">
+                <video autoplay muted loop playsinline>
+                  <source src="assets/images/projects/playable-ads/playable hero.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <div class="metadata-matrix">
+              <div class="meta-item">
+                <span class="meta-item__label">Role</span>
+                <span class="meta-item__value">Lead Product Designer</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-item__label">Platform / Surface</span>
+                <span class="meta-item__value">Facebook &amp; Instagram</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </header>
+
+      <!-- H1: Main media panel — full row of all 5 surfaces -->
+      <div class="hero-reveal">
+        <section class="media-container media-container--full hero-row" id="heroRow">
+          <div class="hero-row__toggle-wrap">
+            <div class="hero-row__toggle" role="tablist" aria-label="Filter designs by surface">
+              <span class="hero-row__indicator" aria-hidden="true"></span>
+              <button class="hero-row__btn is-active" role="tab" aria-selected="true" data-surface="instagram" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+              </button>
+              <button class="hero-row__btn" role="tab" aria-selected="false" data-surface="facebook" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.49-3.91 3.78-3.91 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.79 8.43-4.94 8.43-9.94z"/></svg>
+              </button>
+              <button class="hero-row__btn" role="tab" aria-selected="false" data-surface="compare" aria-label="Compare">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><rect x="2" y="3" width="9" height="18" rx="2"/><rect x="13" y="3" width="9" height="18" rx="2"/></svg>
+              </button>
+              <div class="hero-row__hint" aria-hidden="true">Try toggling the surface</div>
+            </div>
+          </div><!-- /.hero-row__toggle-wrap -->
+          <div class="hero-row__logo" id="heroRowLogo" aria-hidden="true"></div>
+          <div class="hero-row__frames" id="heroRowFrames">
+            <!-- frames injected by JS -->
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+
+    <!-- ============================================
+         STAKES STAT — business war, up top
+         ============================================ -->
+    <div class="stakes-stat fade-up">
+      <div class="stakes-stat__num">
+        21%
+        <svg class="stakes-stat__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        13.6%
+      </div>
+      <div class="stakes-stat__body">
+        <p>Gaming's share of Meta's app ad revenue, lost in two years to a format Meta had tried and failed to ship. I rebuilt it.</p>
+      </div>
+    </div>
+
+
+    <!-- ============================================
+         CONTEXT — orientation before the problem
+         ============================================ -->
+    <section class="cs-intro fade-up">
+      <div class="split split--text-left">
+        <div class="split__text">
+          <span class="cs-intro__label">The Format</span>
+          <p class="cs-intro__lead" style="margin-bottom: 16px;">
+            A playable ad is a short, interactive demo of an app. Tap "Try demo" on a video ad, and you're playing the app before you decide to install.
+          </p>
+          <p class="cs-intro__sub" style="margin-bottom: 0;">
+            It's one of the strongest formats in mobile advertising. For years, Meta couldn't make it work, while competitors built entire businesses on it and took app and gaming budgets that used to be Meta's. I redesigned it from a failed experiment into a format that shipped across Facebook and Instagram.
+          </p>
+        </div>
+        <!-- C1: Format explainer — pre-click video ad → post-click playable -->
+        <div class="media-container split__media" style="aspect-ratio: 4/3; background: #fff;">
+          <img src="assets/images/projects/playable-ads/C1.png" alt="Pre-click video ad with Try Demo CTA on Instagram Reels, and the post-click HTML playable experience with Install Now" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         01. THE PROBLEM
+         ============================================ -->
+    <section class="cs-section fade-up" id="section-problem" data-section-label="01. The Problem">
+      <div class="cs-section__header">
+        <span class="section-label">01. The Problem</span>
+        <h2 class="section-title">Losing Ground to <em>Competition</em></h2>
+      </div>
+
+      <!-- P1: Competitive landscape — text left, image right -->
+      <div class="split split--text-left">
+        <div class="split__text">
+          <p class="body-text">
+            Gaming's share of Meta's app ad revenue dropped from <strong>21% to 13.6%</strong> in two years. AppLovin was the primary beneficiary. Playables account for 70–100% of spend on their platform. The dominant format in the category was one Meta had tried on Facebook in 2017 and never scaled.
+          </p>
+          <p class="body-text" style="margin-bottom: 0;">
+            People don't download apps they haven't tried. Users with high intent will tap "Install now," but there's a larger group on the fence who'd convert if they could demo the app first. User interviews backed this up: people were open to trying apps within Instagram. The interactive format bridged a trust gap that static video ads couldn't.
+          </p>
+        </div>
+        <div class="split__media">
+          <div class="media-container media-container--tall" style="background: #fff;">
+            <img src="assets/images/projects/playable-ads/P1.png" alt="AppLovin's 3-step flow vs Meta's old single-CTA approach" style="width: 100%; height: 100%; object-fit: contain;">
+          </div>
+          <p style="margin: 10px 0 0; font-size: 0.75rem; font-weight: 600; color: var(--ink-muted); letter-spacing: 0.04em; text-transform: uppercase; text-align: center;">Competition: AppLovin</p>
+        </div>
+      </div>
+
+      <!-- P2: Cannibalization — image left, text right -->
+      <div class="split split--text-right">
+        <div class="split__media">
+          <div class="media-container media-container--tall" style="background: #fff;">
+            <img src="assets/images/projects/playable-ads/P2.png" alt="Single CTA drop-off diagram: annotated conversion leak" style="width: 100%; height: 100%; object-fit: contain;">
+          </div>
+        </div>
+        <div class="split__text">
+          <p class="body-text">
+            Meta's previous attempt replaced "Install now" with a single "Try demo" CTA. It cannibalized direct conversions. A video ad has one path: the App Store. A playable with only a demo CTA introduced multiple drop-off points and removed that direct path entirely. The format was supposed to make installing easier. It was doing the opposite.
+          </p>
+          <p class="body-text">
+            But there was a nuance in the data. When optimising for deeper funnel events like purchases, in-app actions, and retention, <strong>these demos performed significantly better.</strong> Users who tried the app first converted with more intent.
+          </p>
+          <p class="body-text" style="margin-bottom: 0;">
+            The design challenge was serving both user groups in the same ad unit without cannibalizing either path. And doing it on Instagram, a platform that had never supported the format and was protective of every pixel in the feed.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================
+         02. THE PROCESS
+         ============================================ -->
+    <section class="cs-section fade-up" id="section-process" data-section-label="02. The Process">
+      <div class="cs-section__header">
+        <span class="section-label">02. The Process</span>
+        <h2 class="section-title">Designing Against the <em>Pattern</em></h2>
+      </div>
+
+      <h3 class="subsection-title" style="margin-top: 0;">Starting from zero</h3>
+      <p class="body-text">
+        This started as an unfunded experiment. Just me and one engineer, no roadmap slot, no PM. I wrote the one-pager, defined the success criteria, and scoped the redesign myself. The bar was simple: the experiment needed to perform equal to or better than a traditional video ad. We ran the baseline test on Facebook. In most campaigns, playables matched or outperformed video ads. For deeper funnel events, they performed significantly better.
+      </p>
+
+      <!-- PR1: Early prototype — image left, text right -->
+      <div class="split split--text-right">
+        <div class="split__media">
+          <div class="media-container media-container--tall" style="background: #fff;">
+            <img src="assets/images/projects/playable-ads/PR1.png" alt="Early prototype — scrappy Figma Make build used to pitch the format to leadership" style="width:100%;height:100%;object-fit:contain;display:block;">
+          </div>
+        </div>
+        <div class="split__text">
+          <p class="body-text">
+            The data was enough to make the case, but I didn't pitch it with a deck. I built working prototypes, vibe-coded in Figma Make. Rough, but functional enough to show in context. A ten-second demo communicated the concept faster than any document could. Leadership got it immediately. The conversation went from "explain this format" to "when can we test it."
+          </p>
+          <p class="body-text" style="margin-bottom: 0;">
+            The experiment became a funded workstream.
+          </p>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">The dual-CTA problem</h3>
+      <p class="body-text">
+        The previous experiment's single "Try demo" button had cannibalized conversions. It replaced the install path entirely. The fix: put both "Install now" and "Try demo" in the same ad unit. A dual-CTA model didn't exist on Instagram, so I designed five concepts for how it could work on Reels.
+      </p>
+
+      <!-- Criteria intro — the four trade-off axes -->
+      <div class="concept-criteria">
+        <p class="concept-criteria__lead">
+          I weighed a range of concepts against four trade-offs: discoverability, disruption, nativity, and complexity.
+        </p>
+        <div class="criteria-grid">
+          <div class="criteria-item">
+            <div class="criteria-item__fill"></div>
+            <div class="criteria-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div class="criteria-item__term">Discoverability</div>
+            <div class="criteria-item__def">It's a new feature, so how easily will users actually notice and find it?</div>
+          </div>
+          <div class="criteria-item">
+            <div class="criteria-item__fill"></div>
+            <div class="criteria-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+            </div>
+            <div class="criteria-item__term">Disruption</div>
+            <div class="criteria-item__def">Does it grab attention and interrupt the feed? On Instagram it has to stay subtle.</div>
+          </div>
+          <div class="criteria-item">
+            <div class="criteria-item__fill"></div>
+            <div class="criteria-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="criteria-item__term">Nativity</div>
+            <div class="criteria-item__def">Does Instagram already have this interaction pattern, or is it something new?</div>
+          </div>
+          <div class="criteria-item">
+            <div class="criteria-item__fill"></div>
+            <div class="criteria-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <div class="criteria-item__term">Complexity</div>
+            <div class="criteria-item__def">How much new engineering lift does it take to build and ship?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PR2: 5 concepts — interactive comparison matrix -->
+      <div class="concept-explorer">
+        <div class="concept-stage" id="conceptStage">
+        <div class="concept-matrix-scroll concept-layer">
+          <div class="concept-matrix">
+            <!-- Header row -->
+            <div class="cm-corner">
+              <span class="cm-corner__hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V5.5a1.5 1.5 0 0 1 3 0v5"></path><path d="M12 10V4.5a1.5 1.5 0 0 1 3 0V10"></path><path d="M15 9.5V6a1.5 1.5 0 0 1 3 0v7a7 7 0 0 1-7 7h-1.5a5 5 0 0 1-4-2l-2.5-3.3a1.6 1.6 0 0 1 2.4-2.1L9 13"></path></svg>
+                Click any concept to explore its prototype
+              </span>
+            </div>
+            <button class="cm-head" data-concept="ranking" data-col="1">
+              <span class="cm-head__name">Ranking</span>
+              <span class="cm-head__desc">Rank play vs install by user intent</span>
+            </button>
+            <button class="cm-head" data-concept="attribution-pill" data-col="2">
+              <span class="cm-head__name">Attribution pill</span>
+              <span class="cm-head__desc">A "Try demo" pill beside the sponsored pill</span>
+            </button>
+            <button class="cm-head" data-concept="attribution-ranking" data-col="3">
+              <span class="cm-head__name">Attribution pill + Ranking</span>
+              <span class="cm-head__badge cm-head__badge--test">&#9733; Worth testing</span>
+              <span class="cm-head__desc">Pill plus intent-ranked CTAs</span>
+            </button>
+            <button class="cm-head" data-concept="mid-scene" data-col="4">
+              <span class="cm-head__name">Mid-Scene</span>
+              <span class="cm-head__badge cm-head__badge--rec">&#9733; Recommended</span>
+              <span class="cm-head__desc">A "Try demo" pill surfaced mid-Reel</span>
+            </button>
+            <button class="cm-head" data-concept="skoverlay" data-col="5">
+              <span class="cm-head__name">SK Overlay</span>
+              <span class="cm-head__desc">SKOverlay appears on dwell</span>
+            </button>
+
+            <!-- Discoverability -->
+            <div class="cm-rowlabel">Discoverability</div>
+            <div class="cm-cell" data-col="1"><span class="dot dot--warn"></span>Depending on how the intent model works, some users may not see playables</div>
+            <div class="cm-cell" data-col="2"><span class="dot dot--warn"></span>Somewhat subtle placement, may be missed</div>
+            <div class="cm-cell" data-col="3"><span class="dot dot--warn"></span>Different intent groups can still see the secondary CTA</div>
+            <div class="cm-cell" data-col="4"><span class="dot dot--warn"></span>Appears around 8 seconds into the video</div>
+            <div class="cm-cell" data-col="5"><span class="dot dot--warn"></span>Forces interaction with the playable CTA until SKOverlay appears</div>
+
+            <!-- Disruption -->
+            <div class="cm-rowlabel">Disruption</div>
+            <div class="cm-cell" data-col="1"><span class="dot dot--good"></span>No UI changes</div>
+            <div class="cm-cell" data-col="2"><span class="dot dot--good"></span>No changes to the existing Reels format</div>
+            <div class="cm-cell" data-col="3"><span class="dot dot--good"></span>No changes to the existing Reels format</div>
+            <div class="cm-cell" data-col="4"><span class="dot dot--good"></span>Uses the same mid-scene interaction model</div>
+            <div class="cm-cell" data-col="5"><span class="dot dot--warn"></span>Disrupts the user with SKOverlay</div>
+
+            <!-- Nativity -->
+            <div class="cm-rowlabel">Nativity</div>
+            <div class="cm-cell" data-col="1"><span class="dot dot--good"></span>No UI changes</div>
+            <div class="cm-cell" data-col="2"><span class="dot dot--good"></span>A pattern tested in the past</div>
+            <div class="cm-cell" data-col="3"><span class="dot dot--good"></span>A pattern tested in the past</div>
+            <div class="cm-cell" data-col="4"><span class="dot dot--good"></span>Uses the familiar mid-scene pattern</div>
+            <div class="cm-cell" data-col="5"><span class="dot dot--good"></span>SKOverlay is a known pattern</div>
+
+            <!-- Complexity -->
+            <div class="cm-rowlabel">Complexity</div>
+            <div class="cm-cell" data-col="1"><span class="dot dot--good"></span>New pattern. Switching CTAs on a Reel adds eng work</div>
+            <div class="cm-cell" data-col="2"><span class="dot dot--warn"></span>Introduces the pill system for the "offsite" click</div>
+            <div class="cm-cell" data-col="3"><span class="dot dot--warn"></span>The ranking model could take extra time to implement</div>
+            <div class="cm-cell" data-col="4"><span class="dot dot--warn"></span>New design pattern in mid-scene with an extra button</div>
+            <div class="cm-cell" data-col="5"><span class="dot dot--na"></span>iOS only</div>
+          </div>
+        </div>
+
+        <div class="concept-details concept-layer">
+
+        <!-- Concept 1: Ranking -->
+        <div class="concept-detail" data-concept="ranking">
+          <div class="concept-detail__main">
+            <button class="concept-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>All concepts</button>
+            <span class="concept-detail__num">Concept 1</span>
+            <h3 class="concept-detail__title">Ranking</h3>
+            <p class="concept-detail__lead">Rank either play or install based on user intent.</p>
+            <p class="concept-detail__risk"><strong>Risk:</strong> relying on the ranking model. Can we actually achieve this?</p>
+            <div class="concept-ratings">
+              <div class="crate"><span class="dot dot--warn"></span><div class="crate__body"><span class="crate__dim">Discoverability</span><span class="crate__text">Depending on how the intent model works, some users may not see playables</span></div></div>
+              <div class="crate"><span class="dot dot--good"></span><div class="crate__body"><span class="crate__dim">Disruption</span><span class="crate__text">No UI changes</span></div></div>
+              <div class="crate"><span class="dot dot--good"></span><div class="crate__body"><span class="crate__dim">Nativity</span><span class="crate__text">No UI changes</span></div></div>
+              <div class="crate"><span class="dot dot--good"></span><div class="crate__body"><span class="crate__dim">Complexity</span><span class="crate__text">New pattern. Switching CTAs on a Reel adds eng work</span></div></div>
+            </div>
+          </div>
+          <div class="concept-shots">
+            <div class="concept-shot">
+              <div class="media-container media-container--phone">
+                <video autoplay loop muted playsinline>
+                  <source src="assets/images/projects/playable-ads/C1-1.mp4" type="video/mp4">
+                  <source src="assets/images/projects/playable-ads/C1-1.mov" type="video/quicktime">
+                </video>
+              </div>
+              <p class="concept-shot__cap">High intent &rarr; Install now CTA</p>
+            </div>
+            <div class="concept-shot">
+              <div class="media-container media-container--phone">
+                <video autoplay loop muted playsinline>
+                  <source src="assets/images/projects/playable-ads/C1-2.mp4" type="video/mp4">
+                  <source src="assets/images/projects/playable-ads/C1-2.mov" type="video/quicktime">
+                </video>
+              </div>
+              <p class="concept-shot__cap">Low intent &rarr; Try demo CTA &rarr; App Store</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 2: Attribution pill -->
+        <div class="concept-detail" data-concept="attribution-pill">
+          <div class="concept-detail__main">
+            <button class="concept-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>All concepts</button>
+            <span class="concept-detail__num">Concept 2</span>
+            <h3 class="concept-detail__title">Attribution pill</h3>
+            <p class="concept-detail__lead">Use the attribution pill row, adding a "Try demo" pill beside the sponsored pill.</p>
+            <div class="concept-ratings">
+              <div class="crate"><span class="dot dot--warn"></span><div class="crate__body"><span class="crate__dim">Discoverability</span><span class="crate__text">Somewhat subtle placement, may be missed</span></div></div>
+              <div class="crate"><span class="dot dot--good"></span><div class="crate__body"><span class="crate__dim">Disruption</span><span class="crate__text">No changes to the existing Reels format</span></div></div>
+              <div class="crate"><span class="dot dot--good"></span><div class="crate__body"><span class="crate__dim">Nativity</span><span class="crate__text">A pattern tested in the past</span></div></div>
+              <div class="crate"><span class="dot dot--warn"></span><div class="crate__body"><span class="crate__dim">Complexity</span><span class="crate__text">Introduces the pill system for the "offsite" click</span></div></div>
+            </div>
+          </div>
+          <div class="concept-shots">
+            <div class="concept-shot">
+              <div class="media-container media-container--phone">
+                <video autoplay loop muted playsinline>
+                  <source src="assets/images/projects/playable-ads/C2.mp4" type="video/mp4">
+                  <source src="assets/images/projects/playable-ads/C2.mov" type="video/quicktime">
+                </video>
+              </div>
+              <p class="concept-shot__cap">Attribution pill on the Reel</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 3: Attribution pill + Ranking -->
+        <div class="concept-detail" data-concept="attribution-ranking">
+          <div class="concept-detail__main">
+            <button class="concept-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>All concepts</button>
+            <span class="concept-detail__num">Concept 3</span>
+            <h3 class="concept-detail__title">Attribution pill with intent ranking <span class="cm-head__badge cm-head__badge--test">&#9733; Worth testing</span></h3>
+            <p class="concept-detail__lead">Use the attribution pill row with a "Try demo" pill, then add intent ranking. Users with high intent see the Install CTA with a demo pill; users with low intent see the inverse.</p>
+            <div class="concept-ratings">
+              <div class="crate"><span class="dot dot--warn"></span><div class="crate__body"><span class="crate__dim">Discoverability</span><span class="crate__text">Different intent groups can still see the secondary CTA</span></div></div>
+              <div class="crate"><span class="dot dot--good"></span><div class="crate__body"><span class="crate__dim">Disruption</span><span class="crate__text">No changes to the existing Reels format</span></div></div>
+              <div class="crate"><span class="dot dot--good"></span><div class="crate__body"><span class="crate__dim">Nativity</span><span class="crate__text">A pattern tested in the past</span></div></div>
+              <div class="crate"><span class="dot dot--warn"></span><div class="crate__body"><span class="crate__dim">Complexity</span><span class="crate__text">The ranking model could take extra time to implement</span></div></div>
+            </div>
+          </div>
+          <div class="concept-shots">
+            <div class="concept-shot">
+              <div class="media-container media-container--phone">
+                <video autoplay loop muted playsinline>
+                  <source src="assets/images/projects/playable-ads/C3-1.mp4" type="video/mp4">
+                  <source src="assets/images/projects/playable-ads/C3-1.mov" type="video/quicktime">
+                </video>
+              </div>
+              <p class="concept-shot__cap">High intent &rarr; CTA Install, pill Demo</p>
+            </div>
+            <div class="concept-shot">
+              <div class="media-container media-container--phone">
+                <video autoplay loop muted playsinline>
+                  <source src="assets/images/projects/playable-ads/C3-2.mp4" type="video/mp4">
+                  <source src="assets/images/projects/playable-ads/C3-2.mov" type="video/quicktime">
+                </video>
+              </div>
+              <p class="concept-shot__cap">Low intent &rarr; CTA Demo, pill Install</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 4: Mid-Scene -->
+        <div class="concept-detail" data-concept="mid-scene">
+          <div class="concept-detail__main">
+            <button class="concept-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>All concepts</button>
+            <span class="concept-detail__num">Concept 4</span>
+            <h3 class="concept-detail__title">Mid-Scene <span class="cm-head__badge cm-head__badge--rec">&#9733; Recommended</span></h3>
+            <p class="concept-detail__lead">Using the new mid-scene pattern, surface a "Try demo" pill alongside the standard Install now CTA as the core CTA.</p>
+            <div class="concept-ratings">
+              <div class="crate"><span class="dot dot--warn"></span><div class="crate__body"><span class="crate__dim">Discoverability</span><span class="crate__text">Appears around 8 seconds into the video</span></div></div>
+              <div class="crate"><span class="dot dot--good"></span><div class="crate__body"><span class="crate__dim">Disruption</span><span class="crate__text">Uses the same mid-scene interaction model</span></div></div>
+              <div class="crate"><span class="dot dot--good"></span><div class="crate__body"><span class="crate__dim">Nativity</span><span class="crate__text">Uses the familiar mid-scene pattern</span></div></div>
+              <div class="crate"><span class="dot dot--warn"></span><div class="crate__body"><span class="crate__dim">Complexity</span><span class="crate__text">New design pattern in mid-scene with an extra button</span></div></div>
+            </div>
+          </div>
+          <div class="concept-shots">
+            <div class="concept-shot">
+              <div class="media-container media-container--phone">
+                <video autoplay loop muted playsinline>
+                  <source src="assets/images/projects/playable-ads/C4.mp4" type="video/mp4">
+                  <source src="assets/images/projects/playable-ads/C4.mov" type="video/quicktime">
+                </video>
+              </div>
+              <p class="concept-shot__cap">Mid-scene dual CTA</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Concept 5: SK Overlay -->
+        <div class="concept-detail" data-concept="skoverlay">
+          <div class="concept-detail__main">
+            <button class="concept-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>All concepts</button>
+            <span class="concept-detail__num">Concept 5</span>
+            <h3 class="concept-detail__title">SK Overlay</h3>
+            <p class="concept-detail__lead">The CTA stays "Try demo", but SKOverlay appears on dwell to drive the install.</p>
+            <div class="concept-ratings">
+              <div class="crate"><span class="dot dot--warn"></span><div class="crate__body"><span class="crate__dim">Discoverability</span><span class="crate__text">Forces interaction with the playable CTA until SKOverlay appears</span></div></div>
+              <div class="crate"><span class="dot dot--warn"></span><div class="crate__body"><span class="crate__dim">Disruption</span><span class="crate__text">Disrupts the user with SKOverlay</span></div></div>
+              <div class="crate"><span class="dot dot--good"></span><div class="crate__body"><span class="crate__dim">Nativity</span><span class="crate__text">SKOverlay is a known pattern</span></div></div>
+              <div class="crate"><span class="dot dot--na"></span><div class="crate__body"><span class="crate__dim">Complexity</span><span class="crate__text">iOS only</span></div></div>
+            </div>
+          </div>
+          <div class="concept-shots">
+            <div class="concept-shot">
+              <div class="media-container media-container--phone">
+                <video autoplay loop muted playsinline>
+                  <source src="assets/images/projects/playable-ads/C5.mp4" type="video/mp4">
+                  <source src="assets/images/projects/playable-ads/C5.mov" type="video/quicktime">
+                </video>
+              </div>
+              <p class="concept-shot__cap">SKOverlay install</p>
+            </div>
+          </div>
+        </div>
+        </div><!-- /.concept-details -->
+        <button class="concept-nav concept-nav--prev" type="button" aria-label="Previous concept"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <button class="concept-nav concept-nav--next" type="button" aria-label="Next concept"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div><!-- /.concept-stage -->
+
+        <!-- Floating hover preview of a concept's prototype -->
+        <div class="concept-peek" aria-hidden="true">
+          <div class="concept-peek__phone">
+            <video class="concept-peek__video" loop muted playsinline></video>
+          </div>
+        </div>
+      </div>
+
+      <p class="body-text">
+        I fought for the mid-scene overlay. Instagram is protective of its surfaces, and getting a new CTA pattern approved on Reels meant a rigorous design review. I anchored the conversation with aggressive concepts first (playables on impression, full-surface takeovers) then presented mid-scene as the measured alternative. It worked.
+      </p>
+
+      <!-- PR2b: Mid-scene dual CTA pattern explorations -->
+      <div class="media-container media-container--full media-container--inline" style="background: #fff;">
+        <img src="assets/images/projects/playable-ads/PR2b.png" alt="Different mid-scene dual CTA patterns explored for Reels" style="width: 100%; height: 100%; object-fit: contain;">
+      </div>
+
+      <!-- PR3: Before/after — single CTA control vs dual CTA approved -->
+      <div class="media-container media-container--full media-container--inline" style="background: #fff;">
+        <img src="assets/images/projects/playable-ads/PR3.png" alt="Single CTA control vs dual CTA approved — mobile screens compared" style="width: 100%; height: 100%; object-fit: contain;">
+      </div>
+
+    </section>
+
+
+    <!-- ============================================
+         03. EXECUTION
+         ============================================ -->
+    <section class="cs-section fade-up" id="section-execution" data-section-label="03. Execution">
+      <div class="cs-section__header">
+        <span class="section-label">03. Execution</span>
+        <h2 class="section-title">From Experiment to <em>Platform</em></h2>
+      </div>
+
+      <p class="body-text">
+        Playable ads shipped across Facebook and Instagram (Feed, Stories, and Reels) on iOS and Android. I'm oversimplifying it here, but this meant running design reviews with both Facebook and Instagram while collaborating with format owners on every single surface: Reels, Feed, and Stories.
+      </p>
+
+      <!-- E1: Happy path — full width -->
+      <div class="media-container media-container--full media-container--inline" style="background: #fff; aspect-ratio: 5710/2176;">
+        <img src="assets/images/projects/playable-ads/E1.png" alt="End-to-end happy path: Reel, dwell, dual CTA, playable demo, install" style="width: 100%; height: 100%; object-fit: contain;">
+      </div>
+
+      <p class="body-text">
+        The user encounters a video ad with two CTAs: "Install now" for users ready to convert, and "Try demo" for users who want to interact first. Tapping "Try demo" opens the playable, an HTML experience inside Meta's in-app browser, where the user demos the app with a persistent install CTA anchored at the bottom. On iOS, Apple's SKOverlay (a native component that shows basic app metadata) lets users install without leaving the ad.
+      </p>
+
+      <h3 class="subsection-title">Designing Android's SKOverlay from scratch</h3>
+      <p class="body-text">
+        Android has no native equivalent of Apple's SKOverlay, so I designed one. Same goal (app metadata, ratings, one-tap install without leaving the ad) but built from scratch to feel native to a platform that doesn't have this convention. This work opened up a new collaboration with Google to build a native Android floating CTA, so users can download directly from the hovercard without leaving the ad.
+      </p>
+
+      <!-- E2: iOS vs Android — SKOverlay comparison -->
+      <div class="media-container media-container--full media-container--inline" style="background: #fff; aspect-ratio: 3840/1368;">
+        <img src="assets/images/projects/playable-ads/E2.png" alt="iOS Apple SKOverlay vs Android custom overlay comparison" style="width: 100%; height: 100%; object-fit: contain;">
+      </div>
+
+      <h3 class="subsection-title">What I cut</h3>
+      <p class="body-text">
+        I designed multiple iterations of playable ads on impression: letting users interact with the demo directly on the surface, no post-click transition. It was the most ambitious concept and I pushed hard for it. It got rejected. I agreed with the call.
+      </p>
+
+      <!-- E5: Rejected concept — full width -->
+      <div class="media-container media-container--full media-container--inline" style="background: #fff;">
+        <img src="assets/images/projects/playable-ads/E5.png" alt="Rejected concept: playables on impression iterations" style="width: 100%; height: 100%; object-fit: contain;">
+      </div>
+
+      <p class="body-text">
+        Users don't expect an ad to behave like an app. Dropping a game straight into a Reel breaks how people read the surface. That post-click tap matters: it's the moment a user chooses to enter the demo. Take the choice away and the format just feels invasive.
+      </p>
+
+    </section>
+
+
+    <!-- ============================================
+         04. OUTCOME
+         ============================================ -->
+    <section class="cs-section fade-up" id="section-outcome" data-section-label="04. Outcomes / Learnings">
+      <div class="cs-section__header">
+        <span class="section-label">04. Outcomes / Learnings</span>
+        <h2 class="section-title">From Two People to a <em>Team</em></h2>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-card__value">7/9</div>
+          <div class="metric-card__label">Campaigns outperformed video ads</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-card__value">6</div>
+          <div class="metric-card__label">Live placements across Feed, Stories &amp; Reels on Facebook &amp; Instagram</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-card__value">$200k+</div>
+          <div class="metric-card__label">Daily ad spend after launch</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-card__value">2 &rarr; Team</div>
+          <div class="metric-card__label">From a two-person experiment to a funded team in App &amp; Gaming Monetization</div>
+        </div>
+      </div>
+
+      <p class="body-text">
+        Advertisers adopted the format immediately. They were already producing playable assets for AppLovin, so running them on Meta required no additional creative production. It also opened a path beyond gaming into e-commerce and other app verticals where demoing the experience before download reduces the barrier to install.
+      </p>
+      <p class="body-text">
+        Two people and a prototype turned into a pitch that landed the format on every major surface: Feed, Stories, and Reels on both Instagram and Facebook. It secured a dedicated team and a fully funded roadmap within App & Gaming Monetization.
+      </p>
+
+      <div class="callout">
+        <p class="callout__text">"The highest-leverage move on this project had nothing to do with polishing screens. I got a rough, working prototype in front of leadership while the idea was still cheap to kill, and that's what got it funded."</p>
+      </div>
+
+    </section>
+
+
+    <!-- Also designed — tabbed gallery -->
+    <div class="also-designed tab-group fade-up">
+      <span class="also-designed__label">Also designed</span>
+      <p class="also-designed__lead">
+        I didn't show everything. Here are a few more pieces of the system I designed for this project.
+      </p>
+
+      <div class="tab-bar" role="tablist">
+        <button class="tab-btn is-active" role="tab" aria-selected="true" data-tab="tab-browser">Game browser + loading state</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-ads-manager">Ads Manager</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-overlay">SKOverlay — Install overlay</button>
+      </div>
+
+      <div class="tab-panel is-active" id="tab-browser" role="tabpanel">
+        <div class="media-container media-container--full" style="background: #fff;">
+          <img src="assets/images/projects/playable-ads/X1.png" alt="In-app browser and loading state for the playable HTML experience" style="width:100%;height:100%;object-fit:contain;display:block;">
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-ads-manager" role="tabpanel">
+        <div class="media-container media-container--full" style="background: #fff;">
+          <img src="assets/images/projects/playable-ads/X2.png" alt="Ads Manager flow for uploading playable HTML and configuring campaigns" style="width:100%;height:100%;object-fit:contain;display:block;">
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-overlay" role="tabpanel">
+        <div class="media-container media-container--full">
+          <!-- Replace with: <img src="assets/images/projects/playable-ads/playable-ads-overlay-detail-01.png" alt="Install overlay detail — CTA layering over third-party HTML"> -->
+          <div class="media-placeholder">
+            <span class="media-placeholder__id">X3</span>
+            Install overlay detail: CTA and app metadata layered over dynamic third-party HTML
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEXT PROJECT FOOTER -->
+    <footer class="next-project fade-up">
+      <span class="next-project__label">Next Case Study</span>
+      <a href="project-ai-workflows.html" class="next-project__title">AI-Native Design Workflows &rarr;</a>
+    </footer>
+
+  </main>
+
+  <!-- SCROLL REVEAL -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elements = document.querySelectorAll('.fade-up');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+      elements.forEach(function(el) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+        observer.observe(el);
+      });
+    });
+  </script>
+
+  <!-- HERO SCROLL REVEAL — text dims as media climbs over -->
+  <script>
+    (function () {
+      var stage  = document.getElementById('heroStage');
+      var sticky = document.getElementById('heroSticky');
+      if (!stage || !sticky) return;
+
+      var ticking = false;
+      function ease(t) { return 1 - Math.pow(1 - t, 3); }
+
+      function update() {
+        ticking = false;
+        if (window.matchMedia('(max-width: 768px)').matches) {
+          sticky.style.opacity = '1';
+          sticky.style.transform = 'none';
+          sticky.style.filter = 'none';
+          return;
+        }
+        var rect = stage.getBoundingClientRect();
+        var vh = window.innerHeight;
+        var scrolled = -rect.top;
+        var progress = Math.min(Math.max(scrolled / (vh * 0.9), 0), 1);
+        var e = ease(progress);
+        sticky.style.opacity   = String(1 - e);
+        sticky.style.transform = 'translateY(' + (e * -48) + 'px) scale(' + (1 - e * 0.04) + ')';
+        sticky.style.filter    = 'blur(' + (e * 6) + 'px)';
+      }
+
+      function onScroll() {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      }
+
+      sticky.style.transition = 'opacity 0.1s linear, filter 0.1s linear';
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      update();
+    })();
+  </script>
+
+  <!-- SECTION LABEL IN NAV — updates as you scroll through sections -->
+  <script>
+    (function () {
+      var label = document.getElementById('navSectionLabel');
+      var sections = document.querySelectorAll('.cs-section[data-section-label]');
+      if (!label || !sections.length) return;
+
+      var current = '';
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var text = entry.target.getAttribute('data-section-label');
+            if (text !== current) {
+              current = text;
+              label.classList.remove('is-visible');
+              setTimeout(function () {
+                label.textContent = current;
+                label.classList.add('is-visible');
+              }, 150);
+            }
+          }
+        });
+      }, {
+        rootMargin: '-' + (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) + 1) + 'px 0px -60% 0px',
+        threshold: 0
+      });
+
+      sections.forEach(function (s) { observer.observe(s); });
+
+      /* Hide label when scrolled back to hero */
+      var heroStage = document.getElementById('heroStage');
+      if (heroStage) {
+        var heroObserver = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) {
+            current = '';
+            label.classList.remove('is-visible');
+          }
+        }, { threshold: 0.3 });
+        heroObserver.observe(heroStage);
+      }
+    })();
+  </script>
+
+  <!-- ===== PASSWORD GATE ===== -->
+  <style>
+    .pw-overlay{position:fixed;inset:0;z-index:9000;background:rgba(255,255,255,0.6);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);display:flex;align-items:center;justify-content:center;transition:opacity 0.3s ease;}
+    .pw-overlay.is-gone{opacity:0;pointer-events:none;}
+    .pw-modal{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:24px;padding:48px 44px 40px;max-width:420px;width:calc(100% - 48px);box-shadow:0 24px 80px rgba(0,0,0,0.1);text-align:center;position:relative;}
+    .pw-modal__lock{width:44px;height:44px;background:#f7f5f2;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;}
+    .pw-modal__lock svg{width:20px;height:20px;color:#5c574f;}
+    .pw-modal__title{font-family:'DM Sans',sans-serif;font-size:1.25rem;font-weight:600;letter-spacing:-0.02em;color:#1a1814;margin-bottom:10px;}
+    .pw-modal__sub{font-family:'DM Sans',sans-serif;font-size:0.875rem;color:#5c574f;line-height:1.55;margin-bottom:28px;}
+    .pw-modal__sub a{color:#1a1814;font-weight:500;text-decoration:underline;text-underline-offset:2px;}
+    .pw-modal__field{display:flex;gap:10px;margin-bottom:12px;}
+    .pw-modal__input{flex:1;font-family:'DM Sans',sans-serif;font-size:0.9375rem;padding:12px 16px;border:1px solid rgba(0,0,0,0.08);border-radius:12px;background:#f7f5f2;color:#1a1814;outline:none;transition:border-color 0.2s;}
+    .pw-modal__input:focus{border-color:#8b8780;}
+    .pw-modal__input.is-error{border-color:#e05c5c;}
+    .pw-modal__submit{font-family:'DM Sans',sans-serif;font-size:0.9375rem;font-weight:600;padding:12px 20px;background:#1a1814;color:#fff;border:none;border-radius:12px;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;}
+    .pw-modal__submit:hover{opacity:0.85;}
+    .pw-modal__error{font-family:'DM Sans',sans-serif;font-size:0.8125rem;color:#e05c5c;min-height:18px;}
+    .pw-modal__close{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#8b8780;transition:background 0.2s;}
+    .pw-modal__close:hover{background:#f7f5f2;}
+  </style>
+  <div class="pw-overlay" id="pw-overlay" role="dialog" aria-modal="true">
+    <div class="pw-modal">
+      <button class="pw-modal__close" id="pw-close" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <div class="pw-modal__lock">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      </div>
+      <h2 class="pw-modal__title">This project is protected</h2>
+      <p class="pw-modal__sub">These case studies are kept private. To request access, get in touch at <a href="mailto:ngvictor11@gmail.com">ngvictor11@gmail.com</a></p>
+      <div class="pw-modal__field">
+        <input class="pw-modal__input" id="pw-input" type="password" placeholder="Enter password" autocomplete="off">
+        <button class="pw-modal__submit" id="pw-submit">Unlock</button>
+      </div>
+      <p class="pw-modal__error" id="pw-error"></p>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var PASS = 'biscuit';
+      var SESSION_KEY = 'vn_unlocked';
+      var overlay = document.getElementById('pw-overlay');
+      var input   = document.getElementById('pw-input');
+      var submit  = document.getElementById('pw-submit');
+      var error   = document.getElementById('pw-error');
+      var closeBtn = document.getElementById('pw-close');
+
+      // Already unlocked this session — dismiss immediately
+      if (sessionStorage.getItem(SESSION_KEY) === '1') {
+        overlay.classList.add('is-gone');
+        return;
+      }
+
+      setTimeout(function () { input.focus(); }, 100);
+
+      function attempt() {
+        if (input.value.trim().toLowerCase() === PASS) {
+          sessionStorage.setItem(SESSION_KEY, '1');
+          overlay.classList.add('is-gone');
+        } else {
+          input.classList.add('is-error');
+          error.textContent = 'Incorrect password. Try again.';
+          input.value = '';
+          input.focus();
+        }
+      }
+
+      function dismiss() {
+        // Go back to homepage if they close without unlocking
+        window.location.href = 'index.html';
+      }
+
+      submit.addEventListener('click', attempt);
+      input.addEventListener('keydown', function (e) { if (e.key === 'Enter') attempt(); });
+      closeBtn.addEventListener('click', dismiss);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) dismiss(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dismiss(); });
+    })();
+  </script>
+
+  <!-- TABBED GALLERY -->
+  <script>
+    (function () {
+      document.querySelectorAll('.tab-group').forEach(function (group) {
+        var buttons = group.querySelectorAll('.tab-btn');
+        buttons.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            buttons.forEach(function (b) {
+              b.classList.remove('is-active');
+              b.setAttribute('aria-selected', 'false');
+            });
+            group.querySelectorAll('.tab-panel').forEach(function (p) {
+              p.classList.remove('is-active');
+            });
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-selected', 'true');
+            document.getElementById(btn.getAttribute('data-tab')).classList.add('is-active');
+          });
+        });
+      });
+    })();
+  </script>
+
+  <!-- CONCEPT EXPLORER — click a concept to expand its prototype -->
+  <script>
+    (function () {
+      var explorer = document.querySelector('.concept-explorer');
+      if (!explorer) return;
+
+      var stage = explorer.querySelector('.concept-stage');
+      var matrixScroll = explorer.querySelector('.concept-matrix-scroll');
+      var detailsWrap = explorer.querySelector('.concept-details');
+      var hint = explorer.querySelector('.concept-hint');
+      var heads = explorer.querySelectorAll('.cm-head');
+      var details = explorer.querySelectorAll('.concept-detail');
+      var current = null;
+
+      // Floating prototype preview shown on column hover
+      var peek = explorer.querySelector('.concept-peek');
+      var peekVideo = peek ? peek.querySelector('.concept-peek__video') : null;
+      var peekHideTimer = null;
+
+      function firstVideoFor(concept) {
+        var d = explorer.querySelector('.concept-detail[data-concept="' + concept + '"]');
+        var src = d && d.querySelector('video source');
+        return src ? src.getAttribute('src') : null;
+      }
+
+      // Place the preview just to the right of the cursor (flips left near the edge)
+      function positionPeekAtCursor(e) {
+        if (!peek) return;
+        var er = explorer.getBoundingClientRect();
+        var w = peek.offsetWidth;
+        var h = peek.offsetHeight || (w * 1558 / 748);
+        var gap = 22;
+        var clientLeft = e.clientX + gap;
+        if (clientLeft + w > window.innerWidth - 8) {
+          clientLeft = e.clientX - gap - w; // flip to the left of the cursor
+        }
+        var clientTop = e.clientY - h / 2;
+        clientTop = Math.max(8, Math.min(clientTop, window.innerHeight - h - 8));
+        peek.style.left = Math.round(clientLeft - er.left) + 'px';
+        peek.style.top = Math.round(clientTop - er.top) + 'px';
+      }
+
+      function showPeek(concept, e) {
+        if (!peek || !peekVideo) return;
+        clearTimeout(peekHideTimer);
+        var src = firstVideoFor(concept);
+        if (!src) return;
+        if (peekVideo.getAttribute('src') !== src) {
+          peekVideo.setAttribute('src', src);
+        }
+        var p = peekVideo.play();
+        if (p && p.catch) { p.catch(function () {}); }
+        positionPeekAtCursor(e);
+        peek.classList.add('is-visible');
+      }
+
+      function hidePeek() {
+        if (!peek) return;
+        peekHideTimer = setTimeout(function () {
+          peek.classList.remove('is-visible');
+        }, 80);
+      }
+
+      // Measure a layer's natural height without disturbing visible state
+      function layerHeight(el) { return el.offsetHeight; }
+
+      function setStageHeight(px) { stage.style.height = px + 'px'; }
+
+      // Lock the stage to the matrix height on load so absolute layers have a box
+      function syncToMatrix() {
+        if (!stage.classList.contains('is-detail')) {
+          setStageHeight(layerHeight(matrixScroll));
+        }
+      }
+
+      function showDetail(key) {
+        var detail = explorer.querySelector('.concept-detail[data-concept="' + key + '"]');
+        if (!detail) return;
+        current = key;
+
+        details.forEach(function (d) {
+          d.classList.toggle('is-active', d === detail);
+          d.classList.remove('is-animating');
+        });
+        // Force reflow so removing + re-adding the class restarts the animation
+        void detail.offsetWidth;
+        detail.classList.add('is-animating');
+
+        setStageHeight(layerHeight(detail));
+        stage.classList.add('is-detail');
+        if (hint) hint.style.opacity = '0';
+      }
+
+      function showMatrix() {
+        current = null;
+        stage.classList.remove('is-detail');
+        setStageHeight(layerHeight(matrixScroll));
+        if (hint) hint.style.opacity = '';
+        resetCriteria();
+        // clear active state after the cross-fade settles
+        setTimeout(function () {
+          if (!stage.classList.contains('is-detail')) {
+            details.forEach(function (d) { d.classList.remove('is-active'); });
+          }
+        }, 450);
+      }
+
+      // Criteria cards above the matrix — recolor to reflect a concept's column on hover/click
+      var criteriaItems = document.querySelectorAll('.criteria-grid .criteria-item');
+      var matrixRows = [];
+      explorer.querySelectorAll('.cm-rowlabel').forEach(function (label) {
+        var cells = [];
+        var sib = label.nextElementSibling;
+        while (sib && sib.classList.contains('cm-cell')) {
+          cells.push(sib);
+          sib = sib.nextElementSibling;
+        }
+        matrixRows.push(cells);
+      });
+
+      function setCriteria(col) {
+        criteriaItems.forEach(function (item, i) {
+          var row = matrixRows[i];
+          var cell = row && row.filter(function (c) { return c.getAttribute('data-col') === col; })[0];
+          var dot = cell && cell.querySelector('.dot');
+          var status = null;
+          if (dot) {
+            if (dot.classList.contains('dot--good')) status = 'good';
+            else if (dot.classList.contains('dot--warn')) status = 'warn';
+            else if (dot.classList.contains('dot--na')) status = 'na';
+          }
+          if (status) item.setAttribute('data-status', status);
+          else item.removeAttribute('data-status');
+        });
+      }
+
+      function resetCriteria() {
+        criteriaItems.forEach(function (item) { item.removeAttribute('data-status'); });
+      }
+
+      // Make the whole column (header + every cell) a single hover/click target
+      heads.forEach(function (head) {
+        var col = head.getAttribute('data-col');
+        var concept = head.getAttribute('data-concept');
+        // column = the header plus all cells sharing this data-col
+        var column = [head].concat(
+          Array.prototype.slice.call(explorer.querySelectorAll('.cm-cell[data-col="' + col + '"]'))
+        );
+
+        function setHot(on) {
+          column.forEach(function (el) { el.classList.toggle('is-hot', on); });
+        }
+        function open() { showDetail(concept); setCriteria(col); }
+
+        column.forEach(function (el) {
+          el.addEventListener('click', open);
+          el.addEventListener('mouseenter', function (e) { setHot(true); showPeek(concept, e); setCriteria(col); });
+          el.addEventListener('mousemove', positionPeekAtCursor);
+          el.addEventListener('mouseleave', function () {
+            setHot(false); hidePeek();
+            if (!current) resetCriteria();
+          });
+        });
+      });
+
+      explorer.querySelectorAll('.concept-back').forEach(function (btn) {
+        btn.addEventListener('click', showMatrix);
+      });
+
+      // Prev / next navigation between concepts
+      var order = Array.prototype.map.call(details, function (d) {
+        return d.getAttribute('data-concept');
+      });
+      var colByConcept = {};
+      heads.forEach(function (head) {
+        colByConcept[head.getAttribute('data-concept')] = head.getAttribute('data-col');
+      });
+      function step(dir) {
+        if (!current) return;
+        var idx = order.indexOf(current);
+        if (idx === -1) return;
+        var next = (idx + dir + order.length) % order.length;
+        showDetail(order[next]);
+        setCriteria(colByConcept[order[next]]);
+      }
+      var prevBtn = explorer.querySelector('.concept-nav--prev');
+      var nextBtn = explorer.querySelector('.concept-nav--next');
+      if (prevBtn) prevBtn.addEventListener('click', function () { step(-1); });
+      if (nextBtn) nextBtn.addEventListener('click', function () { step(1); });
+      document.addEventListener('keydown', function (e) {
+        if (!stage.classList.contains('is-detail')) return;
+        if (e.key === 'ArrowLeft') { step(-1); }
+        else if (e.key === 'ArrowRight') { step(1); }
+      });
+
+      // Keep heights honest as the layout settles and on resize
+      window.addEventListener('load', syncToMatrix);
+      window.addEventListener('resize', function () {
+        if (current) {
+          setStageHeight(layerHeight(explorer.querySelector('.concept-detail[data-concept="' + current + '"]')));
+        } else {
+          syncToMatrix();
+        }
+      });
+      syncToMatrix();
+
+
+    })();
+  </script>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <script>
+    (function () {
+      var fill = document.getElementById('scrollProgressFill');
+      if (!fill) return;
+      var ticking = false;
+      function update() {
+        ticking = false;
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) * 100 : 0;
+        fill.style.height = pct + '%';
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      }, { passive: true });
+      update();
+    })();
+  </script>
+
+  <!-- H1 SURFACE ROW + TOGGLE -->
+  <script>
+    (function () {
+      var row = document.getElementById('heroRow');
+      if (!row) return;
+      var framesWrap = document.getElementById('heroRowFrames');
+      var logo = document.getElementById('heroRowLogo');
+      var toggle = row.querySelector('.hero-row__toggle');
+      var indicator = row.querySelector('.hero-row__indicator');
+      var btns = row.querySelectorAll('.hero-row__btn');
+
+      var DIR = 'assets/images/projects/playable-ads/H1/';
+      var EXT = '.png';
+      var STEPS = ['feed', 'story', 'reel', 'load', 'game'];
+      var PREFIX = { instagram: 'ig', facebook: 'fb' };
+      var LOGOS = {
+        instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>',
+        facebook: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.49-3.91 3.78-3.91 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.79 8.43-4.94 8.43-9.94z"/></svg>'
+      };
+
+      function makeFrame(surface, step, i) {
+        var frame = document.createElement('div');
+        frame.className = 'hero-row__frame';
+        frame.style.animationDelay = (i * 70) + 'ms';
+        var img = document.createElement('img');
+        img.src = DIR + PREFIX[surface] + '-' + step + EXT;
+        img.alt = surface + ' — ' + step;
+        img.loading = 'lazy';
+        img.addEventListener('error', function () {
+          frame.classList.add('hero-row__frame--ph');
+          frame.textContent = PREFIX[surface] + '-' + step + EXT;
+        });
+        frame.appendChild(img);
+        return frame;
+      }
+
+      function buildFrames(surface) {
+        framesWrap.innerHTML = '';
+        if (surface === 'compare') {
+          framesWrap.classList.add('hero-row__frames--compare');
+          logo.innerHTML = '';
+          ['instagram', 'facebook'].forEach(function (s, ri) {
+            var row = document.createElement('div');
+            row.className = 'hero-row__compare-row';
+            var lbl = document.createElement('span');
+            lbl.className = 'hero-row__compare-label';
+            lbl.innerHTML = LOGOS[s];
+            row.appendChild(lbl);
+            STEPS.forEach(function (step, i) {
+              row.appendChild(makeFrame(s, step, ri * STEPS.length + i));
+            });
+            framesWrap.appendChild(row);
+          });
+        } else {
+          framesWrap.classList.remove('hero-row__frames--compare');
+          STEPS.forEach(function (step, i) {
+            framesWrap.appendChild(makeFrame(surface, step, i));
+          });
+          logo.innerHTML = LOGOS[surface] || '';
+        }
+      }
+
+      function moveIndicator(btn) {
+        var pad = parseFloat(getComputedStyle(toggle).paddingLeft) || 3;
+        indicator.style.width = btn.offsetWidth + 'px';
+        indicator.style.transform = 'translateX(' + (btn.offsetLeft - pad) + 'px)';
+      }
+
+      function selectSurface(surface) {
+        btns.forEach(function (b) {
+          var on = b.getAttribute('data-surface') === surface;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+          if (on) moveIndicator(b);
+        });
+        buildFrames(surface);
+      }
+
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () { selectSurface(b.getAttribute('data-surface')); });
+      });
+
+      var initial = row.querySelector('.hero-row__btn.is-active');
+      buildFrames(initial.getAttribute('data-surface'));
+      requestAnimationFrame(function () { moveIndicator(initial); });
+      window.addEventListener('resize', function () {
+        var a = row.querySelector('.hero-row__btn.is-active');
+        if (a) moveIndicator(a);
+      });
+    })();
+  </script>
+
+  <!-- NAV DARK/LIGHT TRANSITION -->
+  <script>
+    (function () {
+      var nav = document.querySelector('.top-nav');
+      var heroReveal = document.querySelector('.hero-reveal');
+      if (!nav || !heroReveal) return;
+      function update() {
+        var revealTop = heroReveal.getBoundingClientRect().top;
+        nav.classList.toggle('is-light', revealTop <= 0);
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+
+  <script>
+    document.querySelectorAll('a[href]').forEach(function(link) {
+      var href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.body.style.transition = 'opacity 0.25s ease';
+        document.body.style.opacity = '0';
+        setTimeout(function() { window.location = href; }, 260);
+      });
+    });
+  </script>
+
+</body>
+</html>
