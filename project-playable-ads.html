@@ -1623,7 +1623,7 @@
               <div class="hero-content__left">
                 <h1 class="cs-hero__title">Playable Ads — A new ad format for Meta</h1>
                 <p class="cs-hero__tldr">
-                  Meta's gaming ad revenue fell from 21% to 13.6% in two years, losing to a format Meta had already tried and failed to ship. I started with one engineer, no PM, and no roadmap slot, and rebuilt playable ads from a dead experiment into a live format across Feed, Stories, and Reels on iOS and Android.
+                  For years, Meta couldn't make playable ads work, while competitors built entire businesses on the format and pulled away the app and gaming budgets that used to be Meta's. I started this with one engineer, no PM, and no roadmap slot, and shipped it across Facebook and Instagram.
                 </p>
               </div>
               <div class="hero-content__video">
@@ -1701,7 +1701,7 @@
             A playable ad is a short, interactive demo of an app. Tap "Try demo" on a video ad, and you're playing the app before you decide to install.
           </p>
           <p class="cs-intro__sub" style="margin-bottom: 0;">
-            It's one of the strongest formats in mobile advertising. For years, Meta couldn't make it work, while competitors built entire businesses on it and took app and gaming budgets that used to be Meta's. I redesigned it from a failed experiment into a format that shipped across Facebook and Instagram.
+            It's one of the strongest formats in mobile advertising, and the biggest gap in Meta's ad lineup when I started.
           </p>
         </div>
         <!-- C1: Format explainer — pre-click video ad → post-click playable -->
@@ -1725,10 +1725,10 @@
       <div class="split split--text-left">
         <div class="split__text">
           <p class="body-text">
-            Gaming's share of Meta's app ad revenue dropped from <strong>21% to 13.6%</strong> in two years. AppLovin was the primary beneficiary. Playables account for 70–100% of spend on their platform. The dominant format in the category was one Meta had tried on Facebook in 2017 and never scaled.
+            AppLovin took most of the share Meta was losing. Playables make up 70–100% of spend on their platform: the dominant format in the category, and one Meta had tried back in 2017 and never scaled.
           </p>
           <p class="body-text" style="margin-bottom: 0;">
-            People don't download apps they haven't tried. Users with high intent will tap "Install now," but there's a larger group on the fence who'd convert if they could demo the app first. User interviews backed this up: people were open to trying apps within Instagram. The interactive format bridged a trust gap that static video ads couldn't.
+            People don't download apps they haven't tried. Users with high intent will tap "Install now," but there's a larger group on the fence who'd convert if they could demo the app first. User interviews backed this up: people were open to trying apps within Instagram. Letting them try the app first did what a static video ad couldn't.
           </p>
         </div>
         <div class="split__media">
@@ -1751,7 +1751,7 @@
             Meta's previous attempt replaced "Install now" with a single "Try demo" CTA. It cannibalized direct conversions. A video ad has one path: the App Store. A playable with only a demo CTA introduced multiple drop-off points and removed that direct path entirely. The format was supposed to make installing easier. It was doing the opposite.
           </p>
           <p class="body-text">
-            But there was a nuance in the data. When optimising for deeper funnel events like purchases, in-app actions, and retention, <strong>these demos performed significantly better.</strong> Users who tried the app first converted with more intent.
+            The data had a wrinkle, though. On goals deeper down the funnel like purchases and retention, <strong>the demos beat video outright.</strong> People who played first installed with more conviction, and stuck around longer.
           </p>
           <p class="body-text" style="margin-bottom: 0;">
             The design challenge was serving both user groups in the same ad unit without cannibalizing either path. And doing it on Instagram, a platform that had never supported the format and was protective of every pixel in the feed.
@@ -1772,7 +1772,7 @@
 
       <h3 class="subsection-title" style="margin-top: 0;">Starting from zero</h3>
       <p class="body-text">
-        This started as an unfunded experiment. Just me and one engineer, no roadmap slot, no PM. I wrote the one-pager, defined the success criteria, and scoped the redesign myself. The bar was simple: the experiment needed to perform equal to or better than a traditional video ad. We ran the baseline test on Facebook. In most campaigns, playables matched or outperformed video ads. For deeper funnel events, they performed significantly better.
+        This started as an unfunded experiment, and I scoped it end to end: the one-pager, the success criteria, the redesign. The bar was simple. Beat a traditional video ad. We ran a baseline test on Facebook to check, and in most campaigns playables matched or beat video. Further down the funnel the margin was decisive.
       </p>
 
       <!-- PR1: Early prototype — image left, text right -->
@@ -1794,7 +1794,7 @@
 
       <h3 class="subsection-title">The dual-CTA problem</h3>
       <p class="body-text">
-        The previous experiment's single "Try demo" button had cannibalized conversions. It replaced the install path entirely. The fix: put both "Install now" and "Try demo" in the same ad unit. A dual-CTA model didn't exist on Instagram, so I designed five concepts for how it could work on Reels.
+        Since the earlier single-CTA version had killed the install path, the fix was obvious: put both "Install now" and "Try demo" in the same ad unit. No dual-CTA model existed on Instagram, so I designed five concepts for how it could work on Reels.
       </p>
 
       <!-- Criteria intro — the four trade-off axes -->
@@ -2076,7 +2076,7 @@
       </div>
 
       <p class="body-text">
-        I fought for the mid-scene overlay. Instagram is protective of its surfaces, and getting a new CTA pattern approved on Reels meant a rigorous design review. I anchored the conversation with aggressive concepts first (playables on impression, full-surface takeovers) then presented mid-scene as the measured alternative. It worked.
+        I fought for the mid-scene overlay. Getting a new CTA pattern onto Reels meant a rigorous review, so I anchored the conversation with aggressive concepts first (playables on impression, full-surface takeovers), then presented mid-scene as the measured alternative. It worked.
       </p>
 
       <!-- PR2b: Mid-scene dual CTA pattern explorations -->
@@ -2102,7 +2102,7 @@
       </div>
 
       <p class="body-text">
-        Playable ads shipped across Facebook and Instagram (Feed, Stories, and Reels) on iOS and Android. I'm oversimplifying it here, but this meant running design reviews with both Facebook and Instagram while collaborating with format owners on every single surface: Reels, Feed, and Stories.
+        Shipping meant winning a separate design review for every surface across both apps, working with each format owner in turn. iOS and Android each needed their own solution.
       </p>
 
       <!-- E1: Happy path — full width -->
@@ -2116,7 +2116,7 @@
 
       <h3 class="subsection-title">Designing Android's SKOverlay from scratch</h3>
       <p class="body-text">
-        Android has no native equivalent of Apple's SKOverlay, so I designed one. Same goal (app metadata, ratings, one-tap install without leaving the ad) but built from scratch to feel native to a platform that doesn't have this convention. This work opened up a new collaboration with Google to build a native Android floating CTA, so users can download directly from the hovercard without leaving the ad.
+        Android has no equivalent of Apple's SKOverlay, so I designed one. Same goal (app metadata, ratings, one-tap install) but built from scratch for a platform without the convention. The work got Google involved; they started building a native Android version of the floating CTA, so users could install straight from the hovercard.
       </p>
 
       <!-- E2: iOS vs Android — SKOverlay comparison -->
@@ -2170,14 +2170,14 @@
       </div>
 
       <p class="body-text">
-        Advertisers adopted the format immediately. They were already producing playable assets for AppLovin, so running them on Meta required no additional creative production. It also opened a path beyond gaming into e-commerce and other app verticals where demoing the experience before download reduces the barrier to install.
+        Advertisers adopted the format immediately. They were already producing playable assets for AppLovin, so running them on Meta required no additional creative production. It also opened a path beyond gaming into e-commerce and other app verticals, anywhere letting people try the thing first makes the download feel less of a gamble.
       </p>
       <p class="body-text">
-        Two people and a prototype turned into a pitch that landed the format on every major surface: Feed, Stories, and Reels on both Instagram and Facebook. It secured a dedicated team and a fully funded roadmap within App & Gaming Monetization.
+        Two people and a prototype turned into a pitch that put the format live across both apps, won a dedicated team, and secured a fully funded roadmap within App & Gaming Monetization.
       </p>
 
       <div class="callout">
-        <p class="callout__text">"The highest-leverage move on this project had nothing to do with polishing screens. I got a rough, working prototype in front of leadership while the idea was still cheap to kill, and that's what got it funded."</p>
+        <p class="callout__text">"The thing that actually moved this forward had nothing to do with polishing screens. I got a rough, working prototype in front of leadership while the idea was still cheap to kill, and that's what got it funded."</p>
       </div>
 
     </section>
