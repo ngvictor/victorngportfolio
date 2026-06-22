@@ -479,6 +479,20 @@
       scroll-margin-top: var(--header-height);
     }
 
+    /* Alternating full-bleed section bands */
+    .cs-section--band { position: relative; z-index: 0; }
+    .cs-section--band::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      top: -60px;
+      bottom: -60px;
+      background: #eee9e0;
+      z-index: -1;
+    }
+
     .cs-section__header {
       margin-bottom: 48px;
       padding-bottom: 32px;
@@ -1487,6 +1501,11 @@
       .case-wrapper { padding: calc(var(--header-height) + 40px) 24px 80px; }
       .top-nav { padding: 0 24px; }
       .cs-hero__title { font-size: 2.5rem; }
+      .cs-section { margin-bottom: 64px !important; }
+      .cs-section--band::before { top: -32px; bottom: -32px; }
+      .cs-section__header { margin-bottom: 28px; padding-bottom: 22px; }
+      .subsection-title { margin-top: 40px !important; }
+      .mobile-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
       .hero-sticky {
         min-height: 70vh;
         position: static;
@@ -1666,7 +1685,7 @@
     </section>
 
     <!-- CONTEXT -->
-    <section class="cs-section fade-up" style="margin-bottom: 96px;">
+    <section class="cs-section cs-section--band fade-up" style="margin-bottom: 96px;">
       <div class="ctx-grid" style="border-top: 1px solid var(--border); padding-top: 40px;">
         <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-gold); padding-top: 4px;">Context</div>
         <div style="max-width: 720px;">
@@ -1749,7 +1768,7 @@
 
     
     <!-- 03. CAPABILITIES -->
-    <section class="cs-section fade-up">
+    <section class="cs-section cs-section--band fade-up">
       <div class="cs-section__header">
         <span class="section-label">03. Capabilities</span>
         <h2 class="section-title">Beyond <em>Prompt Engineering</em></h2>
@@ -1924,7 +1943,8 @@
       <p class="body-text" style="margin-bottom: 8px;">I model personas as cognitive states, not demographics. Run the same screen through Marcus and Priya and the criteria flip: one default reads as a power user's frustration and a beginner's relief at the same time. That tension is exactly what product teams have to design around.</p>
       <p style="font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 28px; max-width: 720px;"><em>Marcus's column is from the real Run&nbsp;1 session. Priya's column is a projected read of those same screens through her documented model. It stays illustrative until her session runs.</em></p>
 
-      <div style="display: grid; grid-template-columns: 1.05fr 1fr 1fr; font-family: var(--sans); font-size: 0.82rem; border: 1px solid var(--border); border-radius: 14px; overflow: hidden;">
+      <div class="mobile-scroll">
+      <div style="display: grid; grid-template-columns: 1.05fr 1fr 1fr; min-width: 540px; font-family: var(--sans); font-size: 0.82rem; border: 1px solid var(--border); border-radius: 14px; overflow: hidden;">
         <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border);">Real screen (Run 1)</div>
         <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border);">Enterprise Marcus <span style="font-weight: 500; color: var(--ink-muted);">· measured</span></div>
         <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border);">First Time Priya <span style="font-weight: 500; color: var(--accent-gold);">· projected</span></div>
@@ -1940,6 +1960,7 @@
         <div style="padding: 16px; color: var(--ink); font-weight: 500;">Unconnected app, click does nothing</div>
         <div style="padding: 16px; color: var(--ink-secondary);"><strong style="color: var(--accent-gold);">Friction</strong>. Knows to leave and use the App Dashboard.</div>
         <div style="padding: 16px; color: var(--ink-secondary);"><strong style="color: #c0392b;">Dead end</strong>. The most likely abandonment point in the flow.</div>
+      </div>
       </div>
 
       <div class="callout" style="margin-top: 28px;">
@@ -2055,7 +2076,8 @@
       <div class="subsection-title" style="margin-top: 64px;">Why the system beats a manual pass</div>
       <p class="body-text">A single report was never the goal. I wanted a system that runs the same way every time, faster, and catches what a tired tester on one platform would miss, like the cross platform bugs it caught running iOS and Android back to back.</p>
 
-      <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; font-family: var(--sans); font-size: 0.82rem; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin: 32px 0 14px;">
+      <div class="mobile-scroll" style="margin: 32px 0 14px;">
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; min-width: 560px; font-family: var(--sans); font-size: 0.82rem; border: 1px solid var(--border); border-radius: 14px; overflow: hidden;">
         <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border);">Dimension</div>
         <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 9px;"><span style="flex:0 0 auto; width:8px; height:8px; border-radius:50%; background:#e0a52e;"></span>Manual</div>
         <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 9px;"><span style="flex:0 0 auto; width:8px; height:8px; border-radius:50%; background:#2f9e5e;"></span>AI driven</div>
@@ -2084,6 +2106,7 @@
         <div style="padding: 14px 16px; color: var(--ink-secondary); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#e0a52e; margin-top:7px;"></span><span>Varies with the tester</span></div>
         <div style="padding: 14px 16px; color: var(--ink-secondary); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#2f9e5e; margin-top:7px;"></span><span>Identical protocol every run</span></div>
       </div>
+      </div>
 
       <div style="margin-top: 28px; background: var(--surface-card); border: 1px solid var(--border); border-left: 4px solid var(--accent-craft); border-radius: 14px; padding: 32px 36px;">
         <span class="section-label" style="color: var(--accent-craft); margin-bottom: 14px;">What it doesn't replace</span>
@@ -2092,7 +2115,7 @@
     </section>
 
     <!-- 05. PROCESS & ITERATION -->
-    <section class="cs-section fade-up">
+    <section class="cs-section cs-section--band fade-up">
       <div class="cs-section__header">
         <span class="section-label">05. Process</span>
         <h2 class="section-title">Key Design <em>Decisions</em></h2>
@@ -2182,12 +2205,39 @@
       <div class="subsection-title" style="margin-top: 56px;">One fix, end to end</div>
       <p class="body-text" style="margin-bottom: 28px;">A usability pass flagged the Attribution model field in ad set settings: an always-visible dropdown adding clutter to an already dense page, out of step with neighboring fields like Performance goal that stay collapsed until you need them. I converted it to the same progressive disclosure pattern, a read-only summary that expands to the full selector on click, then shipped it. An engineer reviewed the diff before it landed.</p>
 
-      <figure style="margin: 0;">
-        <div style="border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--surface); box-shadow: 0 18px 50px -30px rgba(0,0,0,0.45);">
-          <img src="assets/images/projects/ai-workflows/ai-workflows-shipped-diff.png" alt="A committed code diff converting the Attribution model field to a progressive disclosure accordion, with summary, test plan, and before/after screenshots" style="display: block; width: 100%; height: auto;">
+      <!-- Committed diff proof -->
+      <figure style="margin: 0 0 24px; max-width: 720px;">
+        <div style="border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); box-shadow: 0 12px 36px -24px rgba(0,0,0,0.4);">
+          <img src="assets/images/projects/ai-workflows/ai-workflows-fix-diff.png" alt="The committed diff: Convert Attribution model to progressive disclosure pattern, plus 157 minus 87" style="display: block; width: 100%; height: auto;">
         </div>
-        <figcaption style="font-family: var(--sans); font-size: 0.8rem; color: var(--ink-muted); margin-top: 12px; line-height: 1.5; max-width: 760px;">The actual diff: committed, tested, and reviewed. A flagged usability issue going all the way to production code I wrote myself, one of the frontend fixes I shipped that week.</figcaption>
+        <figcaption style="font-family: var(--sans); font-size: 0.8rem; color: var(--ink-muted); margin-top: 12px; line-height: 1.5; max-width: 760px;">Committed and reviewed. A flagged usability issue going all the way to production code, written and shipped by the person who caught it.</figcaption>
       </figure>
+
+      <!-- Before / After UI -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; align-items: start; max-width: 720px;">
+        <!-- BEFORE -->
+        <div style="border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--surface);">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid var(--border); background: rgba(217,48,37,0.04);">
+            <span style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #c0392b;">Before</span>
+            <span style="font-size: 0.72rem; color: var(--ink-muted);">Always-visible dropdown</span>
+          </div>
+          <div style="padding: 18px;">
+            <img src="assets/images/projects/ai-workflows/ai-workflows-fix-before.png" alt="Attribution model shown as an always-visible dropdown in ad set settings" style="display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border);">
+            <p style="font-size: 0.8rem; color: var(--ink-muted); margin: 14px 0 0; line-height: 1.5;">Open by default, adding height to an already long page.</p>
+          </div>
+        </div>
+        <!-- AFTER -->
+        <div style="border: 1px solid var(--accent-craft); border-radius: 16px; overflow: hidden; background: var(--surface); box-shadow: 0 8px 28px -16px rgba(44,74,62,0.45);">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid var(--border); background: rgba(44,74,62,0.05);">
+            <span style="font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-craft);">After &middot; shipped</span>
+            <span style="font-size: 0.72rem; color: var(--ink-muted);">Progressive disclosure</span>
+          </div>
+          <div style="padding: 18px;">
+            <img src="assets/images/projects/ai-workflows/ai-workflows-fix-after.png" alt="Attribution model collapsed to a read-only summary that expands on click" style="display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border);">
+            <p style="font-size: 0.8rem; color: var(--ink-muted); margin: 14px 0 0; line-height: 1.5;">Collapses to a read-only summary, matching the Performance goal field. Expands to the full selector on click.</p>
+          </div>
+        </div>
+      </div>
 
       <p class="body-text" style="margin-top: 40px;">The system now runs the same way for our team dogfooding sessions. The agent handles detection, I handle verification and fixes, and an engineer handles review. The whole design to ship cycle dropped by half.</p>
 
@@ -2198,7 +2248,7 @@
     </section>
 
     <!-- 07. REFLECTION -->
-    <section class="cs-section fade-up">
+    <section class="cs-section cs-section--band fade-up">
       <div class="cs-section__header">
         <span class="section-label">07. Reflection</span>
         <h2 class="section-title">What I'd Watch, and <em>Where It Goes</em></h2>
