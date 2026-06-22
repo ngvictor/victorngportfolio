@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Victor Ng — Product Designer</title>
-  <meta name="description" content="Victor Ng is a Senior Product Designer with a background in consulting, now based in London. Portfolio featuring work at Meta across Ads Monetization, AI Workflows, VR Experiences, and more.">
+  <meta name="description" content="Victor Ng is a Product Designer with a background in consulting, now based in London. Portfolio featuring work at Meta across Ads Monetization, AI Workflows, VR Experiences, and more.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Victor Ng — Product Designer">
-  <meta property="og:description" content="Senior Product Designer with a background in consulting, now based in London. Currently shaping ad experiences and AI-native workflows at Meta.">
+  <meta property="og:description" content="Product Designer with a background in consulting, now based in London. Currently shaping ad experiences and AI-native workflows at Meta.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Victor Ng — Product Designer">
-  <meta name="twitter:description" content="Senior Product Designer based in London.">
+  <meta name="twitter:description" content="Product Designer based in London.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Permanent+Marker&display=swap" rel="stylesheet">
@@ -1661,6 +1661,99 @@
         grid-template-columns: 1fr;
       }
 
+      /* ---- Mobile ceramics: flat full-width slideshow ---- */
+      .ceramics__carousel {
+        display: flex !important;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
+        height: auto !important;
+        perspective: none;
+        margin-top: 20px;
+        margin-bottom: 0;
+        overflow: visible;
+      }
+      /* Track takes full width on its own row */
+      .ceramics__carousel-track {
+        flex: 0 0 100%;
+        position: relative;
+        height: 72vw;
+        max-height: 320px;
+        width: 100%;
+      }
+      /* Slides: stacked, show only active via opacity */
+      .ceramics__slide {
+        position: absolute !important;
+        inset: 0;
+        width: 100% !important;
+        transform: none !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: opacity 0.4s ease !important;
+      }
+      .ceramics__slide.is-active {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      /* Override collapsed nth-child peek */
+      .ceramics__slide:nth-child(1),
+      .ceramics__slide:nth-child(2) {
+        opacity: 0 !important;
+        transform: none !important;
+        left: auto !important; right: auto !important;
+      }
+      .ceramics__slide.is-active:nth-child(1),
+      .ceramics__slide.is-active:nth-child(2) {
+        opacity: 1 !important;
+      }
+      .ceramics__slide-img {
+        aspect-ratio: 4/5;
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+      .ceramics__slide-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 8px;
+        background: rgba(245,243,239,0.92);
+      }
+      /* Controls row: prev | dots | next */
+      .ceramics__nav {
+        position: relative !important;
+        top: auto !important; left: auto !important; right: auto !important;
+        transform: none !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        flex-shrink: 0;
+        margin-top: 10px;
+      }
+      .ceramics__nav--prev { order: 1; }
+      .ceramics__dots {
+        order: 2;
+        flex: 1;
+        opacity: 1 !important;
+        margin-top: 10px;
+        justify-content: center;
+      }
+      .ceramics__nav--next { order: 3; }
+
+      /* Move the site link below the subtitle on mobile */
+      .ceramics__arrow {
+        position: relative;
+        top: auto; right: auto;
+        display: inline-flex;
+        align-self: flex-start;
+        margin-bottom: 16px;
+      }
+      .ceramics__card-inner {
+        display: flex;
+        flex-direction: column;
+      }
+
       .floating-nav {
         bottom: 16px;
         padding: 7px 7px;
@@ -2061,18 +2154,17 @@
       .tl-desc { font-size: 0.75rem; text-align: left; }
     }
 
-    @media (hover: none), (pointer: coarse) {
-      .tl-tile:hover { transform: rotate(-30deg) skew(25deg) translate(0,0); box-shadow: -20px 20px 10px rgba(0,0,0,0.1); background: #fff; }
-      .tl-tile:hover .tl-tile__front { opacity: 1; }
-      .tl-tile:hover .tl-tile__back { opacity: 0; }
-      .tl-tile:hover::before { background: #d5d2cd; }
-      .tl-tile:hover::after { background: #c8c5c0; }
-      .tl-tile:hover ~ .tl-dot { transform: translateX(-50%) scale(1); background: #d3cfc7; }
-      .tl-node.is-flipped .tl-tile { transform: rotate(-8deg) skew(4deg) translate(20px,-15px); box-shadow: -30px 30px 40px rgba(0,0,0,0.18); background: var(--brand, #444); }
-      .tl-node.is-flipped .tl-tile__front { opacity: 0; }
-      .tl-node.is-flipped .tl-tile__back { opacity: 1; transition-delay: 0.15s; }
-      .tl-node.is-flipped .tl-tile::before { background: var(--brand-dk, #333); }
-      .tl-node.is-flipped .tl-tile::after { background: var(--brand-lt, #666); }
+    /* Touch/mobile: flat tap-to-reveal (no 3D skew — looks broken on mobile layout) */
+    @media (max-width: 768px) {
+      .tl-tile:hover { transform: none !important; box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important; background: transparent !important; }
+      .tl-tile:hover .tl-tile__front { opacity: 1 !important; }
+      .tl-tile:hover .tl-tile__back { opacity: 0 !important; }
+      .tl-tile:hover::before, .tl-tile:hover::after { display: none !important; }
+      /* Tapped state: show description in-place */
+      .tl-node.is-flipped .tl-tile { transform: none !important; box-shadow: 0 4px 20px rgba(0,0,0,0.12) !important; background: var(--brand, #444) !important; }
+      .tl-node.is-flipped .tl-tile__front { opacity: 0 !important; }
+      .tl-node.is-flipped .tl-tile__back { opacity: 1 !important; transition-delay: 0.1s; }
+      .tl-node.is-flipped .tl-tile::before, .tl-node.is-flipped .tl-tile::after { display: none !important; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2236,7 +2328,7 @@
       </div>
       <div class="header__center">
         <div class="header__name">Victor Ng</div>
-        <div class="header__role">Senior Product Designer</div>
+        <div class="header__role">Product Designer</div>
         <div class="header__location">London, United Kingdom</div>
       </div>
       <div class="header__right">
@@ -2734,15 +2826,16 @@
       var active = 0;
       var expanded = false;
 
+      function isMobile() { return window.innerWidth <= 768; }
+
       function layoutArc() {
         slides.forEach(function (slide, i) {
           var offset = i - active;
-          // Arc geometry: each step gets rotation + horizontal shift + depth
-          var rotate   = offset * 8;           // degrees of tilt per step
-          var translateX = offset * 230;        // px horizontal spread (slides doubled in size)
-          var translateZ = -Math.abs(offset) * 60;  // push non-active cards back
-          var scale    = offset === 0 ? 1 : 0.85;
-          var opacity  = Math.abs(offset) > 2 ? 0 : 1;
+          var rotate     = offset * 8;
+          var translateX = offset * 230;
+          var translateZ = -Math.abs(offset) * 60;
+          var scale      = offset === 0 ? 1 : 0.85;
+          var opacity    = Math.abs(offset) > 2 ? 0 : 1;
 
           slide.style.transform =
             'translateX(' + translateX + 'px) ' +
@@ -2752,24 +2845,37 @@
           slide.style.opacity = opacity;
           slide.style.zIndex  = total - Math.abs(offset);
 
-          if (offset === 0) {
-            slide.classList.add('is-active');
-          } else {
-            slide.classList.remove('is-active');
-          }
+          if (offset === 0) slide.classList.add('is-active');
+          else              slide.classList.remove('is-active');
         });
 
         dots.forEach(function (dot, i) {
-          if (i === active) {
-            dot.classList.add('is-active');
-          } else {
-            dot.classList.remove('is-active');
-          }
+          if (i === active) dot.classList.add('is-active');
+          else              dot.classList.remove('is-active');
         });
       }
 
-      function layoutCollapsed() {
+      function layoutFlat() {
         slides.forEach(function (slide, i) {
+          slide.style.transform = '';
+          slide.style.opacity   = '';
+          slide.style.zIndex    = '';
+          if (i === active) slide.classList.add('is-active');
+          else              slide.classList.remove('is-active');
+        });
+        dots.forEach(function (dot, i) {
+          if (i === active) dot.classList.add('is-active');
+          else              dot.classList.remove('is-active');
+        });
+      }
+
+      function layout() {
+        if (isMobile()) layoutFlat();
+        else            layoutArc();
+      }
+
+      function layoutCollapsed() {
+        slides.forEach(function (slide) {
           slide.style.transform = '';
           slide.style.opacity   = '';
           slide.style.zIndex    = '';
@@ -2781,7 +2887,7 @@
         if (expanded) return;
         expanded = true;
         card.classList.add('is-expanded');
-        layoutArc();
+        layout();
       }
 
       function collapse() {
@@ -2793,13 +2899,15 @@
 
       function goTo(index) {
         active = ((index % total) + total) % total;
-        layoutArc();
+        layout();
       }
 
-      // Hover to expand
-      card.addEventListener('mouseenter', function () {
+      // Auto-expand on mobile; hover-to-expand on desktop
+      if (isMobile()) {
         expand();
-      });
+      } else {
+        card.addEventListener('mouseenter', function () { expand(); });
+      }
 
       // Note: scroll-to-collapse was removed — it felt broken/jumpy
       // (layout shift from expanding nudges window.scrollY, which kept
