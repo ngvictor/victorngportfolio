@@ -1817,7 +1817,7 @@
           </div>
         </div>
 
-        <div style="text-align: center; color: var(--ink-faint); font-size: 1.1rem; line-height: 1; margin: 12px 0;">&darr;</div>
+        <div style="text-align: center; color: var(--accent-gold); font-size: 1.3rem; line-height: 1; margin: 12px 0;">&darr;</div>
 
         <!-- Output types -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px;">
@@ -1955,6 +1955,14 @@
       </div>
 
       <p class="body-text">For its first production run, the agent took <strong>Enterprise Marcus</strong> through the full App Promotion flow on iOS and Android, back to back, in about 90 minutes. One pass surfaced 18 issues, including things our manual sessions had been walking past. A few mattered enough to show here; the point is how many it caught, and how fast.</p>
+
+      <!-- Artifact: the agent running live -->
+      <figure style="margin: 32px 0 40px;">
+        <div style="border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--surface-raised); box-shadow: 0 18px 50px -30px rgba(0,0,0,0.45);">
+          <img src="assets/images/projects/ai-workflows/ai-workflows-agent-live.png" alt="The agent narrating its CAPTURE and EVALUATE reasoning as Enterprise Marcus in the terminal while driving live Ads Manager in the browser" style="display: block; width: 100%; height: auto;">
+        </div>
+        <figcaption style="font-family: var(--sans); font-size: 0.8rem; color: var(--ink-muted); margin-top: 12px; line-height: 1.5; max-width: 760px;">The agent mid-run. On the left it narrates the CAPTURE &rarr; EVALUATE loop in Marcus's voice (&ldquo;where is the conversion location picker?&rdquo;); on the right it's driving the real Ads Manager campaign setup. Every issue it files comes out of a live session like this one.</figcaption>
+      </figure>
 
       <!-- Session summary strip -->
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin: 32px 0 40px;">
@@ -2112,23 +2120,16 @@
 └── <span class="code-fn">dogfood-connect.sh</span>    <span class="code-cm"># Drives live Ads Manager via Chrome DevTools Protocol</span></div>
       </div>
 
-      <div class="split split--text-left">
-        <div class="split__text">
-          <div style="background: var(--surface-raised); border-left: 3px solid var(--accent-gold); padding: 24px; margin-bottom: 32px; border-radius: 0 12px 12px 0;">
-            <h3 style="font-family: var(--sans); font-size: 1.1rem; color: var(--ink); margin-bottom: 12px;">Iteration: Two Personas, Not Three</h3>
-            <p class="body-text" style="margin-bottom: 0; font-size: 1rem;">
-              I started with three personas. Testing showed the middle "agency" persona was producing overlapping noise rather than distinct findings, so I cut it to two extreme archetypes: First Time Priya (catches onboarding gaps) and Enterprise Marcus (catches power user friction). Two clear voices gave far cleaner signal than three that overlapped.
-            </p>
-          </div>
-          
-          <p class="body-text"><strong>App Specific Focus Areas</strong><br>I spelled out the areas the agent has to inspect (Objective selection, App selection, SKAdNetwork). Without that, it just evaluates whatever is most visually prominent. This keeps the attention on the surfaces our team actually owns.</p>
-          <p class="body-text"><strong>Reused Infrastructure</strong><br>I reused the browser setup flow, the quality and usability scoring frameworks, report templates, and task creation flow from a previous Playables skill. The differentiation is in the evaluation focus, not the tooling.</p>
+      <div style="max-width: 820px;">
+        <div style="background: var(--surface-raised); border-left: 3px solid var(--accent-gold); padding: 24px; margin-bottom: 32px; border-radius: 0 12px 12px 0;">
+          <h3 style="font-family: var(--sans); font-size: 1.1rem; color: var(--ink); margin-bottom: 12px;">Iteration: two personas, not three</h3>
+          <p class="body-text" style="margin-bottom: 0; font-size: 1rem;">
+            I started with three personas. Testing showed the middle "agency" persona was producing overlapping noise rather than distinct findings, so I cut it to two extreme archetypes: First Time Priya (catches onboarding gaps) and Enterprise Marcus (catches power user friction). Two clear voices gave far cleaner signal than three that overlapped.
+          </p>
         </div>
-        <div class="split__media">
-          <div class="media-container media-container--tall">
-            <img src="assets/images/projects/ai-workflows/ai-workflows-screenshot-08.png" alt="Architecture Diagram" style="width: 100%; height: 100%; object-fit: cover;">
-          </div>
-        </div>
+
+        <p class="body-text"><strong>App specific focus areas</strong><br>I spelled out the areas the agent has to inspect (Objective selection, App selection, SKAdNetwork). Without that, it just evaluates whatever is most visually prominent. This keeps the attention on the surfaces our team actually owns.</p>
+        <p class="body-text" style="margin-bottom: 0;"><strong>Wired into our codebase</strong><br>Our codebase is connected inside Claude, so I can spin up every app ads flow the agent needs to evaluate, generated straight from the source. That means a usability pass runs against the real states we ship, the full set of screens and edge cases a flow has to cover, not just whatever a test account happens to surface.</p>
       </div>
     </section>
 
