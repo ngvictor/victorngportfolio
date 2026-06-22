@@ -153,6 +153,16 @@
       font-weight: 500;
     }
 
+    .media-caption {
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+      margin: 12px auto 32px;
+      max-width: 820px;
+      text-align: center;
+    }
+
     .subsection-title {
       font-family: var(--sans);
       font-size: 1rem;
@@ -760,6 +770,9 @@
 
     .media-container--inline {
       margin: 40px 0;
+    }
+    .media-container--inline:has(+ .media-caption) {
+      margin-bottom: 0;
     }
 
     .media-placeholder {
@@ -1700,7 +1713,7 @@
         13.6%
       </div>
       <div class="stakes-stat__body">
-        <p>Gaming's share of Meta's app ad revenue, lost in two years. I rebuilt the format that could win it back.</p>
+        <p>Gaming's share of Meta's app ad revenue, lost in two years. Playables were the format to regain that share, and the one Meta hadn't cracked.</p>
       </div>
     </div>
 
@@ -1720,8 +1733,10 @@
           </p>
         </div>
         <!-- C1: Format explainer — pre-click video ad → post-click playable -->
-        <div class="media-container split__media" style="aspect-ratio: 4/3; background: #fff;">
-          <img src="assets/images/projects/playable-ads/C1.png" alt="Pre-click video ad with Try Demo CTA on Instagram Reels, and the post-click HTML playable experience with Install Now" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+        <div class="split__media">
+          <div class="media-container" style="aspect-ratio: 4/3; background: #fff;">
+            <img src="assets/images/projects/playable-ads/C1.png" alt="Pre-click video ad with Try Demo CTA on Instagram Reels, and the post-click HTML playable experience with Install Now" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+          </div>
         </div>
       </div>
     </section>
@@ -1750,7 +1765,7 @@
           <div class="media-container media-container--tall" style="background: #fff;">
             <img src="assets/images/projects/playable-ads/P1.png" alt="AppLovin's 3-step flow vs Meta's old single-CTA approach" style="width: 100%; height: 100%; object-fit: contain;">
           </div>
-          <p style="margin: 10px 0 0; font-size: 0.75rem; font-weight: 600; color: var(--ink-muted); letter-spacing: 0.04em; text-transform: uppercase; text-align: center;">Competition: AppLovin</p>
+          <p class="media-caption">AppLovin's three-step funnel: video ad, playable demo, install. Meta's equivalent at the time was a single "Install now" CTA with no demo path.</p>
         </div>
       </div>
 
@@ -1760,6 +1775,7 @@
           <div class="media-container media-container--tall" style="background: #fff;">
             <img src="assets/images/projects/playable-ads/P2.png" alt="Single CTA drop-off diagram: annotated conversion leak" style="width: 100%; height: 100%; object-fit: contain;">
           </div>
+          <p class="media-caption">The single-CTA drop-off diagram. Replacing "Install now" with "Try demo" removed the direct install path and added multiple new exit points.</p>
         </div>
         <div class="split__text">
           <p class="body-text">
@@ -1796,6 +1812,7 @@
           <div class="media-container media-container--tall" style="background: #fff;">
             <img src="assets/images/projects/playable-ads/PR1.png" alt="Early prototype — scrappy Figma Make build used to pitch the format to leadership" style="width:100%;height:100%;object-fit:contain;display:block;">
           </div>
+          <p class="media-caption">Initial experiment on Facebook Feed.</p>
         </div>
         <div class="split__text">
           <p class="body-text">
@@ -2098,11 +2115,13 @@
       <div class="media-container media-container--full media-container--inline" style="background: #fff;">
         <img src="assets/images/projects/playable-ads/PR2b.png" alt="Different mid-scene dual CTA patterns explored for Reels" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
+      <p class="media-caption">Different variants of Dual CTA in mid-scene</p>
 
       <!-- PR3: Before/after — single CTA control vs dual CTA approved -->
       <div class="media-container media-container--full media-container--inline" style="background: #fff;">
         <img src="assets/images/projects/playable-ads/PR3.png" alt="Single CTA control vs dual CTA approved — mobile screens compared" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
+      <p class="media-caption">Before and after. Left: the single-CTA control that removed the install path. Right: the approved dual-CTA design that keeps both options in one ad unit.</p>
 
     </section>
 
@@ -2124,6 +2143,7 @@
       <div class="media-container media-container--full media-container--inline" style="background: #fff; aspect-ratio: 5710/2176;">
         <img src="assets/images/projects/playable-ads/E1.png" alt="End-to-end happy path: Reel, dwell, dual CTA, playable demo, install" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
+      <p class="media-caption">End to End Flow</p>
 
       <p class="body-text">
         The user encounters a video ad with two CTAs: "Install now" for users ready to convert, and "Try demo" for users who want to interact first. Tapping "Try demo" opens the playable, an HTML experience inside Meta's in-app browser, where the user demos the app with a persistent install CTA anchored at the bottom. On iOS, Apple's SKOverlay (a native component that shows basic app metadata) lets users install without leaving the ad.
@@ -2138,6 +2158,7 @@
       <div class="media-container media-container--full media-container--inline" style="background: #fff; aspect-ratio: 3840/1368;">
         <img src="assets/images/projects/playable-ads/E2.png" alt="iOS Apple SKOverlay vs Android custom overlay comparison" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
+      <p class="media-caption">Apple's native SKOverlay component. Android had no equivalent, so I designed one from scratch, this lead to conversations with Google having their own SKOverlay equivalent.</p>
 
       <h3 class="subsection-title">What I cut</h3>
       <p class="body-text">
@@ -2148,6 +2169,7 @@
       <div class="media-container media-container--full media-container--inline" style="background: #fff;">
         <img src="assets/images/projects/playable-ads/E5.png" alt="Rejected concept: playables on impression iterations" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
+      <p class="media-caption">Playables on impression. Rejected.</p>
 
       <p class="body-text">
         Users don't expect an ad to behave like an app. Dropping a game straight into a Reel breaks how people read the surface. That post-click tap matters: it's the moment a user chooses to enter the demo. Take the choice away and the format just feels invasive.
@@ -2208,30 +2230,23 @@
       <div class="tab-bar" role="tablist">
         <button class="tab-btn is-active" role="tab" aria-selected="true" data-tab="tab-browser">Game browser + loading state</button>
         <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-ads-manager">Ads Manager</button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-overlay">SKOverlay — Install overlay</button>
       </div>
 
       <div class="tab-panel is-active" id="tab-browser" role="tabpanel">
         <div class="media-container media-container--full" style="background: #fff;">
           <img src="assets/images/projects/playable-ads/X1.png" alt="In-app browser and loading state for the playable HTML experience" style="width:100%;height:100%;object-fit:contain;display:block;">
         </div>
+        <p class="media-caption">When a user taps "Try demo", the playable loads inside Meta's in-app browser. I designed the loading state to set expectations before the HTML experience renders: progress indicator, game thumbnail, and a short instruction line so users know what they're about to do.</p>
       </div>
 
       <div class="tab-panel" id="tab-ads-manager" role="tabpanel">
         <div class="media-container media-container--full" style="background: #fff;">
           <img src="assets/images/projects/playable-ads/X2.png" alt="Ads Manager flow for uploading playable HTML and configuring campaigns" style="width:100%;height:100%;object-fit:contain;display:block;">
         </div>
+        <p class="media-caption">Advertisers upload their playable as a single HTML file directly in Ads Manager. I designed the upload flow, the preview panel, and the validation states — including error handling for common HTML issues that would break the ad experience at runtime.</p>
       </div>
 
-      <div class="tab-panel" id="tab-overlay" role="tabpanel">
-        <div class="media-container media-container--full">
-          <!-- Replace with: <img src="assets/images/projects/playable-ads/playable-ads-overlay-detail-01.png" alt="Install overlay detail — CTA layering over third-party HTML"> -->
-          <div class="media-placeholder">
-            <span class="media-placeholder__id">X3</span>
-            Install overlay detail: CTA and app metadata layered over dynamic third-party HTML
-          </div>
-        </div>
-      </div>
+
     </div>
 
     <!-- NEXT PROJECT FOOTER -->
