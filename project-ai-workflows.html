@@ -270,7 +270,7 @@
     .hero-term {
       flex: 0 0 auto;
       width: 420px;
-      margin-top: 48px;
+      margin-top: 10px;
       background: #1a1814;
       border: 1px solid rgba(0,0,0,0.10);
       border-radius: 12px;
@@ -629,6 +629,14 @@
     /* One-third / two-thirds */
     .split--narrow-left {
       grid-template-columns: 1fr 2fr;
+    }
+
+    /* Context intro: label rail + prose */
+    .ctx-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 40px;
+      align-items: start;
     }
 
     .split--narrow-right {
@@ -1469,6 +1477,7 @@
       .split--text-right .split__text { order: 1; }
       .split--narrow-left,
       .split--narrow-right { grid-template-columns: 1fr; }
+      .ctx-grid { grid-template-columns: 1fr; gap: 16px; }
       .media-grid { grid-template-columns: 1fr; }
       .primer { grid-template-columns: 1fr; gap: 24px; }
       .metrics-grid { grid-template-columns: 1fr; }
@@ -1589,10 +1598,10 @@
 
     <!-- HERO STAGE -->
     <div class="hero-stage" id="heroStage">
-      <header class="hero-sticky" id="heroSticky" style="min-height: 80vh;">
+      <header class="hero-sticky" id="heroSticky" style="min-height: 66vh;">
         <div class="hero-bg" style="background: var(--surface-card);"></div>
         
-        <div class="hero-content" style="padding-top: 120px;">
+        <div class="hero-content" style="padding-top: 56px;">
           <div class="hero-content__text">
             <div class="hero-content__top">
               <div class="hero-content__left">
@@ -1618,6 +1627,10 @@
               </div>
             </div>
             <div class="metadata-matrix" style="border-top-color: var(--border); border-bottom-color: var(--border);">
+              <div class="meta-item">
+                <span class="meta-item__label" style="color: var(--ink-muted);">Role</span>
+                <span class="meta-item__value" style="color: var(--ink);">Usability Lead / Product Designer</span>
+              </div>
               <div class="meta-item">
                 <span class="meta-item__label" style="color: var(--ink-muted);">Timeline</span>
                 <span class="meta-item__value" style="color: var(--ink);">May 2026</span>
@@ -1654,45 +1667,53 @@
 
     <!-- CONTEXT -->
     <section class="cs-section fade-up" style="margin-bottom: 96px;">
-      <div style="border-top: 1px solid var(--border); padding-top: 40px;">
-        <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 24px;">Context</div>
-        <p class="body-text">On Ads Manager, every team owns a flow. Mine, App &amp; Gaming, owns the experience advertisers use to promote an app. As the team's Usability Lead, I'm responsible for keeping that flow at the highest quality bar in the org.</p>
-        <p class="body-text">That bar is enforced two ways, and both are manual. Internally, my team and our design leads run quarterly dogfooding sessions, testing our own flow the way a customer would. Externally, a central usability team scores every team's flow against a rigorous rubric. Between them, that's the standard I own.</p>
-        <p class="body-text" style="margin-bottom: 0;">Through H1 2026, as designers across the org began adopting AI, I spent the cycle testing tools and asking a sharper question: how could I streamline this entire process for my team, not just speed up a single step of it?</p>
+      <div class="ctx-grid" style="border-top: 1px solid var(--border); padding-top: 40px;">
+        <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-gold); padding-top: 4px;">Context</div>
+        <div style="max-width: 720px;">
+          <p class="body-text">On Ads Manager, every team owns a flow. Mine, App &amp; Gaming, owns the experience advertisers use to promote an app. As the team's Usability Lead, I'm responsible for keeping that flow at the highest quality bar in the org.</p>
+          <p class="body-text">That bar is enforced two ways, and both are manual. Internally, my team and our design leads run quarterly dogfooding sessions, testing our own flow the way a customer would. Externally, a central usability team scores every team's flow against a rigorous rubric. Between them, that's the standard I own.</p>
+          <p class="body-text" style="margin-bottom: 0;">Through H1 2026, as designers across the org began adopting AI, I spent the cycle testing tools and asking a sharper question: how could I streamline this entire process for my team, not just speed up a single step of it?</p>
+        </div>
       </div>
 
-      <!-- Before / after the gap -->
-      <div style="margin-top: 56px;">
-        <!-- Before -->
-        <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 18px;">Before &middot; the manual loop</div>
-        <div style="display: flex; align-items: center; gap: 0; flex-wrap: wrap;">
-          <div style="background: var(--surface-card); border: 1px solid var(--border); color: var(--ink-secondary); font-size: 0.82rem; font-weight: 500; padding: 10px 20px; border-radius: 8px;">Manual dogfood</div>
-          <div style="color: var(--ink-faint); font-size: 1.2rem; padding: 0 12px;">&rarr;</div>
-          <div style="background: var(--surface-card); border: 1px solid var(--border); color: var(--ink-secondary); font-size: 0.82rem; font-weight: 500; padding: 10px 20px; border-radius: 8px;">Task every finding</div>
-          <div style="color: var(--ink-faint); font-size: 1.2rem; padding: 0 12px;">&rarr;</div>
-          <div style="background: var(--surface-card); border: 1px solid var(--border); color: var(--ink-secondary); font-size: 0.82rem; font-weight: 500; padding: 10px 20px; border-radius: 8px;">Prioritization session</div>
-          <div style="color: var(--ink-faint); font-size: 1.2rem; padding: 0 12px;">&rarr;</div>
-          <div style="background: var(--surface-card); border: 1px solid var(--border); color: var(--ink-secondary); font-size: 0.82rem; font-weight: 500; padding: 10px 20px; border-radius: 8px;">Usability roadmap</div>
-          <div style="color: var(--ink-faint); font-size: 1.2rem; padding: 0 12px;">&rarr;</div>
-          <div style="background: transparent; border: 1px dashed rgba(192,57,43,0.5); color: #c0392b; font-size: 0.82rem; font-weight: 500; padding: 10px 20px; border-radius: 8px;">UI fixes cut for bandwidth</div>
+      <!-- Before → After transformation card -->
+      <div style="margin-top: 48px; border: 1px solid var(--border); border-radius: 20px; overflow: hidden;">
+
+        <!-- BEFORE region -->
+        <div style="padding: 30px 34px 34px; background: var(--surface-card);">
+          <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 18px;">Before &middot; the manual loop</div>
+          <div style="display: flex; align-items: center; gap: 0; flex-wrap: wrap; row-gap: 10px;">
+            <div style="background: var(--surface); border: 1px solid var(--border); color: var(--ink-secondary); font-size: 0.82rem; font-weight: 500; padding: 10px 18px; border-radius: 8px;">Manual dogfood</div>
+            <div style="color: var(--ink-faint); font-size: 1.2rem; padding: 0 10px;">&rarr;</div>
+            <div style="background: var(--surface); border: 1px solid var(--border); color: var(--ink-secondary); font-size: 0.82rem; font-weight: 500; padding: 10px 18px; border-radius: 8px;">Task every finding</div>
+            <div style="color: var(--ink-faint); font-size: 1.2rem; padding: 0 10px;">&rarr;</div>
+            <div style="background: var(--surface); border: 1px solid var(--border); color: var(--ink-secondary); font-size: 0.82rem; font-weight: 500; padding: 10px 18px; border-radius: 8px;">Prioritization session</div>
+            <div style="color: var(--ink-faint); font-size: 1.2rem; padding: 0 10px;">&rarr;</div>
+            <div style="background: var(--surface); border: 1px solid var(--border); color: var(--ink-secondary); font-size: 0.82rem; font-weight: 500; padding: 10px 18px; border-radius: 8px;">Usability roadmap</div>
+            <div style="color: var(--ink-faint); font-size: 1.2rem; padding: 0 10px;">&rarr;</div>
+            <div style="background: transparent; border: 1px dashed rgba(192,57,43,0.5); color: #c0392b; font-size: 0.82rem; font-weight: 500; padding: 10px 18px; border-radius: 8px;">UI fixes cut for bandwidth</div>
+          </div>
+
+          <div style="margin-top: 24px; border-left: 2px solid var(--accent-gold); padding: 4px 0 4px 22px; max-width: 760px;">
+            <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 8px;">Where it leaks</div>
+            <p class="body-text" style="margin: 0; font-size: 1rem;">Engineering bandwidth is finite, so the "low priority" work, especially small UI fixes, rarely survives prioritization. Those fixes are real usability debt that just never ships. Learning to vibe code as a designer closes that gap. I find the issue, then ship the fix myself.</p>
+          </div>
         </div>
 
-        <div style="margin-top: 28px; border-left: 2px solid var(--accent-gold); background: linear-gradient(90deg, rgba(184,134,11,0.05) 0%, transparent 100%); padding: 22px 28px; max-width: var(--content-narrow);">
-          <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 8px;">Where it leaks</div>
-          <p class="body-text" style="margin: 0;">Engineering bandwidth is finite, so the "low priority" work, especially small UI fixes, rarely survives prioritization. Those fixes are real usability debt that just never ships. Learning to vibe code as a designer closes that gap. I find the issue, then ship the fix myself.</p>
+        <!-- AFTER region -->
+        <div style="padding: 30px 34px 34px; background: linear-gradient(180deg, rgba(44,74,62,0.07), rgba(44,74,62,0.025)); border-top: 1px solid var(--border);">
+          <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-craft); margin-bottom: 18px;">After &middot; with the dogfooding agent</div>
+          <div style="display: flex; align-items: center; gap: 0; flex-wrap: wrap; row-gap: 10px;">
+            <div style="background: var(--surface); border: 1px solid var(--border); color: var(--ink); font-size: 0.82rem; font-weight: 600; padding: 10px 18px; border-radius: 8px;">AI dogfoods both platforms</div>
+            <div style="color: var(--accent-craft); font-size: 1.2rem; padding: 0 10px;">&rarr;</div>
+            <div style="background: var(--surface); border: 1px solid var(--border); color: var(--ink); font-size: 0.82rem; font-weight: 600; padding: 10px 18px; border-radius: 8px;">Findings scored &amp; filed automatically</div>
+            <div style="color: var(--accent-craft); font-size: 1.2rem; padding: 0 10px;">&rarr;</div>
+            <div style="background: var(--accent-craft); border: 1px solid var(--accent-craft); color: #fff; font-size: 0.82rem; font-weight: 600; padding: 10px 18px; border-radius: 8px; box-shadow: 0 6px 18px -8px rgba(44,74,62,0.6);">Quick UI fixes shipped by design</div>
+            <div style="color: var(--accent-craft); font-size: 1.2rem; padding: 0 10px;">&rarr;</div>
+            <div style="background: var(--surface); border: 1px solid var(--border); color: var(--ink); font-size: 0.82rem; font-weight: 600; padding: 10px 18px; border-radius: 8px;">Roadmap holds only the deep work</div>
+          </div>
         </div>
 
-        <!-- After -->
-        <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-craft); margin: 40px 0 18px;">After &middot; with the dogfooding agent</div>
-        <div style="display: flex; align-items: center; gap: 0; flex-wrap: wrap;">
-          <div style="background: var(--surface); border: 1px solid var(--border); color: var(--ink); font-size: 0.82rem; font-weight: 600; padding: 10px 20px; border-radius: 8px;">AI dogfoods both platforms</div>
-          <div style="color: var(--accent-craft); font-size: 1.2rem; padding: 0 12px;">&rarr;</div>
-          <div style="background: var(--surface); border: 1px solid var(--border); color: var(--ink); font-size: 0.82rem; font-weight: 600; padding: 10px 20px; border-radius: 8px;">Findings scored &amp; filed automatically</div>
-          <div style="color: var(--accent-craft); font-size: 1.2rem; padding: 0 12px;">&rarr;</div>
-          <div style="background: var(--accent-craft); border: 1px solid var(--accent-craft); color: #fff; font-size: 0.82rem; font-weight: 600; padding: 10px 20px; border-radius: 8px;">Quick UI fixes shipped by design</div>
-          <div style="color: var(--accent-craft); font-size: 1.2rem; padding: 0 12px;">&rarr;</div>
-          <div style="background: var(--surface); border: 1px solid var(--border); color: var(--ink); font-size: 0.82rem; font-weight: 600; padding: 10px 20px; border-radius: 8px;">Roadmap holds only the deep work</div>
-        </div>
       </div>
     </section>
 
@@ -1703,25 +1724,25 @@
         <h2 class="section-title">Automating <em>UX Evaluation</em></h2>
       </div>
 
-      <div class="split split--text-left">
-        <div class="split__text">
-          <p class="body-text" style="font-size: 1.25rem; font-weight: 500; color: var(--ink);">
-            Most of this work lived in systems design, cognitive modeling, and service design, not in Figma.
-          </p>
-          <p class="body-text">
-            <strong>Eliminate inconsistency.</strong> Manual dogfooding (testing our own product the way a customer would) varies wildly from tester to tester. I designed a structured CAPTURE → EVALUATE → ACT protocol that evaluates the same surfaces, with the same rigor, every time.
-          </p>
-          <p class="body-text">
-            <strong>Scale coverage.</strong> One person can now run several sessions a day across different personas and platforms, each one producing a structured report where every issue is already graded against Meta's product quality rubric. What used to take a week takes an afternoon.
-          </p>
-          <p class="body-text">
-            <strong>Embed the user's perspective.</strong> The skill doesn't just check whether things work. It plays the part of specific advertiser archetypes, catching confusing defaults, jargon, and missing controls that functional testing walks right past.
-          </p>
+      <p class="body-text" style="font-size: 1.25rem; font-weight: 500; color: var(--ink); max-width: 760px;">
+        Most of this work lived in systems design, cognitive modeling, and service design, not in Figma.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 40px;">
+        <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px;">
+          <div style="font-family: var(--sans); font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 14px;">01</div>
+          <h3 style="font-family: var(--sans); font-size: 1.05rem; font-weight: 600; color: var(--ink); margin: 0 0 10px;">Eliminate inconsistency</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6; margin: 0;">Manual dogfooding (testing our own product the way a customer would) varies wildly from tester to tester. I designed a structured CAPTURE → EVALUATE → ACT protocol that evaluates the same surfaces, with the same rigor, every time.</p>
         </div>
-        <div class="split__media">
-          <div class="media-container media-container--tall">
-             <img src="assets/images/projects/ai-workflows/ai-workflows-screenshot-01.png" alt="AI Agent Setup" style="width: 100%; height: 100%; object-fit: cover;">
-          </div>
+        <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px;">
+          <div style="font-family: var(--sans); font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 14px;">02</div>
+          <h3 style="font-family: var(--sans); font-size: 1.05rem; font-weight: 600; color: var(--ink); margin: 0 0 10px;">Scale coverage</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6; margin: 0;">One person can now run several sessions a day across different personas and platforms, each one producing a structured report where every issue is already graded against Meta's product quality rubric. What used to take a week takes an afternoon.</p>
+        </div>
+        <div style="background: var(--surface-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px;">
+          <div style="font-family: var(--sans); font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 14px;">03</div>
+          <h3 style="font-family: var(--sans); font-size: 1.05rem; font-weight: 600; color: var(--ink); margin: 0 0 10px;">Embed the user's perspective</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6; margin: 0;">The skill doesn't just check whether things work. It plays the part of specific advertiser archetypes, catching confusing defaults, jargon, and missing controls that functional testing walks right past.</p>
         </div>
       </div>
     </section>
@@ -1734,11 +1755,13 @@
         <h2 class="section-title">Beyond <em>Prompt Engineering</em></h2>
       </div>
 
-      <p class="body-text" style="max-width: 800px; margin-bottom: 24px;"><strong>AI Fluency: Directing the LLM</strong><br>Building this took working out how to hand an LLM a long task full of judgment calls. The prompts keep the agent in character for a whole session, get it to tell bugs apart from design problems, and stop it falling back on lazy AI habits like defaulting to "add a tooltip".</p>
-      
-      <p class="body-text" style="max-width: 800px; margin-bottom: 48px;"><strong>Automating Workflows That Require Human Judgment</strong><br>Everyone assumes UX evaluation needs a human and resists automation. I pulled "judgment" apart into concrete questions a model can actually check: "Can the persona tell what this page is for? Do they know what to do next? Does the language match their technical level?"</p>
+      <div style="max-width: 800px; margin-bottom: 56px;">
+        <p class="body-text" style="margin-bottom: 32px;"><strong style="display: block; font-size: 1.05rem; margin-bottom: 6px;">Directing the LLM</strong>Building this meant handing an LLM a long task full of judgment calls and getting consistent results. The prompts keep the agent in character for a whole session, get it to tell bugs apart from design problems, and stop it reaching for lazy AI habits like defaulting to "add a tooltip".</p>
 
-      <p class="body-text" style="max-width: 800px; margin-bottom: 48px;"><strong>Grounded in Internal Design Knowledge</strong><br>The personas and the rubric weren't invented from scratch. I distilled them from Meta's own design system, encoding three internal frameworks into the agent's prompt: the <strong>Product Quality Scorecard</strong> (PQS), Meta's rubric for grading UX quality; the <strong>Usability Playbook</strong> (UPB), a 0 to 100 usability score; and our team's app promotion pattern docs. The agent now grades against the same standards a designer on my team would. The hard part was the translation: taking design judgment that usually lives in people's heads and writing it down as an explicit system an LLM can run the same way every session.</p>
+        <p class="body-text" style="margin-bottom: 32px;"><strong style="display: block; font-size: 1.05rem; margin-bottom: 6px;">Automating a task everyone thinks needs a human</strong>UX evaluation is assumed to need a person in the loop. I broke "judgment" down into concrete questions a model can actually check: can the persona tell what this page is for? Do they know what to do next? Does the language match their technical level?</p>
+
+        <p class="body-text" style="margin-bottom: 0;"><strong style="display: block; font-size: 1.05rem; margin-bottom: 6px;">Grounded in internal design knowledge</strong>The personas and the rubric weren't invented from scratch. I distilled them from Meta's own design system, encoding its evaluation frameworks into the agent's prompt: the <strong>Product Quality Scorecard</strong> (PQS), Meta's rubric for grading UX quality; the <strong>Usability Playbook</strong> (UPB), a 0 to 100 usability score; and our team's app promotion pattern docs. The agent now grades against the same standards a designer on my team would. The hard part was the translation: taking design judgment that usually lives in people's heads and writing it down as an explicit system an LLM can run the same way every session.</p>
+      </div>
 
       <!-- Synthesis Diagram: internal frameworks → the agent -->
       <div style="border: 1px solid var(--border); border-radius: 20px; background: var(--surface-raised); padding: 40px 40px 44px; margin-bottom: 56px;">
@@ -1803,15 +1826,14 @@
       </div>
 
       <!-- Side-by-Side Agent Personas -->
-      <div class="media-container media-container--full" style="background: var(--surface-raised); padding: 48px; border-radius: 16px;">
-        <div style="display: flex; gap: 32px; flex-wrap: wrap;">
+      <div class="media-container media-container--full" style="aspect-ratio: auto; background: var(--surface-raised); padding: 48px; border-radius: 16px;">
+        <div style="display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start;">
           
           <!-- Priya -->
           <div style="flex: 1; min-width: 300px;">
             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-              <div style="width: 48px; height: 48px; border-radius: 50%; background: #e6e4e0; display: flex; align-items: center; justify-content: center;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              </div>
+              <img src="assets/images/projects/ai-workflows/from%20persona/priya.png" alt="First Time Priya" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;">
+
               <div>
                 <div style="font-weight: 600; font-family: var(--sans); font-size: 1.05rem; color: var(--ink); letter-spacing: -0.01em;">First Time Priya</div>
                 <div style="font-size: 0.85rem; color: var(--ink-secondary);">Small Business Owner</div>
@@ -1844,9 +1866,8 @@
           <!-- Marcus -->
           <div style="flex: 1; min-width: 300px;">
             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-              <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--ink); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.15);">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--surface)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              </div>
+              <img src="assets/images/projects/ai-workflows/from%20persona/marcus.png" alt="Enterprise Marcus" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex: 0 0 auto; box-shadow: 0 8px 24px rgba(0,0,0,0.15);">
+
               <div>
                 <div style="font-weight: 600; font-family: var(--sans); font-size: 1.05rem; color: var(--ink); letter-spacing: -0.01em;">Enterprise Marcus</div>
                 <div style="font-size: 0.85rem; color: var(--ink-secondary);">Senior UA Manager ($2M+/mo)</div>
@@ -1921,7 +1942,6 @@
         <div style="background: var(--surface); padding: 18px 20px;"><div style="font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 6px;">Flow</div><div style="font-size: 0.9rem; font-weight: 500; color: var(--ink);">E2E App Promotion</div></div>
         <div style="background: var(--surface); padding: 18px 20px;"><div style="font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 6px;">Platforms</div><div style="font-size: 0.9rem; font-weight: 500; color: var(--ink);">iOS + Android</div></div>
         <div style="background: var(--surface); padding: 18px 20px;"><div style="font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 6px;">Duration</div><div style="font-size: 0.9rem; font-weight: 500; color: var(--ink);">~90 minutes</div></div>
-        <div style="background: var(--surface); padding: 18px 20px;"><div style="font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 6px;">Date</div><div style="font-size: 0.9rem; font-weight: 500; color: var(--ink);">2026-05-13</div></div>
       </div>
 
       <!-- Scoreboard -->
@@ -1949,7 +1969,7 @@
             <p style="font-size: 0.875rem; color: var(--ink-secondary); margin-bottom: 16px; line-height: 1.5;">Enterprise advertisers cannot configure their iOS measurement strategy. SKAdNetwork is Apple's privacy era system for measuring app installs, so wrong defaults quietly degrade campaign reporting. At $2M+/month, that is real measurement risk.</p>
             <div style="background: var(--surface-raised); padding: 16px; border-left: 3px solid var(--accent-gold);">
               <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 10px;">
-                <span style="flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); display: inline-flex; align-items: center; justify-content: center;" data-persona-avatar="marcus"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                <img src="assets/images/projects/ai-workflows/from%20persona/marcus.png" alt="Enterprise Marcus" style="flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
                 <span style="font-size: 0.8rem; font-weight: 600; color: var(--ink);">Enterprise Marcus</span>
               </div>
               <p style="font-style: italic; font-size: 0.875rem; color: var(--ink); line-height: 1.6; margin: 0;">"I scrolled through the entire ad set for my iOS campaign. Where is SKAdNetwork? My entire iOS strategy depends on getting the conversion schema right. If the system is making SKAN decisions for me, I need to know what those decisions are."</p>
@@ -1967,7 +1987,7 @@
             <p style="font-size: 0.875rem; color: var(--ink-secondary); margin-bottom: 16px; line-height: 1.5;">After selecting an app at the ad set level, the ad level shows an error warning: "multiple apps that can't be edited together." This is a flow breaking bug that blocks Android campaign creation.</p>
             <div style="background: var(--surface-raised); padding: 16px; border-left: 3px solid var(--accent-gold);">
               <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 10px;">
-                <span style="flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); display: inline-flex; align-items: center; justify-content: center;" data-persona-avatar="marcus"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                <img src="assets/images/projects/ai-workflows/from%20persona/marcus.png" alt="Enterprise Marcus" style="flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
                 <span style="font-size: 0.8rem; font-weight: 600; color: var(--ink);">Enterprise Marcus</span>
               </div>
               <p style="font-style: italic; font-size: 0.875rem; color: var(--ink); line-height: 1.6; margin: 0;">"I selected one app on Google Play. Now the ad level says I have 'multiple apps that can't be edited together.' And it tells me to go back and select a store that I already selected. This is broken."</p>
@@ -2009,46 +2029,42 @@
 
       <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; font-family: var(--sans); font-size: 0.82rem; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin: 32px 0 14px;">
         <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border);">Dimension</div>
-        <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border);">Manual</div>
-        <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border);">AI driven</div>
+        <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 9px;"><span style="flex:0 0 auto; width:8px; height:8px; border-radius:50%; background:#e0a52e;"></span>Manual</div>
+        <div style="padding: 12px 16px; background: var(--surface-raised); font-weight: 600; color: var(--ink); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 9px;"><span style="flex:0 0 auto; width:8px; height:8px; border-radius:50%; background:#2f9e5e;"></span>AI driven</div>
 
         <div style="padding: 14px 16px; color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--border);">Issues per session</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border);">3–5 typical</div>
-        <div style="padding: 14px 16px; color: var(--ink); font-weight: 600; border-bottom: 1px solid var(--border);"><span style="color: var(--accent-gold);">18</span> (first session)</div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#e0a52e; margin-top:7px;"></span><span>3–5 typical</span></div>
+        <div style="padding: 14px 16px; color: var(--ink); font-weight: 600; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#2f9e5e; margin-top:7px;"></span><span><span style="color: var(--accent-gold);">18</span> (first session)</span></div>
 
         <div style="padding: 14px 16px; color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--border);">Time</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border);">2–3 hrs, one platform</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border);">~90 min, both platforms</div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#e0a52e; margin-top:7px;"></span><span>45 min – 1 hr, not exhaustive across platforms</span></div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#2f9e5e; margin-top:7px;"></span><span>~90 min, full pass on both platforms</span></div>
 
         <div style="padding: 14px 16px; color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--border);">Cross platform bugs</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border);">Rare (needs 2 sessions + a manual diff)</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border);">2, found automatically</div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#e0a52e; margin-top:7px;"></span><span>Rare (needs 2 sessions + a manual diff)</span></div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#2f9e5e; margin-top:7px;"></span><span>2, found automatically</span></div>
 
         <div style="padding: 14px 16px; color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--border);">Output</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border);">Freeform notes</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border);">Structured report, scored &amp; classified</div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#e0a52e; margin-top:7px;"></span><span>Manual table with screenshots</span></div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#2f9e5e; margin-top:7px;"></span><span>Structured report, scored &amp; classified</span></div>
 
         <div style="padding: 14px 16px; color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--border);">Task creation</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border);">Manual copy / tag / attach</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border);">Filed automatically to the board</div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#e0a52e; margin-top:7px;"></span><span>Often deferred, filed later if at all</span></div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#2f9e5e; margin-top:7px;"></span><span>Filed automatically to the board</span></div>
 
         <div style="padding: 14px 16px; color: var(--ink); font-weight: 500;">Consistency</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary);">Varies with the tester</div>
-        <div style="padding: 14px 16px; color: var(--ink-secondary);">Identical protocol every run</div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#e0a52e; margin-top:7px;"></span><span>Varies with the tester</span></div>
+        <div style="padding: 14px 16px; color: var(--ink-secondary); display: flex; align-items: flex-start; gap: 9px;"><span style="flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:#2f9e5e; margin-top:7px;"></span><span>Identical protocol every run</span></div>
       </div>
-      <p style="font-size: 0.8rem; color: var(--ink-muted); max-width: 760px; margin-bottom: 0;"><em>First run figures from a single session; manual baselines reflect the team's prior experience rather than a controlled study. The comparison will firm up as more sessions accrue.</em></p>
+
+      <div style="margin-top: 28px; background: var(--surface-card); border: 1px solid var(--border); border-left: 4px solid var(--accent-craft); border-radius: 14px; padding: 32px 36px;">
+        <span class="section-label" style="color: var(--accent-craft); margin-bottom: 14px;">What it doesn't replace</span>
+        <p style="font-family: var(--serif); font-size: clamp(1.15rem, 1.9vw, 1.5rem); line-height: 1.45; color: var(--ink); max-width: 840px; margin: 0;">The agent isn't a replacement for manual testing. It handles the repetitive parts and hits both platforms every run, so I spend my time on the judgment calls instead of the clicking. A human still catches what it misses, and every issue it flags is still mine to verify.</p>
+      </div>
 
       <!-- Pipeline is wired into real tooling -->
       <div class="subsection-title" style="margin-top: 64px;">It files straight into our tools</div>
-      <p class="body-text">The findings don't stop at a document. Every issue lands as a classified ticket on the team's engineering board, with screenshots attached and a row logged to our tracker. I wired the output into the tools we already use, so triage starts the moment the run ends.</p>
-      <div class="media-grid">
-        <div class="media-item">
-          <img src="assets/images/projects/ai-workflows/ai-workflows-screenshot-06.png" alt="Task filed automatically with metadata" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <div class="media-item">
-          <img src="assets/images/projects/ai-workflows/ai-workflows-screenshot-07.png" alt="Session tracking dashboard" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-      </div>
+      <p class="body-text" style="margin-bottom: 0;">The findings don't stop at a document. Every issue lands as a classified ticket on the team's engineering board, with screenshots attached and a row logged to our tracker. I wired the output into the tools we already use, so triage starts the moment the run ends.</p>
     </section>
 
     <!-- 05. PROCESS & ITERATION -->
