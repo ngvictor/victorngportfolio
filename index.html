@@ -97,8 +97,8 @@
     .site-header {
       padding: 40px 0 36px;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      align-items: start;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
       gap: 24px;
     }
 
@@ -207,34 +207,6 @@
 
     @keyframes avatar-spin {
       to { transform: rotateY(360deg); }
-    }
-
-    .header__center {
-      text-align: center;
-    }
-
-    .header__name {
-      font-family: var(--sans);
-      font-size: 0.9375rem;
-      font-weight: 500;
-      color: var(--ink);
-      letter-spacing: -0.01em;
-    }
-
-    .header__role {
-      font-family: var(--sans);
-      font-size: 0.8125rem;
-      font-weight: 400;
-      color: var(--ink-secondary);
-      margin-top: 2px;
-    }
-
-    .header__location {
-      font-family: var(--sans);
-      font-size: 0.8125rem;
-      font-weight: 400;
-      color: var(--ink-muted);
-      margin-top: 1px;
     }
 
     .header__right {
@@ -1018,7 +990,8 @@
 
     .ceramics__subtitle {
       font-family: var(--sans);
-      font-size: 0.8125rem;
+      font-size: 0.9375rem;
+      line-height: 1.6;
       font-weight: 400;
       color: var(--ink-secondary);
       margin-bottom: 24px;
@@ -1631,10 +1604,6 @@
         grid-template-columns: 1fr;
         gap: 20px;
         padding: 28px 0;
-      }
-
-      .header__center {
-        text-align: left;
       }
 
       .header__right {
@@ -2331,11 +2300,6 @@
             </svg>
           </div>
         </div>
-      </div>
-      <div class="header__center">
-        <div class="header__name">Victor Ng</div>
-        <div class="header__role">Product Designer</div>
-        <div class="header__location">London, United Kingdom</div>
       </div>
       <div class="header__right">
         <div class="header__connect-label">Connect</div>
