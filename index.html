@@ -753,8 +753,12 @@
     .pt-link { color: #e6b54a; border-bottom: 1px solid rgba(230,181,74,0.35); padding-bottom: 1px; }
     @media (prefers-reduced-motion: reduce) { .pt-cursor { animation: none; } }
     @media (max-width: 768px) {
-      .project-card__terminal { top: 11%; width: 90%; }
-      .pterm__body { font-size: 11px; padding: 12px 14px; line-height: 1.7; }
+      .project-card__terminal { top: 50%; width: 88%; transform: translate(-50%, -50%); }
+      .pterm__bar { padding: 7px 10px; }
+      .pterm__dot { width: 8px; height: 8px; }
+      .pterm__title { font-size: 10px; }
+      .pterm__body { font-size: 10px; padding: 10px 12px; line-height: 1.6; }
+      .pt-cursor { width: 6px; height: 11px; }
       .project-card__terminal .pt-resp,
       .project-card__terminal .pt-gap { display: none; }
     }
@@ -1642,7 +1646,7 @@
       }
 
       .hero__heading {
-        font-size: clamp(2rem, 8vw, 3rem);
+        font-size: clamp(1.35rem, 5.5vw, 2rem);
       }
 
       .hero__timeline {
@@ -1747,7 +1751,7 @@
         top: auto; right: auto;
         display: inline-flex;
         align-self: flex-start;
-        margin-bottom: 16px;
+        margin: 24px 0 0 32px;
       }
       .ceramics__card-inner {
         display: flex;
@@ -1812,7 +1816,7 @@
 
     @media (max-width: 480px) {
       .hero__heading {
-        font-size: 1.75rem;
+        font-size: clamp(1.2rem, 5vw, 1.5rem);
       }
 
       .timeline__node {
@@ -2576,7 +2580,7 @@
         </a>
         <div class="ceramics__card-inner">
           <h3 class="ceramics__title">I make pots</h3>
-          <p class="ceramics__subtitle">Victor Ng Ceramics is my solo studio practice — wonky, one-of-a-kind wheel-thrown pieces, never matching sets. I've grown it to 50K+ followers, 50M+ views and a 500+ newsletter, sold 500+ works, and was cast on Season 8 of The Great Pottery Throwdown. I run the whole thing myself — making, sales, marketing, content and the website.</p>
+          <p class="ceramics__subtitle">Victor Ng Ceramics is my solo studio practice — wonky, one of a kind wheel thrown pieces, never matching sets. I've grown it to 50K+ followers, 50M+ views and a 500+ newsletter, sold 500+ works, and was cast on Season 8 of The Great Pottery Throwdown. I run the whole thing myself — making, sales, marketing, content and the website.</p>
 
           <!-- Arc Carousel -->
           <div class="ceramics__carousel" id="ceramics-carousel">
