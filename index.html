@@ -17,6 +17,38 @@
 
   <style>
     /* ========================================
+       SELF-HOSTED FONT — Instagram Sans
+       ======================================== */
+    @font-face {
+      font-family: 'Instagram Sans';
+      src: url('assets/fonts/InstagramSans-Light.ttf') format('truetype');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Instagram Sans';
+      src: url('assets/fonts/InstagramSans-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Instagram Sans';
+      src: url('assets/fonts/InstagramSans-Medium.ttf') format('truetype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Instagram Sans';
+      src: url('assets/fonts/InstagramSans-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ========================================
        DESIGN TOKENS — Light Premium
        ======================================== */
     :root {
@@ -34,8 +66,8 @@
       --accent-green: #5eaa8d;
       --accent-gold: #2d6a4f;
       --accent-blue: #2f6fd6;
-      --serif: 'DM Sans', system-ui, sans-serif;
-      --sans: 'DM Sans', system-ui, sans-serif;
+      --serif: 'Instagram Sans', 'DM Sans', system-ui, sans-serif;
+      --sans: 'Instagram Sans', 'DM Sans', system-ui, sans-serif;
 
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
       --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -249,7 +281,7 @@
     .hero__heading {
       font-family: var(--sans);
       font-size: clamp(2rem, 4.5vw, 3.5rem);
-      line-height: 1.25;
+      line-height: 1.12;
       font-weight: 300;
       color: var(--ink);
       letter-spacing: -0.03em;
@@ -275,7 +307,7 @@
       font-weight: 300;
       color: var(--ink-secondary);
       letter-spacing: -0.02em;
-      line-height: 1.25;
+      line-height: 1.4;
       display: block;
       margin-top: 4px;
       position: relative;
@@ -876,7 +908,7 @@
        ======================================== */
     .narrative {
       padding: 80px 0 24px;
-      text-align: center;
+      text-align: left;
     }
 
     .narrative__text {
@@ -885,8 +917,8 @@
       line-height: 1.6;
       font-weight: 300;
       color: var(--ink-muted);
-      max-width: 780px;
-      margin-left: auto;
+      max-width: 50ch;
+      margin-left: 0;
       margin-right: auto;
       letter-spacing: -0.015em;
     }
@@ -1991,7 +2023,7 @@
     .tl-company {
       font-family: var(--sans);
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       letter-spacing: -0.02em;
       color: var(--ink);
       margin-top: 10px;
@@ -1999,15 +2031,15 @@
     .tl-role {
       font-family: var(--sans);
       font-weight: 500;
-      font-size: 0.72rem;
+      font-size: 0.82rem;
       color: var(--ink-muted);
       margin-top: 3px;
     }
     .tl-desc {
       font-family: var(--sans);
       font-weight: 400;
-      font-size: 0.72rem;
-      line-height: 1.5;
+      font-size: 0.8rem;
+      line-height: 1.4;
       color: #fff;
       text-align: center;
     }
@@ -2123,9 +2155,9 @@
       .tl-tile__front { flex-direction: row; gap: 12px; }
       .tl-tile__back { position: absolute; inset: 0; border-radius: 8px; justify-content: center; }
       .tl-logo { height: 24px; }
-      .tl-company { font-size: 0.88rem; margin-top: 0; }
-      .tl-role { font-size: 0.7rem; margin-top: 2px; }
-      .tl-desc { font-size: 0.75rem; text-align: left; }
+      .tl-company { font-size: 1rem; margin-top: 0; }
+      .tl-role { font-size: 0.82rem; margin-top: 2px; }
+      .tl-desc { font-size: 0.85rem; text-align: left; }
     }
 
     /* Touch/mobile: flat tap-to-reveal (no 3D skew — looks broken on mobile layout) */
@@ -2313,7 +2345,7 @@
     <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
       <h1 class="hero__heading">
-        <span class="hero__line hero__line--1"><span class="hero__muted">Hi, I'm</span> Victor Ng,</span><br>
+        <span class="hero__line hero__line--1"><span class="hero__muted">Hi, I’m</span> Victor Ng,</span><br>
         <span class="hero__line hero__line--2"><span class="hero__sub">Product Designer, Potter, Do-er</span></span>
         <span class="hero__line hero__line--3"><span class="hero__body">I love creating physical or digital products that feel entirely natural to use.</span></span>
       </h1>
@@ -2429,7 +2461,7 @@
         My background is a bit of a mix. Born in Hong Kong, raised in Canada, and now living in London, I started out in <strong>business and tech</strong>, working across operations and consulting before I retrained as a designer in 2018. That way of thinking stuck with me. I still think in <strong>outcomes, growth, and the product behind the pixels</strong>.
       </p>
       <p class="narrative__text fade-up stagger-1">
-        At my core, I love building things. I'm happiest when I'm in the weeds, figuring out how a system works, prototyping a new idea, or exploring new tools. Lately I've been experimenting with AI to speed up my workflow and build more independently.
+        At my core, I love building things. I’m happiest when I’m in the weeds, figuring out how a system works, prototyping a new idea, or exploring new tools. Lately I’ve been experimenting with AI to speed up my workflow and build more independently.
       </p>
     </section>
 
@@ -2448,7 +2480,7 @@
           </div>
           <div class="tl-annot tl-annot--2018" aria-hidden="true">2018</div>
           <div class="tl-annot tl-annot--retrain" aria-hidden="true">
-            <p>I'd always wanted to make things — so I bit the bullet, quit my job, and went back to school for design</p>
+            <p>I’d always wanted to make things — so I bit the bullet, quit my job, and went back to school for design</p>
             <svg viewBox="0 0 40 45"><path d="M35 3 C 20 5, 9 16, 8 40"/><path d="M8 40 L 4 32"/><path d="M8 40 L 15 35"/></svg>
           </div>
 
@@ -2499,7 +2531,7 @@
                 <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/ibm-logo-transparent.png" alt="IBM"></div>
                 <div class="tl-tile__front-text"><h2 class="tl-company">IBM</h2><div class="tl-role">UX Design Intern</div></div>
               </div>
-              <div class="tl-tile__back"><p class="tl-desc">Shipped UX improvements to the Cognos Analytics dashboard on IBM's Carbon design system.</p></div>
+              <div class="tl-tile__back"><p class="tl-desc">Shipped UX improvements to the Cognos Analytics dashboard on IBM’s Carbon design system.</p></div>
             </div>
             <span class="tl-dot" aria-hidden="true"></span>
           </article>
@@ -2546,7 +2578,7 @@
         </a>
         <div class="ceramics__card-inner">
           <h3 class="ceramics__title">I make pots</h3>
-          <p class="ceramics__subtitle">Victor Ng Ceramics is my solo studio practice — wonky, one of a kind wheel thrown pieces, never matching sets. I've grown it to 50K+ followers, 50M+ views and a 500+ newsletter, sold 500+ works, and was cast on Season 8 of The Great Pottery Throwdown. I run the whole thing myself — making, sales, marketing, content and the website.</p>
+          <p class="ceramics__subtitle">Victor Ng Ceramics is my solo studio practice — wonky, one of a kind wheel thrown pieces, never matching sets. I’ve grown it to 50K+ followers, 50M+ views and a 500+ newsletter, sold 500+ works, and was cast on Season 8 of The Great Pottery Throwdown. I run the whole thing myself — making, sales, marketing, content and the website.</p>
 
           <!-- Arc Carousel -->
           <div class="ceramics__carousel" id="ceramics-carousel">
@@ -2583,7 +2615,7 @@
                   <img src="assets/images/ceramics/card-throwdown-cast.jpg" alt="The Great Pottery Throwdown cast" style="object-fit: contain;">
                 </div>
                 <div class="ceramics__slide-caption">
-                  <div class="ceramics__slide-title">Throwdown Season 8 group pic (I didn't win)</div>
+                  <div class="ceramics__slide-title">Throwdown Season 8 group pic (I didn’t win)</div>
                 </div>
               </div>
               <div class="ceramics__slide ceramics__slide--video" data-slide="4">
