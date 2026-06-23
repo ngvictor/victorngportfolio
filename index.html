@@ -280,13 +280,22 @@
 
     .hero__heading {
       font-family: var(--sans);
-      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-size: clamp(1.6rem, 4.2vw, 3rem);
       line-height: 1.12;
-      font-weight: 300;
+      font-weight: 700;
       color: var(--ink);
       letter-spacing: -0.03em;
-      max-width: 1000px;
+      max-width: none;
       margin: 0 auto;
+    }
+
+    .hero__eyebrow {
+      font-family: var(--sans);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      letter-spacing: -0.01em;
+      margin: 0 auto 20px;
     }
 
     .hero__heading em {
@@ -309,7 +318,8 @@
       letter-spacing: -0.02em;
       line-height: 1.4;
       display: block;
-      margin-top: 4px;
+      margin: 24px auto 0;
+      max-width: 60ch;
       position: relative;
     }
 
@@ -338,7 +348,7 @@
     }
 
     .hero__line {
-      display: inline-block;
+      display: block;
       opacity: 0;
       animation: entrance-rise 0.8s var(--ease-out-expo) forwards;
     }
@@ -1644,11 +1654,21 @@
 
       .hero {
         padding: 60px 0 80px;
-        text-align: left;
+        text-align: center;
       }
 
       .hero__heading {
-        font-size: clamp(1.35rem, 5.5vw, 2rem);
+        font-size: clamp(1.6rem, 6.5vw, 2.2rem);
+        max-width: 100%;
+      }
+
+      .hero__eyebrow {
+        font-size: 1rem;
+      }
+
+      .hero__body {
+        max-width: 100%;
+        font-size: 1rem;
       }
 
       .hero__timeline {
@@ -1818,7 +1838,7 @@
 
     @media (max-width: 480px) {
       .hero__heading {
-        font-size: clamp(1.2rem, 5vw, 1.5rem);
+        font-size: clamp(1.5rem, 7vw, 2rem);
       }
 
       .timeline__node {
@@ -1914,6 +1934,29 @@
     }
     .tl-node.is-in .tl-dot { transform: translateX(-50%) scale(1); }
     .tl-tile:hover ~ .tl-dot { transform: translateX(-50%) scale(1.5); background: #56BC7E; }
+
+    /* Current role marker (Meta) */
+    .tl-node--current .tl-dot {
+      background: var(--accent-green);
+      box-shadow: 0 0 0 5px rgba(94,170,141,0.22);
+    }
+    .tl-node--current .tl-year { color: var(--accent-craft); font-weight: 700; }
+    .tl-now-label {
+      position: absolute;
+      left: 50%;
+      top: calc(var(--rail-y) - 42px);
+      transform: translateX(-50%);
+      font-family: var(--sans);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--accent-green);
+      padding: 3px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
 
     /* Year */
     .tl-year {
@@ -2158,6 +2201,7 @@
       .tl-company { font-size: 1rem; margin-top: 0; }
       .tl-role { font-size: 0.82rem; margin-top: 2px; }
       .tl-desc { font-size: 0.85rem; text-align: left; }
+      .tl-now-label { display: none; }
     }
 
     /* Touch/mobile: flat tap-to-reveal (no 3D skew — looks broken on mobile layout) */
@@ -2344,11 +2388,9 @@
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
-      <h1 class="hero__heading">
-        <span class="hero__line hero__line--1"><span class="hero__muted">Hi, I’m</span> Victor Ng,</span><br>
-        <span class="hero__line hero__line--2"><span class="hero__sub">Product Designer, Potter, Do-er</span></span>
-        <span class="hero__line hero__line--3"><span class="hero__body">I love creating physical or digital products that feel entirely natural to use.</span></span>
-      </h1>
+      <p class="hero__eyebrow hero__line hero__line--1">Victor Ng &middot; Product Designer</p>
+      <h1 class="hero__heading hero__line hero__line--2">I do my best work where the brief is blank.</h1>
+      <p class="hero__body hero__line hero__line--3">Senior Product Designer at Meta across Ads, AI, and VR. I ship 0→1, I’ve worked in AI since 2020, and I’m usually the person teams want in the room.</p>
     </section>
 
     <!-- ===== PROJECTS ===== -->
@@ -2458,10 +2500,10 @@
     <!-- ===== NARRATIVE / ABOUT ===== -->
     <section class="narrative" id="about">
       <p class="narrative__text fade-up">
-        My background is a bit of a mix. Born in Hong Kong, raised in Canada, and now living in London, I started out in <strong>business and tech</strong>, working across operations and consulting before I retrained as a designer in 2018. That way of thinking stuck with me. I still think in <strong>outcomes, growth, and the product behind the pixels</strong>.
+        At my core I love building things, especially the ambiguous, 0→1 kind that don’t have a playbook yet. At Meta I’ve shipped across <strong>Ads, AI, and VR</strong>, often starting from scratch. I’ve worked with AI since a 2020 internship at Facebook AI, and I build with it daily. I made an agent that catches usability issues and ships fixes, which <strong>cut our design-to-ship time in half</strong>. I think in outcomes, and I’m at my best working across product and engineering, getting the whole team moving together.
       </p>
       <p class="narrative__text fade-up stagger-1">
-        At my core, I love building things. I’m happiest when I’m in the weeds, figuring out how a system works, prototyping a new idea, or exploring new tools. Lately I’ve been experimenting with AI to speed up my workflow and build more independently.
+        My path here was a bit of a mix. Born in Hong Kong, raised in Canada, now living in London, I started out in <strong>business and tech</strong>, working across operations and consulting before I retrained as a designer in 2018. That way of thinking stuck with me, and I still think in <strong>outcomes, growth, and the product behind the pixels</strong>.
       </p>
     </section>
 
@@ -2473,69 +2515,19 @@
 
           <span class="tl-line tl-line--solid" aria-hidden="true"></span>
 
-          <!-- Annotations (desktop only) -->
-          <div class="tl-annot tl-annot--before" aria-hidden="true">
-            <span class="tl-annot__label">Before design</span>
-            <span class="tl-annot__bracket"></span>
-          </div>
-          <div class="tl-annot tl-annot--2018" aria-hidden="true">2018</div>
-          <div class="tl-annot tl-annot--retrain" aria-hidden="true">
-            <p>I’d always wanted to make things — so I bit the bullet, quit my job, and went back to school for design</p>
-            <svg viewBox="0 0 40 45"><path d="M35 3 C 20 5, 9 16, 8 40"/><path d="M8 40 L 4 32"/><path d="M8 40 L 15 35"/></svg>
-          </div>
-
-          <!-- 1 · Repsol -->
-          <article class="tl-node tl-reveal" style="--brand:#E63927; --brand-dk:#b82e20; --brand-lt:#eb614e;">
-            <div class="tl-year">2014 – 2015</div>
+          <!-- 6 · Meta -->
+          <article class="tl-node tl-reveal tl-node--current" style="--brand:#0668E1; --brand-dk:#0554b8; --brand-lt:#3d87e8;">
+            <div class="tl-year">2021 – now</div>
             <div class="tl-tile">
               <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/repsol-mark.png" alt="Repsol"></div>
-                <div class="tl-tile__front-text"><h2 class="tl-company">Repsol</h2><div class="tl-role">IT Infrastructure Analyst</div></div>
+                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/meta_PNG5.png" alt="Meta"></div>
+                <div class="tl-tile__front-text"><h2 class="tl-company">Meta</h2><div class="tl-role">Product Designer</div></div>
               </div>
-              <div class="tl-tile__back"><p class="tl-desc"><span class="tl-kicker">My first internship</span>Decommissioned 100+ servers from gas plants across northern Canada.</p></div>
+              <div class="tl-tile__back"><p class="tl-desc">Ad formats shipping to Facebook &amp; Instagram, B2B (Workplace), and product visions for VR.</p></div>
             </div>
+            <span class="tl-now-label" aria-hidden="true">Now</span>
             <span class="tl-dot" aria-hidden="true"></span>
           </article>
-
-          <!-- 2 · SAP -->
-          <article class="tl-node tl-reveal" style="--brand:#0070F2; --brand-dk:#005cc4; --brand-lt:#3d8ff5;">
-            <div class="tl-year">2016</div>
-            <div class="tl-tile">
-              <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/SAP_2011_logo.svg.png" alt="SAP"></div>
-                <div class="tl-tile__front-text"><h2 class="tl-company">SAP</h2><div class="tl-role">Operations Analyst</div></div>
-              </div>
-              <div class="tl-tile__back"><p class="tl-desc">Designed management dashboards tracking backlog items for 30+ software teams.</p></div>
-            </div>
-            <span class="tl-dot" aria-hidden="true"></span>
-          </article>
-
-          <!-- 3 · Accenture -->
-          <article class="tl-node tl-reveal" style="--brand:#A100FF; --brand-dk:#8200cc; --brand-lt:#b740ff;">
-            <div class="tl-year">2017</div>
-            <div class="tl-tile">
-              <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/Accenture-Logo.png" alt="Accenture"></div>
-                <div class="tl-tile__front-text"><h2 class="tl-company">Accenture</h2><div class="tl-role">Technology Analyst</div></div>
-              </div>
-              <div class="tl-tile__back"><p class="tl-desc">Ran daily scrums with dev teams in India and Spain to resolve code defects and UX/UI issues.</p></div>
-            </div>
-            <span class="tl-dot" aria-hidden="true"></span>
-          </article>
-
-          <!-- 4 · IBM -->
-          <article class="tl-node tl-reveal" style="--brand:#0530AD; --brand-dk:#04268c; --brand-lt:#3758c0;">
-            <div class="tl-year">2020</div>
-            <div class="tl-tile">
-              <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/ibm-logo-transparent.png" alt="IBM"></div>
-                <div class="tl-tile__front-text"><h2 class="tl-company">IBM</h2><div class="tl-role">UX Design Intern</div></div>
-              </div>
-              <div class="tl-tile__back"><p class="tl-desc">Shipped UX improvements to the Cognos Analytics dashboard on IBM’s Carbon design system.</p></div>
-            </div>
-            <span class="tl-dot" aria-hidden="true"></span>
-          </article>
-
           <!-- 5 · Facebook AI -->
           <article class="tl-node tl-reveal" style="--brand:#1877F2; --brand-dk:#1462c4; --brand-lt:#4a93f5;">
             <div class="tl-year">2020</div>
@@ -2548,16 +2540,51 @@
             </div>
             <span class="tl-dot" aria-hidden="true"></span>
           </article>
-
-          <!-- 6 · Meta -->
-          <article class="tl-node tl-reveal" style="--brand:#0668E1; --brand-dk:#0554b8; --brand-lt:#3d87e8;">
-            <div class="tl-year">2021 – now</div>
+          <!-- 4 · IBM -->
+          <article class="tl-node tl-reveal" style="--brand:#0530AD; --brand-dk:#04268c; --brand-lt:#3758c0;">
+            <div class="tl-year">2020</div>
             <div class="tl-tile">
               <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/meta_PNG5.png" alt="Meta"></div>
-                <div class="tl-tile__front-text"><h2 class="tl-company">Meta</h2><div class="tl-role">Product Designer</div></div>
+                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/ibm-logo-transparent.png" alt="IBM" style="height:22px;"></div>
+                <div class="tl-tile__front-text"><h2 class="tl-company">IBM</h2><div class="tl-role">UX Design Intern</div></div>
               </div>
-              <div class="tl-tile__back"><p class="tl-desc">Ad formats shipping to Facebook &amp; Instagram, B2B (Workplace), and product visions for VR.</p></div>
+              <div class="tl-tile__back"><p class="tl-desc">Shipped UX improvements to the Cognos Analytics dashboard on IBM’s Carbon design system.</p></div>
+            </div>
+            <span class="tl-dot" aria-hidden="true"></span>
+          </article>
+          <!-- 3 · Accenture -->
+          <article class="tl-node tl-reveal" style="--brand:#A100FF; --brand-dk:#8200cc; --brand-lt:#b740ff;">
+            <div class="tl-year">2017</div>
+            <div class="tl-tile">
+              <div class="tl-tile__front">
+                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/Accenture-Logo.png" alt="Accenture"></div>
+                <div class="tl-tile__front-text"><h2 class="tl-company">Accenture</h2><div class="tl-role">Technology Analyst</div></div>
+              </div>
+              <div class="tl-tile__back"><p class="tl-desc">Ran daily scrums with dev teams in India and Spain to resolve code defects and UX/UI issues.</p></div>
+            </div>
+            <span class="tl-dot" aria-hidden="true"></span>
+          </article>
+          <!-- 2 · SAP -->
+          <article class="tl-node tl-reveal" style="--brand:#0070F2; --brand-dk:#005cc4; --brand-lt:#3d8ff5;">
+            <div class="tl-year">2016</div>
+            <div class="tl-tile">
+              <div class="tl-tile__front">
+                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/SAP_2011_logo.svg.png" alt="SAP"></div>
+                <div class="tl-tile__front-text"><h2 class="tl-company">SAP</h2><div class="tl-role">Operations Analyst</div></div>
+              </div>
+              <div class="tl-tile__back"><p class="tl-desc">Designed management dashboards tracking backlog items for 30+ software teams.</p></div>
+            </div>
+            <span class="tl-dot" aria-hidden="true"></span>
+          </article>
+          <!-- 1 · Repsol -->
+          <article class="tl-node tl-reveal" style="--brand:#E63927; --brand-dk:#b82e20; --brand-lt:#eb614e;">
+            <div class="tl-year">2014 – 2015</div>
+            <div class="tl-tile">
+              <div class="tl-tile__front">
+                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/repsol-mark.png" alt="Repsol"></div>
+                <div class="tl-tile__front-text"><h2 class="tl-company">Repsol</h2><div class="tl-role">IT Infrastructure Analyst</div></div>
+              </div>
+              <div class="tl-tile__back"><p class="tl-desc"><span class="tl-kicker">My first internship</span>Decommissioned 100+ servers from gas plants across northern Canada.</p></div>
             </div>
             <span class="tl-dot" aria-hidden="true"></span>
           </article>
@@ -2904,12 +2931,8 @@
         layout();
       }
 
-      // Auto-expand on mobile; hover-to-expand on desktop
-      if (isMobile()) {
-        expand();
-      } else {
-        card.addEventListener('mouseenter', function () { expand(); });
-      }
+      // Expanded by default on every device — show the work at rest, no hover needed
+      expand();
 
       // Note: scroll-to-collapse was removed — it felt broken/jumpy
       // (layout shift from expanding nudges window.scrollY, which kept
