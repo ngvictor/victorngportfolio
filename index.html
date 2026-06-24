@@ -1943,6 +1943,20 @@
       box-shadow: 0 0 0 5px rgba(94,170,141,0.22);
     }
     .tl-node--current .tl-year { color: var(--accent-craft); font-weight: 700; }
+
+    /* Current role: a larger, dominant tile to convey its scale (5 yrs vs months) */
+    .tl-node--current { flex-grow: 1.45; z-index: 3; }
+    .tl-node.is-flipped { z-index: 5; }
+    .tl-node--current .tl-tile { width: 264px; height: 102px; }
+    .tl-node--current .tl-company { font-size: 1.2rem; }
+    .tl-tenure {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent-craft);
+      margin-top: 3px;
+      letter-spacing: 0.01em;
+    }
     .tl-now-label {
       position: absolute;
       left: 50%;
@@ -2204,6 +2218,10 @@
       .tl-role { font-size: 0.82rem; margin-top: 2px; }
       .tl-desc { font-size: 0.85rem; text-align: left; }
       .tl-now-label { display: none; }
+      /* keep the current role inline-consistent on mobile (no oversized tile) */
+      .tl-node--current { flex-grow: 1; z-index: auto; }
+      .tl-node--current .tl-tile { width: 100%; height: auto; }
+      .tl-node--current .tl-company { font-size: 1rem; }
     }
 
     /* Touch/mobile: flat tap-to-reveal (no 3D skew — looks broken on mobile layout) */
@@ -2523,7 +2541,7 @@
             <div class="tl-tile">
               <div class="tl-tile__front">
                 <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/meta_PNG5.png" alt="Meta"></div>
-                <div class="tl-tile__front-text"><h2 class="tl-company">Meta</h2><div class="tl-role">Product Designer</div></div>
+                <div class="tl-tile__front-text"><h2 class="tl-company">Meta</h2><div class="tl-role">Product Designer</div><div class="tl-tenure">5 years</div></div>
               </div>
               <div class="tl-tile__back"><p class="tl-desc">Ad formats shipping to Facebook &amp; Instagram, B2B (Workplace), and product visions for VR.</p></div>
             </div>
