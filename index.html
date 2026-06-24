@@ -291,7 +291,7 @@
 
     .hero__eyebrow {
       font-family: var(--sans);
-      font-size: 1.1rem;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
       font-weight: 500;
       color: var(--ink-muted);
       letter-spacing: -0.01em;
@@ -918,7 +918,7 @@
        ======================================== */
     .narrative {
       padding: 80px 0 24px;
-      text-align: left;
+      text-align: center;
     }
 
     .narrative__text {
@@ -928,9 +928,10 @@
       font-weight: 300;
       color: var(--ink-muted);
       max-width: 50ch;
-      margin-left: 0;
+      margin-left: auto;
       margin-right: auto;
       letter-spacing: -0.015em;
+      text-wrap: pretty;
     }
 
     .narrative__text strong {
@@ -1038,6 +1039,7 @@
       color: var(--ink-secondary);
       margin-bottom: 24px;
       max-width: 560px;
+      text-wrap: pretty;
     }
 
     /* --- Arc Carousel --- */
@@ -2500,10 +2502,10 @@
     <!-- ===== NARRATIVE / ABOUT ===== -->
     <section class="narrative" id="about">
       <p class="narrative__text fade-up">
-        At my core I love building things, especially the ambiguous, 0→1 kind that don’t have a playbook yet. At Meta I’ve shipped across <strong>Ads, AI, and VR</strong>, often starting from scratch. I’ve worked with AI since a 2020 internship at Facebook AI, and I build with it daily. I made an agent that catches usability issues and ships fixes, which <strong>cut our design-to-ship time in half</strong>. I think in outcomes, and I’m at my best working across product and engineering, getting the whole team moving together.
+        I’m a designer because I like solving problems, and the more ambiguous, the better. <strong>AI is fully embedded</strong> in how I work. I build my own tools, including an agent that catches usability issues and ships fixes, which <strong>cut our design-to-ship time in half</strong>.
       </p>
       <p class="narrative__text fade-up stagger-1">
-        My path here was a bit of a mix. Born in Hong Kong, raised in Canada, now living in London, I started out in <strong>business and tech</strong>, working across operations and consulting before I retrained as a designer in 2018. That way of thinking stuck with me, and I still think in <strong>outcomes, growth, and the product behind the pixels</strong>.
+        Design is my second career, after years in <strong>business and consulting</strong>, so I think in <strong>outcomes</strong> and pull <strong>product and engineering</strong> together.
       </p>
     </section>
 
