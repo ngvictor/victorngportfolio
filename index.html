@@ -1935,7 +1935,7 @@
       transition: transform 0.5s var(--ease), background 0.4s var(--ease);
     }
     .tl-node.is-in .tl-dot { transform: translateX(-50%) scale(1); }
-    .tl-tile:hover ~ .tl-dot { transform: translateX(-50%) scale(1.5); background: #56BC7E; }
+    .tl-node.is-flipped .tl-tile ~ .tl-dot { transform: translateX(-50%) scale(1.5); background: #56BC7E; }
 
     /* Current role marker (Meta) */
     .tl-node--current .tl-dot {
@@ -1983,7 +1983,7 @@
       margin: 0 auto;
       border-radius: 10px;
       transform: rotate(-30deg) skew(25deg) translate(0,0);
-      transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
       box-shadow: -20px 20px 10px rgba(0,0,0,0.1);
       cursor: pointer;
       background: transparent;
@@ -2012,13 +2012,13 @@
       transform: skewX(-45deg);
       transition: background 0.5s var(--ease);
     }
-    .tl-tile:hover {
-      transform: rotate(-8deg) skew(4deg) translate(20px,-15px);
+    .tl-node.is-flipped .tl-tile {
+      transform: rotate(-8deg) skew(4deg) scale(1.06);
       box-shadow: -30px 30px 40px rgba(0,0,0,0.18);
       background: transparent;
     }
-    .tl-tile:hover::before { background: var(--brand-dk, #d5d2cd); }
-    .tl-tile:hover::after  { background: var(--brand-lt, #c8c5c0); }
+    .tl-node.is-flipped .tl-tile::before { background: var(--brand-dk, #d5d2cd); }
+    .tl-node.is-flipped .tl-tile::after  { background: var(--brand-lt, #c8c5c0); }
 
     /* Front / back faces */
     .tl-tile__front,
@@ -2059,8 +2059,8 @@
       border: 1px solid rgba(255,255,255,0.28);
       box-shadow: inset 0 1px 1px rgba(255,255,255,0.35);
     }
-    .tl-tile:hover .tl-tile__front { opacity: 0; transition: opacity 0.25s var(--ease); }
-    .tl-tile:hover .tl-tile__back  { opacity: 1; transition: opacity 0.35s var(--ease) 0.15s; }
+    .tl-node.is-flipped .tl-tile__front { opacity: 0; transition: opacity 0.25s var(--ease); }
+    .tl-node.is-flipped .tl-tile__back  { opacity: 1; transition: opacity 0.25s var(--ease); }
 
     /* Tile content */
     .tl-logo-wrap { height: 34px; display: flex; align-items: center; justify-content: center; }
@@ -3296,6 +3296,27 @@
             var open = document.querySelector('#tl-track .tl-node.is-flipped');
             if (open) open.classList.remove('is-flipped');
           }
+        });
+      } else {
+        /* Desktop: entering a tile reveals its description for ~3s, then it
+           flips back on its own. Triggered on mouseenter (not :hover) so a
+           brief mouse-leave never reverts it mid-animation — no twitch.
+           Re-entering any tile resets the timer. */
+        var revertTimer = null;
+        function reveal(node) {
+          if (revertTimer) { clearTimeout(revertTimer); revertTimer = null; }
+          var cur = document.querySelector('#tl-track .tl-node.is-flipped');
+          if (cur && cur !== node) cur.classList.remove('is-flipped');
+          node.classList.add('is-flipped');
+          revertTimer = setTimeout(function () {
+            node.classList.remove('is-flipped');
+            revertTimer = null;
+          }, 3000);
+        }
+        nodes.forEach(function (node) {
+          var tile = node.querySelector('.tl-tile');
+          if (!tile) return;
+          tile.addEventListener('mouseenter', function () { reveal(node); });
         });
       }
     })();
