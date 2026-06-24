@@ -1,8 +1,10 @@
-# Typography & Design Standard
+# Typography Standard
 
-The single source of truth for type on this portfolio. Applies to **every page**:
+The single source of truth for **type** on this portfolio. Applies to **every page**:
 `index.html`, `project-playable-ads.html`, `project-ai-workflows.html`, and
 `project-horizon-vr.html` (when built).
+
+For color, spacing, motion, and components, see **[DESIGN.md](DESIGN.md)**.
 
 Distilled from **Pierrick Calvez — "A Five-Minute Guide to Better Typography"**
 (<https://www.pierrickcalvez.com/journal/a-five-minute-guide-to-better-typography>),
@@ -60,12 +62,18 @@ concrete default for each.
 Calvez's example steps 100pt → 50pt → 25pt. Double (or roughly double) between
 levels so the jump is unmistakable. Our scale:
 
+The clamps below are mirrored from the CSS for reference — **the stylesheets are
+canonical.** What matters is the *ratio*: roughly double between levels. If you change
+a size, change it in the CSS; this table follows.
+
 | Role | Size (desktop) | Weight | Line-height |
 |------|----------------|--------|-------------|
-| Display / hero H1 | `clamp(2rem, 5vw, 4rem)` | 700 | 1.05–1.15 |
-| Section title (H2) | `clamp(1.75rem, 3.5vw, 3rem)` | 700 | 1.1 |
-| Subhead (H3) | ~1.5rem | 500 | 1.2 |
-| Body | **1–1.125rem (16–18px)** | 400 | 1.5–1.6 |
+| Stat-band number | `clamp(3.25rem, 7vw, 5.5rem)` | 400 (serif token) | 1.0 |
+| Display / hero H1 | `clamp(3rem, 6vw, 5rem)` | 400–700 | 1.05–1.15 |
+| Section title (H2) | `clamp(2rem, 3.5vw, 3rem)` | 700 | 1.1 |
+| Subhead (H3) | `clamp(1.5rem, 2.6vw, 2.1rem)` | 500 | 1.2 |
+| Lead / tldr | `clamp(1.125rem, 2vw, 1.375rem)` | 400 | 1.5 |
+| Body | **1.125rem (18px)** | 400 | 1.5–1.7 |
 | Caption / label | 0.9375rem (15px) | 400 / 500 | 1.6 |
 
 Adjacent levels should differ enough to read instantly. If two sizes look "close,"
@@ -134,7 +142,14 @@ necessary."* And the safe default: **"In doubt, align left."**
 |------|------|-----|
 | Hyphen | `-` | Compound terms: `full-moon`, `time-out`, `one-of-a-kind` |
 | En dash | `–` | Ranges & connections: `2018–2024`, `London–Paris` |
-| Em dash | `—` | Can replace commas, parentheses, or colons |
+| Em dash | `—` | **Avoid in body prose.** See the project rule below. |
+
+> **Project rule — no em dashes in body copy.** This portfolio's writing is actively
+> de-AI'd, and a sprinkle of em dashes is the loudest "this was drafted by an LLM" tell.
+> The em dash is sanctioned in **exactly one place: the page H1 title**
+> (e.g. "Playable Ads — A new ad format for Meta"). Everywhere else, restructure: use a
+> colon, a full stop, a comma, or parentheses. When in doubt, two short sentences beat
+> one em-dashed clause. (This overrides the generic guide, which permits em dashes freely.)
 
 ---
 
@@ -166,6 +181,7 @@ Apply to every page before shipping:
 - [ ] Headings tracked tight (-0.01/-0.02em); all-caps labels tracked open (+0.14em).
 - [ ] Long text left-aligned; centering only for short display lines.
 - [ ] Curly quotes, real apostrophes, en dashes for ranges, hyphens for compounds.
+- [ ] **No em dashes in body copy** — only the H1 title is allowed one.
 - [ ] Squint test: blocks read as clean shapes with even spacing.
 
 ---
