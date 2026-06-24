@@ -1042,6 +1042,38 @@
       text-wrap: pretty;
     }
 
+    /* --- Stat infographic --- */
+    .ceramics__stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px 48px;
+      margin: 8px 0 36px;
+    }
+    .cstat {
+      display: flex;
+      flex-direction: column;
+    }
+    .cstat__num {
+      font-family: var(--sans);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      color: var(--accent-craft);
+    }
+    .cstat__label {
+      font-family: var(--sans);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      margin-top: 7px;
+      letter-spacing: 0.02em;
+    }
+    @media (max-width: 480px) {
+      .ceramics__stats { gap: 18px 32px; }
+      .cstat { flex: 0 0 calc(50% - 16px); }
+    }
+
     /* --- Arc Carousel --- */
     .ceramics__carousel {
       position: relative;
@@ -1866,7 +1898,7 @@
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
       scroll-snap-type: x proximity;
-      padding-bottom: 24px;
+      padding-bottom: 70px;
       /* Break out of the narrow page-wrapper to stay full-width */
       width: 100vw;
       margin-left: calc(50% - 50vw);
@@ -1887,8 +1919,8 @@
 
     /* Timeline variables */
     .timeline__track {
-      --rail-y: 150px;
-      --body-top: 210px;
+      --rail-y: 50px;
+      --body-top: 110px;
       --dot: 13px;
     }
 
@@ -2625,7 +2657,16 @@
         </a>
         <div class="ceramics__card-inner">
           <h3 class="ceramics__title">I make pots</h3>
-          <p class="ceramics__subtitle">Victor Ng Ceramics is my solo studio practice: wonky, one of a kind wheel thrown pieces, never matching sets, that I make and market entirely myself. I’ve grown it to 50K+ followers, 50M+ views and a 500+ newsletter, sold 1,000+ works, and was cast on Season 8 of The Great Pottery Throwdown.</p>
+          <p class="ceramics__subtitle">Victor Ng Ceramics is my solo studio practice: wonky, one of a kind wheel thrown pieces. It’s where I exercise my creativity, and where I taught myself to run a business, from marketing and campaigns to Shopify and email.</p>
+
+          <!-- Stat infographic -->
+          <div class="ceramics__stats">
+            <div class="cstat"><span class="cstat__num">50K+</span><span class="cstat__label">Followers</span></div>
+            <div class="cstat"><span class="cstat__num">50M+</span><span class="cstat__label">Views</span></div>
+            <div class="cstat"><span class="cstat__num">1,000+</span><span class="cstat__label">Pieces sold</span></div>
+            <div class="cstat"><span class="cstat__num">500+</span><span class="cstat__label">Email subscribers</span></div>
+            <div class="cstat"><span class="cstat__num">S8</span><span class="cstat__label">Great Pottery Throwdown</span></div>
+          </div>
 
           <!-- Arc Carousel -->
           <div class="ceramics__carousel" id="ceramics-carousel">
