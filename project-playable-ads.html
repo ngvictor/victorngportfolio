@@ -757,6 +757,10 @@
     .split--text-right .split__text { order: 2; }
     .split--text-right .split__media { order: 1; }
 
+    /* Media 60%, text 40% */
+    .split--text-left  { grid-template-columns: 2fr 3fr; }
+    .split--text-right { grid-template-columns: 3fr 2fr; }
+
     .split__text {
       display: flex;
       flex-direction: column;
@@ -1775,8 +1779,8 @@
           <div class="metric-card__label">Daily ad spend within the first months of launch</div>
         </div>
         <div class="metric-card">
-          <div class="metric-card__value">6</div>
-          <div class="metric-card__label">Live placements across Feed, Stories &amp; Reels on Facebook &amp; Instagram</div>
+          <div class="metric-card__value">All</div>
+          <div class="metric-card__label">Live on every Meta placement: Feed, Stories &amp; Reels on Facebook &amp; Instagram</div>
         </div>
         <div class="metric-card">
           <div class="metric-card__value">2 &rarr; Team</div>
@@ -1838,7 +1842,7 @@
       <div class="split split--text-left">
         <div class="split__text">
           <p class="body-text">
-            People don't install an app they've never tried. High-intent users tap "Install now," but a larger group sits on the fence: they'd convert if they could play the app first. User interviews backed this up, people were open to trying apps right inside Instagram.
+            People don't install an app they've never tried. High-intent users tap "Install now," but a larger group sits on the fence: they'd convert if they could try the app first. User interviews backed this up, people were open to trying apps right inside Instagram.
           </p>
           <p class="body-text" style="margin-bottom: 0;">
             Competitors had already built businesses on that behaviour. Playables make up 70–100% of spend on AppLovin's platform, and as that format pulled app and gaming budgets away, gaming's share of Meta's app ad revenue fell from <strong>21% to 13.6%</strong> in two years. Meta had tried playables back in 2017 and never scaled them.
@@ -1881,12 +1885,12 @@
     <section class="cs-section fade-up" id="section-process" data-section-label="02. The Process">
       <div class="cs-section__header">
         <span class="section-label">02. The Process</span>
-        <h2 class="section-title">Designing Against the <em>Pattern</em></h2>
+        <h2 class="section-title">Designing for Two User <em>Groups</em></h2>
       </div>
 
       <h3 class="subsection-title" style="margin-top: 0;">Proving it could work</h3>
       <p class="body-text">
-        I scoped the work end to end and ran a baseline test on Facebook. In most campaigns playables matched or beat standard video, and deeper in the funnel the margin was decisive.
+        It started from zero: just me and one engineering partner, running a baseline test on Facebook. I scoped it end to end, and in most campaigns playables matched or beat standard video, with the margin decisive deeper in the funnel.
       </p>
 
       <!-- PR1: Early prototype — image left, text right -->
@@ -1904,7 +1908,7 @@
         </div>
       </div>
 
-      <h3 class="subsection-title">Two users, one ad unit</h3>
+      <h3 class="subsection-title">Two user groups, one ad unit</h3>
       <p class="body-text">
         The design had to serve both intents at once: "Install now" for users ready to convert, "Try demo" for the ones who wanted to play first. No model for showing both existed on Instagram, so I designed five concepts for how it could work on Reels.
       </p>
