@@ -1629,6 +1629,9 @@
     .code-fn { color: #61afef; } /* function */
     .code-pr { color: #e06c75; } /* property */
     .code-cm { color: #5c6370; font-style: italic; } /* comment */
+    .code-num { color: #d19a66; } /* number / enum value */
+    .code-op { color: #56b6c2; } /* operator (| block scalar) */
+    .code-punc { color: #7f848e; } /* punctuation (colons) */
 
     /* ===== Fix loop (cyclical diagram) ===== */
     .fix-loop__track { position: relative; display: inline-block; width: fit-content; padding-bottom: 58px; }
@@ -2070,20 +2073,19 @@
       <div class="split split--text-left">
         <div class="split__text">
           <!-- Custom Issue Card 1 -->
-          <div style="border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
-            <div style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 14px;">Task 01 &middot; filed by Enterprise Marcus</div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-              <span style="font-size: 0.75rem; font-weight: 700; color: #d93025; background: rgba(217,48,37,0.1); padding: 4px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;">Launch Blocking</span>
-              <span style="font-size: 0.75rem; color: var(--ink-muted); font-family: var(--sans);">Quality issue · Flow doesn’t hold together</span>
+          <div style="border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 24px; background: #fff; box-shadow: 0 6px 22px -10px rgba(0,0,0,0.08);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+              <span style="font-size: 0.7rem; font-weight: 700; color: #d93025; background: rgba(217,48,37,0.1); padding: 5px 11px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.07em;">Launch blocking</span>
+              <span style="font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted);">Task 01</span>
             </div>
-            <h4 style="margin: 0 0 8px 0; font-size: 1.1rem; color: var(--ink);">SKAdNetwork Configuration Missing</h4>
-            <p style="font-size: 0.95rem; color: var(--ink-secondary); margin-bottom: 16px; line-height: 1.5;">Enterprise advertisers cannot configure their iOS measurement strategy. SKAdNetwork is Apple’s privacy era system for measuring app installs, so wrong defaults quietly degrade campaign reporting. At $2M+/month, that is real measurement risk.</p>
-            <div style="background: var(--surface-raised); padding: 16px; border-left: 3px solid var(--accent-gold);">
-              <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 10px;">
-                <img src="assets/images/projects/ai-workflows/from%20persona/marcus.png" alt="Enterprise Marcus" style="flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
-                <span style="font-size: 0.9rem; font-weight: 600; color: var(--ink);">Enterprise Marcus</span>
+            <h4 style="margin: 0 0 12px; font-size: 1.35rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; color: var(--ink);">SKAdNetwork configuration missing</h4>
+            <p style="font-size: 1rem; color: var(--ink-secondary); margin: 0 0 22px; line-height: 1.55;">The ad set has no SKAdNetwork section, so enterprise advertisers can’t configure their iOS measurement. Wrong defaults quietly degrade reporting, a real risk for advertisers spending <strong style="color: var(--ink); font-weight: 600;">$2M+/month</strong>.</p>
+            <div style="background: var(--surface-raised); padding: 18px 20px; border-left: 3px solid var(--accent-gold); border-radius: 0 12px 12px 0;">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <img src="assets/images/projects/ai-workflows/from%20persona/marcus.png" alt="Enterprise Marcus" style="flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+                <span style="font-size: 0.92rem; font-weight: 600; color: var(--ink);">Enterprise Marcus</span>
               </div>
-              <p style="font-style: italic; font-size: 0.95rem; color: var(--ink); line-height: 1.6; margin: 0;">“I scrolled through the entire ad set for my iOS campaign. Where is SKAdNetwork? My entire iOS strategy depends on getting the conversion schema right. If the system is making SKAN decisions for me, I need to know what those decisions are.”</p>
+              <p style="font-style: italic; font-size: 1rem; color: var(--ink); line-height: 1.6; margin: 0;">“I scrolled through the entire ad set for my iOS campaign. Where is SKAdNetwork? If the system is making SKAN decisions for me, I need to know what they are.”</p>
             </div>
           </div>
 
@@ -2098,21 +2100,21 @@
               </div>
               <div class="code-window__title">agent_output/issue_01.yaml</div>
             </div>
-            <div class="code-window__body"><span class="code-kw">issue_id</span>: <span class="code-str">"SKAN_Config_Missing"</span>
-<span class="code-kw">quality_axis</span>: <span class="code-str">"Coherent End to End"</span>
-<span class="code-kw">classification</span>: <span class="code-str">"Launch-Blocking"</span>
-<span class="code-kw">rock_size</span>: <span class="code-str">"Large (6+ months)"</span>
+            <div class="code-window__body"><span class="code-pr">issue_id</span><span class="code-punc">:</span> <span class="code-str">"SKAN_Config_Missing"</span>
+<span class="code-pr">quality_axis</span><span class="code-punc">:</span> <span class="code-str">"Coherent End to End"</span>
+<span class="code-pr">classification</span><span class="code-punc">:</span> <span class="code-num">"Launch-Blocking"</span>
+<span class="code-pr">rock_size</span><span class="code-punc">:</span> <span class="code-num">"Large (6+ months)"</span>
 
-<span class="code-kw">problem</span>: <span class="code-str">"No SKAdNetwork section exists. For an iOS campaign, SKAN configuration is foundational to measurement."</span>
+<span class="code-pr">problem</span><span class="code-punc">:</span> <span class="code-str">"No SKAdNetwork section exists. For an iOS campaign, SKAN configuration is foundational to measurement."</span>
 
-<span class="code-kw">user_impact</span>: <span class="code-str">"Enterprise advertisers cannot configure their iOS measurement strategy."</span>
+<span class="code-pr">user_impact</span><span class="code-punc">:</span> <span class="code-str">"Enterprise advertisers cannot configure their iOS measurement strategy."</span>
 
-<span class="code-kw">persona_quote</span>: |
+<span class="code-pr">persona_quote</span><span class="code-punc">:</span> <span class="code-op">|</span>
 <span class="code-str">  "I scrolled through the entire ad set for my iOS campaign.
   Where is SKAdNetwork? My entire iOS strategy depends on
   getting the conversion schema right."</span>
 
-<span class="code-kw">recommended_fix</span>: <span class="code-str">"Surface current SKAN configuration as read-only summary in ad set."</span></div>
+<span class="code-pr">recommended_fix</span><span class="code-punc">:</span> <span class="code-str">"Surface current SKAN configuration as read-only summary in ad set."</span></div>
           </div>
         </div>
       </div>
@@ -2464,6 +2466,9 @@
     .code-fn { color: #61afef; } /* function */
     .code-pr { color: #e06c75; } /* property */
     .code-cm { color: #5c6370; font-style: italic; } /* comment */
+    .code-num { color: #d19a66; } /* number / enum value */
+    .code-op { color: #56b6c2; } /* operator (| block scalar) */
+    .code-punc { color: #7f848e; } /* punctuation (colons) */
 
   </style>
   <div class="pw-overlay" id="pw-overlay" role="dialog" aria-modal="true" aria-label="Password required">
