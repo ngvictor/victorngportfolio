@@ -70,10 +70,11 @@ a size, change it in the CSS; this table follows.
 |------|----------------|--------|-------------|
 | Stat-band number | `clamp(3.25rem, 7vw, 5.5rem)` | 400 (serif token) | 1.0 |
 | Display / hero H1 | `clamp(3rem, 6vw, 5rem)` | 400–700 | 1.05–1.15 |
-| Section title (H2) | `clamp(2rem, 3.5vw, 3rem)` | 700 | 1.1 |
-| Subhead (H3) | `clamp(1.5rem, 2.6vw, 2.1rem)` | 500 | 1.2 |
-| Lead / tldr | `clamp(1.125rem, 2vw, 1.375rem)` | 400 | 1.5 |
-| Body | **1.125rem (18px)** | 400 | 1.5–1.7 |
+| Section title (H2) | `clamp(2.25rem, 4vw, 3.25rem)` | 600 | 1.08 |
+| Subhead (H3) | `clamp(1.75rem, 2.8vw, 2.15rem)` | 600 | 1.2 |
+| Lead / tldr | `clamp(1.5rem, 2.4vw, 1.875rem)` | 400–500 | 1.45 |
+| Body | **1.375rem (22px)** | 400 | 1.5–1.6 |
+| Table / dense data | 1rem (16px) | 400–600 | 1.4 |
 | Caption / label | 0.9375rem (15px) | 400 / 500 | 1.6 |
 
 Adjacent levels should differ enough to read instantly. If two sizes look "close,"
@@ -100,9 +101,12 @@ loses the next line's start.
 - Current note: `.media-caption` is capped at `820px`. At 15px that's ~75–80 chars —
   slightly over. Prefer `max-width: 70ch` for any multi-line caption or paragraph.
 
-### Body size: 16px and up
-*"12px is too small. 14–25px is better."* Body copy is **16–18px minimum**. 15px is
-fine for short captions/labels but not for reading passages.
+### Body size: a large 22px
+*"12px is too small. 14–25px is better."* Body copy on this portfolio is **1.375rem
+(22px)** — a deliberately large, editorial reading size near the top of the guide's
+range. Everything else keys off it: subheads must clear it (H3 ≈ 28–34px, not 22px),
+and secondary text steps down — **1rem (16px)** is the floor for dense UI like tables,
+15px is fine for short captions/labels but not for reading passages.
 
 ### Line-height (leading): 1.2× to 1.5×
 *"In doubt, use a line-spacing of 1.2× to 1.5× the font size."* And it scales with
