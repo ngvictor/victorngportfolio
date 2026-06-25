@@ -1837,6 +1837,10 @@
           <h3 style="font-family: var(--sans); font-size: 1.12rem; font-weight: 600; color: var(--ink); margin: 0 0 8px; line-height: 1.25;">Personas built from Meta’s own frameworks</h3>
           <p style="font-size: 0.95rem; color: var(--ink-secondary); line-height: 1.55; margin: 0;">Distilled from our Product Quality Scorecard and Usability Playbook, so the agent grades the way my team does.</p>
         </div>
+        <div style="border-top: 2px solid var(--accent-gold); padding-top: 16px;">
+          <h3 style="font-family: var(--sans); font-size: 1.12rem; font-weight: 600; color: var(--ink); margin: 0 0 8px; line-height: 1.25;">Runs against the real shipped flows</h3>
+          <p style="font-size: 0.95rem; color: var(--ink-secondary); line-height: 1.55; margin: 0;">Our codebase is linked in Claude, so the agent tests the actual app-ad flows from source, not whatever a test account surfaces.</p>
+        </div>
       </div>
 
       <!-- Synthesis Diagram: internal frameworks → the agent -->
@@ -2171,52 +2175,10 @@
       </div>
     </section>
 
-    <!-- 05. PROCESS & ITERATION -->
+    <!-- 05. FROM FINDING TO FIX -->
     <section class="cs-section fade-up">
       <div class="cs-section__header">
-        <span class="section-label">05. Process</span>
-        <h2 class="section-title">Key Design <em>Decisions</em></h2>
-      </div>
-
-      <p class="body-text">The skill is a set of modular markdown files, kept deliberately separate. The evaluation engine stays fixed while personas and flows swap in and out, so any team at Meta can fork it for their own surface in a day without touching the core logic.</p>
-
-      <div class="code-window" style="margin: 32px 0 56px; max-width: 760px;">
-        <div class="code-window__header">
-          <div class="code-window__dots">
-            <div class="code-window__dot code-window__dot--red"></div>
-            <div class="code-window__dot code-window__dot--yellow"></div>
-            <div class="code-window__dot code-window__dot--green"></div>
-          </div>
-          <div class="code-window__title">app-promotion-dogfooding/</div>
-        </div>
-        <div class="code-window__body"><span class="code-pr">SKILL.md</span>                  <span class="code-cm"># Setup wizard → launches the session</span>
-<span class="code-pr">references/</span>
-├── <span class="code-pr">agent.md</span>              <span class="code-cm"># CAPTURE → EVALUATE → ACT protocol + quality rubric</span>
-├── <span class="code-pr">personas/</span>
-│   ├── priya_first_time.md
-│   └── marcus_enterprise.md
-├── <span class="code-pr">flows/</span>
-│   └── e2e_app_promotion.md
-└── <span class="code-fn">dogfood-connect.sh</span>    <span class="code-cm"># Drives live Ads Manager via Chrome DevTools Protocol</span></div>
-      </div>
-
-      <div style="max-width: 820px;">
-        <div style="background: var(--surface-raised); border-left: 3px solid var(--accent-gold); padding: 24px; margin-bottom: 32px; border-radius: 0 12px 12px 0;">
-          <h3 style="font-family: var(--sans); font-size: 1.1rem; color: var(--ink); margin-bottom: 12px;">Iteration: two personas, not three</h3>
-          <p class="body-text" style="margin-bottom: 0; font-size: 1rem;">
-            I started with three personas. Testing showed the middle “agency” persona was producing overlapping noise rather than distinct findings, so I cut it to two extreme archetypes: First Time Priya (catches onboarding gaps) and Enterprise Marcus (catches power user friction). Two clear voices gave far cleaner signal than three that overlapped.
-          </p>
-        </div>
-
-        <p class="body-text"><strong>App specific focus areas</strong><br>I spelled out the areas the agent has to inspect (Objective selection, App selection, SKAdNetwork). Without that, it just evaluates whatever is most visually prominent. This keeps the attention on the surfaces our team actually owns.</p>
-        <p class="body-text" style="margin-bottom: 0;"><strong>Wired into our codebase</strong><br>Our codebase is connected inside Claude, so I can spin up every app ads flow the agent needs to evaluate, generated straight from the source. That means a usability pass runs against the real states we ship, the full set of screens and edge cases a flow has to cover, not just whatever a test account happens to surface.</p>
-      </div>
-    </section>
-
-    <!-- 06. FROM FINDING TO FIX -->
-    <section class="cs-section fade-up">
-      <div class="cs-section__header">
-        <span class="section-label">06. From Finding to Fix</span>
+        <span class="section-label">05. From Finding to Fix</span>
         <h2 class="section-title">I Found the Issues, Then <em>Shipped the Fixes Myself.</em></h2>
       </div>
 
@@ -2304,10 +2266,10 @@
       </div>
     </section>
 
-    <!-- 07. REFLECTION -->
+    <!-- 06. REFLECTION -->
     <section class="cs-section fade-up">
       <div class="cs-section__header">
-        <span class="section-label">07. Reflection</span>
+        <span class="section-label">06. Reflection</span>
         <h2 class="section-title">What I’d Watch, and <em>Where It Goes</em></h2>
       </div>
 
