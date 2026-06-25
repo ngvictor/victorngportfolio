@@ -89,6 +89,7 @@
       font-size: 16px;
       scrollbar-width: none;       /* Firefox */
       -ms-overflow-style: none;    /* IE/Edge legacy */
+      overflow-x: clip;            /* lock horizontal: no side-to-side slide on mobile */
     }
 
     html::-webkit-scrollbar {
@@ -179,6 +180,7 @@
       pointer-events: none;
       z-index: 99999;
       transform: translate(-50%, -50%);
+      will-change: transform;
       transition:
         width 0.3s var(--ease-out-expo),
         height 0.3s var(--ease-out-expo),
@@ -2785,8 +2787,7 @@
       document.documentElement.classList.add('cursor-active');
 
       window.addEventListener('mousemove', function (e) {
-        dot.style.left = e.clientX + 'px';
-        dot.style.top  = e.clientY + 'px';
+        dot.style.transform = 'translate3d(' + e.clientX + 'px, ' + e.clientY + 'px, 0) translate(-50%, -50%)';
       }, { passive: true });
 
       document.addEventListener('mouseleave', function () { dot.style.opacity = '0'; });
