@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Victor Ng — Reinventing Work Events in VR</title>
+  <meta name="description" content="A product vision for running real work events in VR. I designed the audience and presenter experiences, including the 2D tooling a host uses to set up and run the event. High-level overview, full walkthrough on request.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================
+       SELF-HOSTED FONT — Instagram Sans
+       ======================================== */
+    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    /* ========================================
+       DESIGN TOKENS — Light Premium
+       ======================================== */
+    :root {
+      --ink: #1a1814;
+      --ink-secondary: #5c574f;
+      --ink-muted: #8b8780;
+      --ink-faint: #d8d4cc;
+      --surface: #ffffff;
+      --surface-raised: #f7f5f2;
+      --surface-card: #f5f3ef;
+      --surface-card-hover: #efece6;
+      --border: rgba(0,0,0,0.08);
+      --border-hover: rgba(0,0,0,0.15);
+      --accent-craft: #2c4a3e;
+      --accent-gold: #2d6a4f;
+      --accent-blue: #2f6fd6;
+      --serif: 'Instagram Sans', 'DM Sans', system-ui, sans-serif;
+      --sans: 'Instagram Sans', 'DM Sans', system-ui, sans-serif;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      --header-height: 80px;
+      --content-max: 1400px;
+      --content-narrow: 720px;
+    }
+
+    /* ========================================
+       RESET & BASE
+       ======================================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; font-size: 16px; scrollbar-width: none; -ms-overflow-style: none; }
+    html::-webkit-scrollbar { display: none; }
+    body { font-family: var(--sans); background-color: var(--surface); color: var(--ink); line-height: 1.6; overflow-x: clip; }
+    a { color: inherit; text-decoration: none; }
+    img, video { display: block; max-width: 100%; height: auto; border-radius: 12px; }
+
+    /* ========================================
+       NAVIGATION
+       ======================================== */
+    .top-nav {
+      position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
+      display: flex; align-items: center; justify-content: center; padding: 0 48px;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.5s ease, border-color 0.5s ease;
+    }
+    .top-nav.is-light { background: rgba(255, 255, 255, 0.85); border-bottom-color: var(--border); }
+    .nav-section-label {
+      font-family: var(--sans); font-size: 0.6875rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted);
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo), color 0.4s ease;
+    }
+    .nav-section-label.is-visible { opacity: 1; transform: translateY(0); }
+    .back-link {
+      position: absolute; left: 48px;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px;
+      color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16); border-radius: 50%;
+      transition: var(--transition-smooth);
+    }
+    .back-link:hover { color: #fff; background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.28); }
+    .top-nav.is-light .back-link { color: var(--ink-secondary); background: var(--surface-card); border-color: var(--border); }
+    .top-nav.is-light .back-link:hover { color: var(--ink); background: var(--surface-card-hover); border-color: var(--border-hover); }
+    .top-nav.is-light .nav-section-label { color: var(--ink-muted); }
+    .back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ========================================
+       LAYOUT
+       ======================================== */
+    .case-wrapper { max-width: var(--content-max); margin: 0 auto; padding: 0 48px 120px; padding-top: var(--header-height); }
+
+    /* ========================================
+       HERO
+       ======================================== */
+    .hero-stage { position: relative; left: 50%; transform: translateX(-50%); width: 100vw; margin-bottom: 96px; }
+    .hero-sticky {
+      position: sticky; top: var(--header-height); z-index: 1;
+      min-height: calc(100vh - var(--header-height));
+      display: flex; flex-direction: column; justify-content: flex-end;
+      will-change: opacity, transform; overflow: hidden;
+    }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+    .hero-bg img, .hero-bg video { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+    .hero-content { position: relative; z-index: 1; padding: 0 48px 64px; max-width: var(--content-max); margin: 0 auto; width: 100%; }
+    .hero-content__left { flex: 1; min-width: 0; }
+
+    .cs-hero__title {
+      font-family: var(--serif); font-size: clamp(3rem, 6vw, 5rem); line-height: 1.05;
+      font-weight: 400; color: #ffffff; letter-spacing: -0.03em; max-width: 900px; margin-bottom: 20px;
+    }
+    .cs-hero__tldr {
+      font-family: var(--sans); font-size: clamp(1.125rem, 2vw, 1.375rem); font-weight: 400;
+      color: rgba(255,255,255,0.65); max-width: 800px; margin-bottom: 40px; line-height: 1.5;
+    }
+    .metadata-matrix {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 24px;
+      border-top: 1px solid rgba(255,255,255,0.12); border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding: 32px 0;
+    }
+    .meta-item { display: flex; flex-direction: column; gap: 8px; }
+    .meta-item__label { font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .meta-item__value { font-family: var(--sans); font-size: 0.9375rem; font-weight: 500; color: rgba(255,255,255,0.85); }
+
+    .hero-reveal {
+      position: relative; z-index: 2; background: var(--surface);
+      border-radius: 24px 24px 0 0; box-shadow: 0 -40px 80px -20px rgba(0,0,0,0.12); margin: 0 24px;
+    }
+    .hero-reveal .media-container { border-radius: 24px 24px 0 0; border: none; }
+
+    /* ========================================
+       LOOKBOOK NOTE — single framing line
+       ======================================== */
+    .lookbook-note {
+      max-width: 760px; margin: 0 auto 110px; text-align: center;
+      font-family: var(--serif); font-size: clamp(1.35rem, 2.4vw, 1.9rem); line-height: 1.4;
+      color: var(--ink); letter-spacing: -0.01em;
+    }
+    .lookbook-note span { color: var(--ink-muted); }
+
+    /* ========================================
+       STAT STRIP — a few high-level numbers
+       ======================================== */
+    .stat-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+      max-width: var(--content-max); margin: 0 auto 110px;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 44px 0;
+    }
+    .stat { display: flex; flex-direction: column; gap: 8px; }
+    .stat__num { font-family: var(--serif); font-size: clamp(2.25rem, 4vw, 3rem); line-height: 1; color: var(--accent-gold); letter-spacing: -0.01em; }
+    .stat__label { font-family: var(--sans); font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.5; }
+    @media (max-width: 768px) {
+      .stat-strip { grid-template-columns: 1fr 1fr; gap: 28px 24px; margin-bottom: 80px; padding: 36px 0; }
+    }
+
+    /* ========================================
+       SCROLL PROGRESS
+       ======================================== */
+    .scroll-progress { position: fixed; top: 0; right: 0; width: 5px; height: 100vh; z-index: 200; pointer-events: none; background: rgba(0,0,0,0.05); }
+    .scroll-progress__fill { width: 100%; height: 0%; background: var(--accent-gold); border-radius: 0 0 2px 2px; box-shadow: 0 0 12px rgba(45,106,79,0.45); transition: height 0.15s linear; }
+
+    /* ========================================
+       GALLERY SECTIONS
+       ======================================== */
+    .gallery { margin-bottom: 120px; scroll-margin-top: var(--header-height); }
+    .gallery__head { max-width: var(--content-narrow); margin-bottom: 40px; }
+    .gallery__label {
+      font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent-gold); margin-bottom: 14px; display: block;
+    }
+    .gallery__title {
+      font-family: var(--serif); font-size: clamp(1.875rem, 3.2vw, 2.75rem); line-height: 1.1;
+      font-weight: 400; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 14px;
+    }
+    .gallery__lead { font-family: var(--sans); font-size: 1.0625rem; color: var(--ink-secondary); line-height: 1.6; }
+
+    .stack { display: flex; flex-direction: column; gap: 24px; }
+
+    /* ========================================
+       MEDIA
+       ======================================== */
+    .media-container { width: 100%; border-radius: 16px; overflow: hidden; background: var(--surface-card); border: 1px solid var(--border); position: relative; }
+    .media-container--wide { aspect-ratio: 16/7; }
+    .media-container--full { aspect-ratio: 16/9; }
+    .media-container--tall { aspect-ratio: 4/3; }
+    .media-placeholder {
+      position: absolute; inset: 0;
+      background: linear-gradient(145deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.01) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--ink-muted); font-family: var(--sans); font-size: 0.8125rem;
+      letter-spacing: 0.03em; gap: 10px; padding: 24px; text-align: center;
+    }
+    .media-placeholder__id { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-gold); }
+    .media-placeholder__desc { max-width: 460px; line-height: 1.5; }
+    .media-caption {
+      font-family: var(--sans); font-size: 0.9rem; color: var(--ink-muted);
+      line-height: 1.55; margin: 12px 2px 0; text-align: left;
+    }
+
+    .media-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .media-row--4 { grid-template-columns: repeat(2, 1fr); }
+    .media-cell { display: flex; flex-direction: column; }
+
+    /* ========================================
+       CTA BAND — present in full on request
+       ======================================== */
+    .cta-band {
+      position: relative; left: 50%; transform: translateX(-50%); width: 100vw;
+      background: #0e1f18; color: #fff; padding: 100px 48px; margin: 0 0 0;
+      text-align: center;
+    }
+    .cta-band__label { font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #5fbf8a; margin-bottom: 22px; display: block; }
+    .cta-band__title { font-family: var(--serif); font-size: clamp(1.8rem, 3.4vw, 2.8rem); line-height: 1.2; font-weight: 400; letter-spacing: -0.02em; max-width: 760px; margin: 0 auto 18px; }
+    .cta-band__sub { font-family: var(--sans); font-size: 1.0625rem; color: rgba(255,255,255,0.7); max-width: 560px; margin: 0 auto 36px; line-height: 1.6; }
+    .cta-band__btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--sans); font-size: 0.95rem; font-weight: 600; color: #0e1f18;
+      background: #fff; border-radius: 999px; padding: 14px 26px;
+      transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s var(--ease-out-expo);
+    }
+    .cta-band__btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+    .cta-band__btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ========================================
+       NEXT PROJECT FOOTER
+       ======================================== */
+    .next-project { margin-top: 120px; padding-top: 80px; border-top: 1px solid var(--border); text-align: center; }
+    .next-project__label { font-family: var(--sans); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 24px; display: block; }
+    .next-project__title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.5rem); color: var(--ink); display: inline-block; transition: color 0.3s ease; }
+    .next-project__title:hover { color: var(--accent-gold); }
+
+    /* ========================================
+       RESPONSIVE
+       ======================================== */
+    @media (max-width: 1024px) {
+      .media-row, .media-row--4 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .case-wrapper { padding: calc(var(--header-height) + 40px) 24px 80px; }
+      .hero-stage { margin-top: -40px; }
+      .top-nav { padding: 0 24px; }
+      .cs-hero__title { font-size: 2.5rem; }
+      .hero-sticky { min-height: 70vh; position: static; margin-bottom: 0; }
+      .hero-reveal { box-shadow: none; margin: 0; border-radius: 0; }
+      .hero-reveal .media-container { border-radius: 0; }
+      .hero-content { padding: 40px 24px 48px; }
+      .nav-section-label { display: none; }
+      .cta-band { padding: 72px 24px; }
+    }
+    @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    body { animation: pageFadeIn 0.35s ease forwards; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "46812fba28814386916d78b3cddc404c"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress__fill" id="scrollProgressFill"></div>
+  </div>
+
+  <nav class="top-nav">
+    <span class="nav-section-label" id="navSectionLabel"></span>
+    <a href="index.html" class="back-link" aria-label="Back to Home">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    </a>
+  </nav>
+
+  <main class="case-wrapper">
+
+    <!-- ============================================
+         HERO
+         ============================================ -->
+    <div class="hero-stage" id="heroStage">
+      <header class="hero-sticky" id="heroSticky">
+        <div class="hero-bg" style="background: linear-gradient(165deg, #12283a 0%, #0c141c 55%, #0a0a0a 100%);"></div>
+        <div class="hero-content">
+          <div class="hero-content__left">
+            <h1 class="cs-hero__title">Reinventing work events in VR</h1>
+            <p class="cs-hero__tldr">
+              A product vision for running real work events in VR. I designed the audience and presenter experiences, including the 2D tooling a host uses to set up and run the whole event.
+            </p>
+          </div>
+          <div class="metadata-matrix">
+            <div class="meta-item">
+              <span class="meta-item__label">Role</span>
+              <span class="meta-item__value">Product Designer, audience &amp; presenter experience</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-item__label">Medium</span>
+              <span class="meta-item__value">VR and 2D web</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-item__label">Status</span>
+              <span class="meta-item__value">Product vision</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-item__label">Access</span>
+              <span class="meta-item__value">Full case study on request</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="hero-reveal">
+        <section class="media-container media-container--wide">
+          <div class="media-placeholder">
+            <span class="media-placeholder__id">Render · Hero</span>
+            <span class="media-placeholder__desc">Attendees mingling at a cocktail table in a VR social lounge, mountain skybox, shared props.</span>
+          </div>
+          <!-- asset: assets/images/projects/horizon-vr/horizon-vr-hero-01.jpg -->
+        </section>
+      </div>
+    </div>
+
+    <!-- ============================================
+         FRAMING LINE
+         ============================================ -->
+    <p class="lookbook-note fade-up">
+      A high-level look at the work. <span>I can present the full project, the research, the decisions and the trade-offs, on request.</span>
+    </p>
+
+    <!-- ============================================
+         STAT STRIP — high-level, anonymized
+         ============================================ -->
+    <div class="stat-strip fade-up" aria-label="At a glance">
+      <div class="stat">
+        <span class="stat__num">26%</span>
+        <span class="stat__label">Drop in cross-team connection when work went hybrid, the problem this set out to fix</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num">15&ndash;20%</span>
+        <span class="stat__label">Projected cut in event cost versus flying teams in</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num">4&times;</span>
+        <span class="stat__label">Faster skills training in VR than on a video call</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num">Closed beta</span>
+        <span class="stat__label">The vision was productized into a real Events module</span>
+      </div>
+    </div>
+    <!-- VICTOR: if the team's traction numbers are yours to claim (a teammate published "29 beta partners / 400+ sessions"), they'd be stronger than the case numbers here. Confirm before swapping in. -->
+
+    <!-- ============================================
+         AUDIENCE EXPERIENCE
+         ============================================ -->
+    <section class="gallery fade-up" id="gallery-audience" data-section-label="Audience Experience">
+      <div class="gallery__head">
+        <span class="gallery__label">In VR</span>
+        <h2 class="gallery__title">The audience experience</h2>
+        <p class="gallery__lead">What an attendee lives through, from joining to the conversations afterward.</p>
+      </div>
+
+      <div class="stack">
+
+        <!-- Joining — two 2D surfaces -->
+        <div class="media-row">
+          <div class="media-cell">
+            <div class="media-container media-container--tall">
+              <div class="media-placeholder">
+                <span class="media-placeholder__id">Join</span>
+                <span class="media-placeholder__desc">Calendar invite and event microsite, each with one "Join in VR" button.</span>
+              </div>
+              <!-- asset: assets/images/projects/horizon-vr/horizon-vr-join-01.png -->
+            </div>
+            <p class="media-caption">Joining, where people already are.</p>
+          </div>
+          <div class="media-cell">
+            <div class="media-container media-container--tall">
+              <div class="media-placeholder">
+                <span class="media-placeholder__id">Event page</span>
+                <span class="media-placeholder__desc">2D event page: live room preview, run-of-show, comments and questions.</span>
+              </div>
+              <!-- asset: assets/images/projects/horizon-vr/horizon-vr-event-page-01.png -->
+            </div>
+            <p class="media-caption">A 2D home base before the headset.</p>
+          </div>
+        </div>
+
+        <!-- Pre-event social -->
+        <div class="media-cell">
+          <div class="media-container media-container--full">
+            <div class="media-placeholder">
+              <span class="media-placeholder__id">Pre-event social</span>
+              <span class="media-placeholder__desc">Avatars gathered at a cocktail table, mountain skybox, shared props.</span>
+            </div>
+            <!-- asset: assets/images/projects/horizon-vr/horizon-vr-social-01.jpg -->
+          </div>
+          <p class="media-caption">Warming the room up at small, auto-seated tables.</p>
+        </div>
+
+        <!-- The stage -->
+        <div class="media-cell">
+          <div class="media-container media-container--full">
+            <div class="media-placeholder">
+              <span class="media-placeholder__id">The stage</span>
+              <span class="media-placeholder__desc">Presenter on a circular stage, giant 3D anniversary mark, sculpted terrain, starfield.</span>
+            </div>
+            <!-- asset: assets/images/projects/horizon-vr/horizon-vr-stage-01.jpg -->
+          </div>
+          <p class="media-caption">Arriving on stage together with your table.</p>
+        </div>
+
+        <!-- Immersive content — 4 up -->
+        <div class="media-row media-row--4">
+          <div class="media-cell">
+            <div class="media-container media-container--tall">
+              <div class="media-placeholder">
+                <span class="media-placeholder__id">Immersive slides</span>
+                <span class="media-placeholder__desc">2D slides on floating panels beside a 3D model.</span>
+              </div>
+              <!-- asset: assets/images/projects/horizon-vr/horizon-vr-immersive-01.png -->
+            </div>
+          </div>
+          <div class="media-cell">
+            <div class="media-container media-container--tall">
+              <div class="media-placeholder">
+                <span class="media-placeholder__id">Environment morph</span>
+                <span class="media-placeholder__desc">The room becomes desert dunes with floating specs.</span>
+              </div>
+              <!-- asset: assets/images/projects/horizon-vr/horizon-vr-immersive-02.jpg -->
+            </div>
+          </div>
+          <div class="media-cell">
+            <div class="media-container media-container--tall">
+              <div class="media-placeholder">
+                <span class="media-placeholder__id">Hold the object</span>
+                <span class="media-placeholder__desc">An attendee holds their own copy of a 3D object.</span>
+              </div>
+              <!-- asset: assets/images/projects/horizon-vr/horizon-vr-immersive-03.png -->
+            </div>
+          </div>
+          <div class="media-cell">
+            <div class="media-container media-container--tall">
+              <div class="media-placeholder">
+                <span class="media-placeholder__id">One big stat</span>
+                <span class="media-placeholder__desc">A forest scene frames a single statistic.</span>
+              </div>
+              <!-- asset: assets/images/projects/horizon-vr/horizon-vr-immersive-04.jpg -->
+            </div>
+          </div>
+        </div>
+        <p class="media-caption">Immersive content: the room re-skins per beat, and any object becomes something you can pick up.</p>
+
+        <!-- Q&A + Post-event -->
+        <div class="media-row">
+          <div class="media-cell">
+            <div class="media-container media-container--tall">
+              <div class="media-placeholder">
+                <span class="media-placeholder__id">Q&amp;A</span>
+                <span class="media-placeholder__desc">A queued attendee teleported on stage with the presenter.</span>
+              </div>
+              <!-- asset: assets/images/projects/horizon-vr/horizon-vr-qa-01.png -->
+            </div>
+            <p class="media-caption">Speaking up, in person, from a queue.</p>
+          </div>
+          <div class="media-cell">
+            <div class="media-container media-container--tall">
+              <div class="media-placeholder">
+                <span class="media-placeholder__id">Post-event</span>
+                <span class="media-placeholder__desc">The group reconvenes in a smaller room, 2D colleagues on a screen.</span>
+              </div>
+              <!-- asset: assets/images/projects/horizon-vr/horizon-vr-post-event-01.png -->
+            </div>
+            <p class="media-caption">The hallway afterward, kept warm.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================
+         PRESENTER EXPERIENCE
+         ============================================ -->
+    <section class="gallery fade-up" id="gallery-presenter" data-section-label="Presenter Experience">
+      <div class="gallery__head">
+        <span class="gallery__label">In VR</span>
+        <h2 class="gallery__title">The presenter experience</h2>
+        <p class="gallery__lead">What a host uses to stay in control and read the room, live in the headset.</p>
+      </div>
+
+      <div class="media-row">
+        <div class="media-cell">
+          <div class="media-container media-container--tall">
+            <div class="media-placeholder">
+              <span class="media-placeholder__id">Presenter cockpit</span>
+              <span class="media-placeholder__desc">In-VR view: the full audience, notes, the next scene, a backstage support line.</span>
+            </div>
+            <!-- asset: assets/images/projects/horizon-vr/horizon-vr-cockpit-01.png -->
+          </div>
+          <p class="media-caption">A cockpit so the presenter is never stranded.</p>
+        </div>
+        <div class="media-cell">
+          <div class="media-container media-container--tall">
+            <div class="media-placeholder">
+              <span class="media-placeholder__id">Feel the room</span>
+              <span class="media-placeholder__desc">Live reactions float over the audience in real time.</span>
+            </div>
+            <!-- asset: assets/images/projects/horizon-vr/horizon-vr-reactions-01.png -->
+          </div>
+          <p class="media-caption">Reactions that put the feedback loop back.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         2D EVENT TOOLING
+         ============================================ -->
+    <section class="gallery fade-up" id="gallery-studio" data-section-label="2D Event Tooling">
+      <div class="gallery__head">
+        <span class="gallery__label">In 2D</span>
+        <h2 class="gallery__title">Running the event, from a screen</h2>
+        <p class="gallery__lead">The 2D tooling a presenter or producer uses to set up, stage content and run the whole event, without living in a headset.</p>
+      </div>
+
+      <div class="stack">
+        <div class="media-cell">
+          <div class="media-container media-container--full">
+            <div class="media-placeholder">
+              <span class="media-placeholder__id">Event Studio</span>
+              <span class="media-placeholder__desc">2D backstage: room preview, a content-insert menu, and a broadcast-agenda timeline.</span>
+            </div>
+            <!-- asset: assets/images/projects/horizon-vr/horizon-vr-studio-01.png -->
+          </div>
+          <p class="media-caption">Event Studio: build the agenda and stage content from a familiar 2D surface.</p>
+        </div>
+
+        <div class="media-row">
+          <div class="media-cell">
+            <div class="media-container media-container--tall">
+              <div class="media-placeholder">
+                <span class="media-placeholder__id">Event setup</span>
+                <span class="media-placeholder__desc">Creating the event: details, room, co-hosts, run-of-show.</span>
+              </div>
+              <!-- asset: assets/images/projects/horizon-vr/horizon-vr-setup-01.png -->
+            </div>
+            <p class="media-caption">Setting an event up, start to finish.</p>
+          </div>
+          <div class="media-cell">
+            <div class="media-container media-container--tall">
+              <div class="media-placeholder">
+                <span class="media-placeholder__id">Content staging</span>
+                <span class="media-placeholder__desc">Staging slides, video, environments and 3D objects into each scene.</span>
+              </div>
+              <!-- asset: assets/images/projects/horizon-vr/horizon-vr-staging-01.png -->
+            </div>
+            <p class="media-caption">Staging content into each beat of the show.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================
+       CTA BAND — present in full on request
+       ============================================ -->
+  <section class="cta-band fade-up">
+    <span class="cta-band__label">The full story</span>
+    <h2 class="cta-band__title">There's a lot more behind this.</h2>
+    <p class="cta-band__sub">This is the high-level version. I can walk through the research, the decisions and the trade-offs end to end, on request.</p>
+    <a href="mailto:ngvictor11@gmail.com?subject=VR%20work%20events%20walkthrough" class="cta-band__btn">
+      Request a walkthrough
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
+  </section>
+
+  <main class="case-wrapper" style="padding-top: 0; padding-bottom: 120px;">
+    <footer class="next-project fade-up" style="margin-top: 0; border-top: none; padding-top: 80px;">
+      <span class="next-project__label">Next Case Study</span>
+      <a href="project-playable-ads.html" class="next-project__title">Playable Ads &rarr;</a>
+    </footer>
+  </main>
+
+  <!-- SCROLL REVEAL -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elements = document.querySelectorAll('.fade-up');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+      elements.forEach(function(el) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+        observer.observe(el);
+      });
+    });
+  </script>
+
+  <!-- HERO SCROLL REVEAL -->
+  <script>
+    (function () {
+      var stage  = document.getElementById('heroStage');
+      var sticky = document.getElementById('heroSticky');
+      if (!stage || !sticky) return;
+      var ticking = false;
+      function ease(t) { return 1 - Math.pow(1 - t, 3); }
+      function update() {
+        ticking = false;
+        if (window.matchMedia('(max-width: 768px)').matches) {
+          sticky.style.opacity = '1'; sticky.style.transform = 'none'; sticky.style.filter = 'none'; return;
+        }
+        var rect = stage.getBoundingClientRect();
+        var vh = window.innerHeight;
+        var scrolled = -rect.top;
+        var progress = Math.min(Math.max(scrolled / (vh * 0.9), 0), 1);
+        var e = ease(progress);
+        sticky.style.opacity   = String(1 - e);
+        sticky.style.transform = 'translateY(' + (e * -48) + 'px) scale(' + (1 - e * 0.04) + ')';
+        sticky.style.filter    = 'blur(' + (e * 6) + 'px)';
+      }
+      function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+      sticky.style.transition = 'opacity 0.1s linear, filter 0.1s linear';
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      update();
+    })();
+  </script>
+
+  <!-- SECTION LABEL IN NAV -->
+  <script>
+    (function () {
+      var label = document.getElementById('navSectionLabel');
+      var sections = document.querySelectorAll('[data-section-label]');
+      if (!label || !sections.length) return;
+      var current = '';
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var text = entry.target.getAttribute('data-section-label');
+            if (text !== current) {
+              current = text;
+              label.classList.remove('is-visible');
+              setTimeout(function () { label.textContent = current; label.classList.add('is-visible'); }, 150);
+            }
+          }
+        });
+      }, {
+        rootMargin: '-' + (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) + 1) + 'px 0px -60% 0px',
+        threshold: 0
+      });
+      sections.forEach(function (s) { observer.observe(s); });
+      var heroStage = document.getElementById('heroStage');
+      if (heroStage) {
+        var heroObserver = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) { current = ''; label.classList.remove('is-visible'); }
+        }, { threshold: 0.3 });
+        heroObserver.observe(heroStage);
+      }
+    })();
+  </script>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <script>
+    (function () {
+      var fill = document.getElementById('scrollProgressFill');
+      if (!fill) return;
+      var ticking = false;
+      function update() {
+        ticking = false;
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) * 100 : 0;
+        fill.style.height = pct + '%';
+      }
+      window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+      update();
+    })();
+  </script>
+
+  <!-- NAV DARK/LIGHT TRANSITION -->
+  <script>
+    (function () {
+      var nav = document.querySelector('.top-nav');
+      var heroReveal = document.querySelector('.hero-reveal');
+      if (!nav || !heroReveal) return;
+      function update() { nav.classList.toggle('is-light', heroReveal.getBoundingClientRect().top <= 0); }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+
+  <!-- ===== PASSWORD GATE ===== -->
+  <style>
+    .pw-overlay{position:fixed;inset:0;z-index:9000;background:rgba(247,245,242,0.5);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s ease;}
+    .pw-overlay.is-open{opacity:1;pointer-events:all;}
+    .pw-modal{background:linear-gradient(150deg,rgba(255,255,255,0.72),rgba(255,255,255,0.42));border:1px solid rgba(255,255,255,0.85);border-radius:24px;padding:48px 44px 40px;max-width:420px;width:calc(100% - 48px);backdrop-filter:blur(40px) saturate(200%);-webkit-backdrop-filter:blur(40px) saturate(200%);box-shadow:0 30px 80px rgba(0,0,0,0.14),inset 0 1px 1px rgba(255,255,255,1),inset 0 -1px 2px rgba(0,0,0,0.05);text-align:left;position:relative;transform:translateY(14px) scale(0.97);transition:transform 0.45s cubic-bezier(0.16,1,0.3,1);}
+    .pw-overlay.is-open .pw-modal{transform:translateY(0) scale(1);}
+    .pw-modal__lock{width:46px;height:46px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.85);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 0 22px;box-shadow:inset 0 1px 1px rgba(255,255,255,0.9),0 2px 8px rgba(0,0,0,0.04);}
+    .pw-modal__lock svg{width:20px;height:20px;color:#5c574f;}
+    .pw-modal__title{font-family:'DM Sans',sans-serif;font-size:1.45rem;font-weight:600;letter-spacing:-0.02em;line-height:1.18;color:#1a1814;margin-bottom:12px;}
+    .pw-modal__sub{font-family:'DM Sans',sans-serif;font-size:0.875rem;color:#8b8780;line-height:1.55;margin-bottom:28px;}
+    .pw-modal__sub a{color:#1a1814;font-weight:500;text-decoration:underline;text-underline-offset:2px;}
+    .pw-modal__field{display:flex;gap:10px;margin-bottom:12px;}
+    .pw-modal__input{flex:1;font-family:'DM Sans',sans-serif;font-size:0.9375rem;padding:12px 16px;border:1px solid rgba(255,255,255,0.7);border-radius:12px;background:rgba(255,255,255,0.45);color:#1a1814;outline:none;transition:border-color 0.2s,background 0.2s;box-shadow:inset 0 1px 2px rgba(0,0,0,0.04);}
+    .pw-modal__input:focus{border-color:rgba(94,170,141,0.85);background:rgba(255,255,255,0.62);}
+    .pw-modal__input.is-error{border-color:#e05c5c;}
+    .pw-modal__submit{font-family:'DM Sans',sans-serif;font-size:0.9375rem;font-weight:600;padding:12px 20px;background:#1a1814;color:#fff;border:none;border-radius:12px;cursor:pointer;transition:opacity 0.2s,transform 0.2s;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,0.18);}
+    .pw-modal__submit:hover{opacity:0.9;transform:translateY(-1px);}
+    .pw-modal__error{font-family:'DM Sans',sans-serif;font-size:0.8125rem;color:#e05c5c;min-height:18px;}
+    .pw-modal__close{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#8b8780;transition:background 0.2s;}
+    .pw-modal__close:hover{background:rgba(255,255,255,0.55);}
+  </style>
+  <div class="pw-overlay" id="pw-overlay" role="dialog" aria-modal="true" aria-label="Password required">
+    <div class="pw-modal" style="position:relative;">
+      <button class="pw-modal__close" id="pw-close" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <div class="pw-modal__lock">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      </div>
+      <h2 class="pw-modal__title">These case studies are private.</h2>
+      <p class="pw-modal__sub">They go deep on live work at Meta. The password is in my CV, or email me at <a href="mailto:ngvictor11@gmail.com">ngvictor11@gmail.com</a> and I’ll send it over.</p>
+      <div class="pw-modal__field">
+        <input class="pw-modal__input" id="pw-input" type="password" placeholder="Password" autocomplete="off">
+        <button class="pw-modal__submit" id="pw-submit">Unlock</button>
+      </div>
+      <p class="pw-modal__error" id="pw-error"></p>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var PASS = 'biscuit';
+      var SESSION_KEY = 'vn_unlocked';
+      var overlay = document.getElementById('pw-overlay');
+      var input   = document.getElementById('pw-input');
+      var submit  = document.getElementById('pw-submit');
+      var error   = document.getElementById('pw-error');
+      var closeBtn = document.getElementById('pw-close');
+      if (sessionStorage.getItem(SESSION_KEY) === '1') { return; }
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () { input.focus(); }, 100);
+      function attempt() {
+        if (input.value.trim().toLowerCase() === PASS) {
+          sessionStorage.setItem(SESSION_KEY, '1');
+          overlay.classList.remove('is-open');
+          document.body.style.overflow = '';
+        } else {
+          input.classList.add('is-error');
+          error.textContent = 'Incorrect password. Try again.';
+          input.value = ''; input.focus();
+        }
+      }
+      function dismiss() { window.location.href = 'index.html'; }
+      submit.addEventListener('click', attempt);
+      input.addEventListener('keydown', function (e) { if (e.key === 'Enter') attempt(); });
+      closeBtn.addEventListener('click', dismiss);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) dismiss(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dismiss(); });
+    })();
+  </script>
+
+  <!-- PAGE TRANSITION ON INTERNAL LINKS -->
+  <script>
+    document.querySelectorAll('a[href]').forEach(function(link) {
+      var href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.body.style.transition = 'opacity 0.25s ease';
+        document.body.style.opacity = '0';
+        setTimeout(function() { window.location = href; }, 260);
+      });
+    });
+  </script>
+
+  <!-- Floating contact nav (homepage-style glass pill; appears on scroll-up) -->
+  <style>
+    .proj-nav{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(140%);z-index:1000;display:flex;align-items:center;gap:6px;padding:8px;border-radius:100px;background:rgba(255,255,255,0.5);backdrop-filter:blur(14px) saturate(185%);-webkit-backdrop-filter:blur(14px) saturate(185%);border:1px solid rgba(255,255,255,0.55);box-shadow:0 8px 30px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.06),inset 0 1px 1px rgba(255,255,255,0.9),inset 0 -1px 2px rgba(255,255,255,0.4);opacity:0;pointer-events:none;transition:transform 0.5s cubic-bezier(0.16,1,0.3,1),opacity 0.4s ease;}
+    .proj-nav.is-visible{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto;}
+    .proj-nav__link{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:0.95rem;font-weight:500;color:var(--ink-secondary);padding:9px 18px;border-radius:100px;transition:color 0.25s ease,background 0.25s ease;white-space:nowrap;}
+    .proj-nav__link:hover{color:var(--ink);background:rgba(0,0,0,0.05);}
+    .proj-nav__link svg{width:15px;height:15px;flex-shrink:0;}
+    @media (max-width:480px){.proj-nav__link{padding:9px 15px;font-size:0.9rem;}}
+    @media (prefers-reduced-motion: reduce){.proj-nav{transition:opacity 0.3s ease;}}
+  </style>
+  <nav class="proj-nav" id="proj-nav" aria-label="Contact">
+    <a class="proj-nav__link" href="mailto:ngvictor11@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email
+    </a>
+    <a class="proj-nav__link" href="https://www.linkedin.com/in/victorng11/" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7.5 0h3.8v2.2h.05c.53-1 1.82-2.2 3.75-2.2 4 0 4.75 2.64 4.75 6.07V24h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V24H8V8z"/></svg>LinkedIn
+    </a>
+  </nav>
+  <script>
+    (function(){
+      var nav=document.getElementById('proj-nav');
+      if(!nav) return;
+      var lastY=window.scrollY||0;
+      window.addEventListener('scroll',function(){
+        var y=window.scrollY||document.documentElement.scrollTop||0;
+        if(y<140){ nav.classList.remove('is-visible'); }
+        else if(y<lastY-4){ nav.classList.add('is-visible'); }
+        else if(y>lastY+4){ nav.classList.remove('is-visible'); }
+        lastY=y;
+      },{passive:true});
+    })();
+  </script>
+</body>
+</html>
