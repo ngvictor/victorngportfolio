@@ -10,8 +10,10 @@ Pairs with **[TYPOGRAPHY.md](TYPOGRAPHY.md)** (how the words look) and
 what the words *say* and how the story is *structured*.
 
 > Synthesized from a hiring-manager review lens, a senior reviewer's structural
-> feedback on the playable-ads study, and the de-AI writing pass. When a new
-> question comes up, answer it the way this doc would.
+> feedback on the playable-ads study, the de-AI writing pass, and 2026
+> portfolio-review research (Suska's 1000-portfolio review, UX Playbook's
+> senior-hiring guide, Atlassian on process-over-outcome). When a new question
+> comes up, answer it the way this doc would.
 
 ---
 
@@ -49,6 +51,13 @@ for the setup to finish.
   ecosystem — reviewers can't infer reach you don't state.
 - **Include non-metric impact.** Platform influence, adoption with zero extra
   cost, a competitor/partner reaction, a new category opened. These count.
+- **Don't end at handoff.** Most portfolios stop at the shipped screen; senior
+  ones own the outcome. Show what happened after launch, the real follow-up
+  iteration, and how results compared to what you predicted. A short "what I'd
+  iterate next" beat is one of the clearest seniority signals there is.
+- **One project, one core problem.** Each study needs a single spine. If it
+  sprawls across three problems it dilutes the signal and skimmers bail. Reviewers
+  give a study three to five minutes — cut to the one decision that mattered most.
 
 ## 2. Voice — ownership without overclaiming
 
@@ -59,8 +68,14 @@ for the setup to finish.
 - **Frame section titles at the altitude of what you did**, not clever-vague.
   "Designing for Two User Groups" beats "Designing Against the Pattern" — a reader
   shouldn't have to decode the title.
-- **Keep the honest beats.** "It got rejected. I agreed with the call." reads as
-  senior. Owning a cut is stronger than pretending everything shipped.
+- **Frame what you cut as strategy, not confession.** "It got rejected. I agreed
+  with the call." reads as senior, but go further: say *why* you cut it and what
+  you traded off. Prioritization reasoning ("I killed playables-on-impression
+  because the post-click tap is load-bearing") is core senior evidence.
+- **Show influence without authority.** Senior work gets done through other
+  people. Even with no direct reports, make the cross-functional moves explicit:
+  how you moved a review, won over a partner, shifted a roadmap. That thread *is*
+  the leadership story.
 
 ## 3. Writing — de-AI pass
 
@@ -117,10 +132,14 @@ Fix structure first, then phrases.
 Walk this top to bottom before shipping any case study:
 
 - [ ] Business impact readable in 10 seconds, metrics near the top.
+- [ ] One project, one core problem — no sprawl; readable in 3–5 minutes.
 - [ ] First problem statement is the *user's* obstacle, not the market.
 - [ ] Setup/scoping trimmed to the meaningful minimum (Minto).
 - [ ] Scale and ecosystem named; non-metric impact included.
+- [ ] Story goes past handoff: post-launch result + what you'd iterate next.
 - [ ] "I" + cross-functional voice; zero "approved"/"greenlit."
+- [ ] Cuts framed as prioritization (why + trade-off), not just confession.
+- [ ] Influence-without-authority thread visible (moved a review, partner, roadmap).
 - [ ] Section titles describe what you did, not clever-vague.
 - [ ] Repetition audited — each fact has one home.
 - [ ] No phrase tics; no em-dashes in body; human fingerprints intact.
