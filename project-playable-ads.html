@@ -221,10 +221,12 @@
 
     .subsection-title {
       font-family: var(--sans);
-      font-size: 1rem;
+      font-size: clamp(1.75rem, 2.8vw, 2.15rem);
       font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
       color: var(--ink);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       margin-top: 56px;
     }
 
@@ -1918,14 +1920,14 @@
       <!-- PR1: Early prototype — image left, text right -->
       <div class="split split--text-right">
         <div class="split__media">
-          <div class="media-container media-container--tall" style="background: #fff;">
-            <img loading="lazy" src="assets/images/projects/playable-ads/PR1.webp" alt="Early prototype — scrappy Figma Make build used to pitch the format to leadership" style="width:100%;height:100%;object-fit:contain;display:block;">
+          <div class="media-container" style="background: #fff;">
+            <img loading="lazy" src="assets/images/projects/playable-ads/PR1.webp" alt="A quick early prototype used to pitch the format to leadership" style="width:100%;height:auto;display:block;">
           </div>
           <p class="media-caption">Initial experiment on Facebook Feed.</p>
         </div>
         <div class="split__text">
           <p class="body-text" style="margin-bottom: 0;">
-            That was the evidence, but I didn't pitch it with a deck. I built working prototypes, vibe-coded in Figma Make. Rough, but functional enough to show in context. A ten-second demo communicated the concept faster than any document could. Leadership got it immediately, and the conversation went from "explain this format" to "when can we test it."
+            That was the evidence, but I didn't pitch it with a deck. I built a quick, working prototype. Rough, but functional enough to show in context. A ten-second demo communicated the concept faster than any document could. Leadership got it immediately, and the conversation went from "explain this format" to "when can we test it."
           </p>
         </div>
       </div>

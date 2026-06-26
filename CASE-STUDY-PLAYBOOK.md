@@ -96,9 +96,10 @@ Fix structure first, then phrases.
   - Hedges: "I'm oversimplifying here"
 - **Punctuation:** no em-dashes in body prose (the H1 title is the only sanctioned
   one). Curly quotes, real apostrophes, en dashes for ranges. See [TYPOGRAPHY.md](TYPOGRAPHY.md).
-- **Keep the human fingerprints:** specific numbers, "vibe-coded in Figma Make,"
-  "cheap to kill," concrete dialogue ("when can we test it"), opinionated first
-  person ("I fought for…"). Don't sand these off while de-AI-ing.
+- **Keep the human fingerprints:** specific numbers, "cheap to kill," concrete
+  dialogue ("when can we test it"), opinionated first person ("I fought for…").
+  Don't sand these off while de-AI-ing — but don't invent them either; cut a
+  colorful detail the moment it turns out to be inaccurate.
 
 ## 4. Craft — let the work be seen
 
