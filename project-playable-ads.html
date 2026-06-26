@@ -11,33 +11,56 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
   <style>
+    /* ===== Accessibility: keyboard focus, skip-link, reduced-motion ===== */
+    :focus-visible { outline: 2px solid #2c4a3e; outline-offset: 2px; }
+    :focus:not(:focus-visible) { outline: none; }
+    .skip-link {
+      position: fixed; top: 10px; left: 10px; z-index: 100000;
+      background: #1a1814; color: #fff; padding: 10px 18px; border-radius: 8px;
+      font-family: var(--sans); font-size: 0.9rem; font-weight: 600; text-decoration: none;
+      transform: translateY(-180%); transition: transform 0.2s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
     /* ========================================
        SELF-HOSTED FONT — Instagram Sans
        ======================================== */
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Light.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Light.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Light.ttf') format('truetype');
       font-weight: 300;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Regular.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Regular.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Regular.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Medium.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Medium.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Medium.ttf') format('truetype');
       font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Bold.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Bold.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Bold.ttf') format('truetype');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
@@ -49,7 +72,7 @@
     :root {
       --ink: #1a1814;
       --ink-secondary: #5c574f;
-      --ink-muted: #8b8780;
+      --ink-muted: #74706a;
       --ink-faint: #d8d4cc;
       --surface: #ffffff;
       --surface-raised: #f7f5f2;
@@ -644,7 +667,7 @@
 
     /* Stakes stat — the business war, up top for skimmers */
     .stakes-stat {
-      margin: 0 0 120px;
+      margin: 0 0 56px;
       padding: 56px 48px;
       background: var(--surface-card);
       border: 1px solid var(--border);
@@ -683,7 +706,7 @@
       margin: 0;
     }
     @media (max-width: 768px) {
-      .stakes-stat { padding: 36px 28px; gap: 28px; margin-bottom: 80px; }
+      .stakes-stat { padding: 36px 28px; gap: 28px; margin-bottom: 40px; }
     }
 
     .cs-intro__label {
@@ -1676,6 +1699,7 @@
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "46812fba28814386916d78b3cddc404c"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- NAVIGATION — with section label slot -->
   <!-- SCROLL PROGRESS -->
@@ -1690,7 +1714,7 @@
     </a>
   </nav>
 
-  <main class="case-wrapper">
+  <main class="case-wrapper" id="main" tabindex="-1">
 
     <!-- ============================================
          HERO STAGE
@@ -1792,21 +1816,6 @@
 
 
     <!-- ============================================
-         STAKES STAT — business war, up top
-         ============================================ -->
-    <div class="stakes-stat fade-up">
-      <div class="stakes-stat__num">
-        21%
-        <svg class="stakes-stat__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        13.6%
-      </div>
-      <div class="stakes-stat__body">
-        <p>Gaming's share of Meta's app ad revenue, lost in two years. Playables were the format to regain that share, and the one Meta hadn't cracked.</p>
-      </div>
-    </div>
-
-
-    <!-- ============================================
          CONTEXT — orientation before the problem
          ============================================ -->
     <section class="cs-intro fade-up">
@@ -1823,7 +1832,7 @@
         <!-- C1: Format explainer — pre-click video ad → post-click playable -->
         <div class="split__media">
           <div class="media-container" style="aspect-ratio: 4/3; background: #fff;">
-            <img src="assets/images/projects/playable-ads/C1.png" alt="Pre-click video ad with Try Demo CTA on Instagram Reels, and the post-click HTML playable experience with Install Now" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+            <img loading="lazy" src="assets/images/projects/playable-ads/C1.webp" alt="Pre-click video ad with Try Demo CTA on Instagram Reels, and the post-click HTML playable experience with Install Now" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
           </div>
         </div>
       </div>
@@ -1839,6 +1848,18 @@
         <h2 class="section-title">Losing Ground to <em>Competition</em></h2>
       </div>
 
+      <!-- STAKES: the decline that frames the problem -->
+      <div class="stakes-stat fade-up">
+        <div class="stakes-stat__num">
+          21%
+          <svg class="stakes-stat__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          13.6%
+        </div>
+        <div class="stakes-stat__body">
+          <p>Gaming's share of Meta's app ad revenue, lost in two years. Playables were the format to regain that share, and the one Meta hadn't cracked.</p>
+        </div>
+      </div>
+
       <!-- P1: Competitive landscape — text left, image right -->
       <div class="split split--text-left">
         <div class="split__text">
@@ -1846,12 +1867,12 @@
             People don't install an app they've never tried. High-intent users tap "Install now," but a larger group sits on the fence: they'd convert if they could try the app first. User interviews backed this up, people were open to trying apps right inside Instagram.
           </p>
           <p class="body-text" style="margin-bottom: 0;">
-            Competitors had already built businesses on that behaviour. Playables make up 70–100% of spend on AppLovin's platform, and as that format pulled app and gaming budgets away, gaming's share of Meta's app ad revenue fell from <strong>21% to 13.6%</strong> in two years. Meta had tried playables back in 2017 and never scaled them.
+            Competitors had already built businesses on that behaviour. Playables make up 70–100% of spend on AppLovin's platform, and that format kept pulling app and gaming budgets away from Meta. Meta had tried playables back in 2017 and never scaled them.
           </p>
         </div>
         <div class="split__media">
           <div class="media-container media-container--tall" style="background: #fff;">
-            <img src="assets/images/projects/playable-ads/P1.png" alt="AppLovin's 3-step flow vs Meta's old single-CTA approach" style="width: 100%; height: 100%; object-fit: contain;">
+            <img loading="lazy" src="assets/images/projects/playable-ads/P1.webp" alt="AppLovin's 3-step flow vs Meta's old single-CTA approach" style="width: 100%; height: 100%; object-fit: contain;">
           </div>
           <p class="media-caption">AppLovin's three-step funnel: video ad, playable demo, install. Meta's equivalent at the time was a single "Install now" CTA with no demo path.</p>
         </div>
@@ -1861,7 +1882,7 @@
       <div class="split split--text-right">
         <div class="split__media">
           <div class="media-container media-container--tall" style="background: #fff;">
-            <img src="assets/images/projects/playable-ads/P2.png" alt="Single CTA drop-off diagram: annotated conversion leak" style="width: 100%; height: 100%; object-fit: contain;">
+            <img loading="lazy" src="assets/images/projects/playable-ads/P2.webp" alt="Single CTA drop-off diagram: annotated conversion leak" style="width: 100%; height: 100%; object-fit: contain;">
           </div>
           <p class="media-caption">The single-CTA drop-off diagram. Replacing "Install now" with "Try demo" removed the direct install path and added multiple new exit points.</p>
         </div>
@@ -1898,7 +1919,7 @@
       <div class="split split--text-right">
         <div class="split__media">
           <div class="media-container media-container--tall" style="background: #fff;">
-            <img src="assets/images/projects/playable-ads/PR1.png" alt="Early prototype — scrappy Figma Make build used to pitch the format to leadership" style="width:100%;height:100%;object-fit:contain;display:block;">
+            <img loading="lazy" src="assets/images/projects/playable-ads/PR1.webp" alt="Early prototype — scrappy Figma Make build used to pitch the format to leadership" style="width:100%;height:100%;object-fit:contain;display:block;">
           </div>
           <p class="media-caption">Initial experiment on Facebook Feed.</p>
         </div>
@@ -2046,7 +2067,6 @@
               <div class="media-container media-container--phone">
                 <video autoplay loop muted playsinline>
                   <source src="assets/images/projects/playable-ads/C1-1.mp4" type="video/mp4">
-                  <source src="assets/images/projects/playable-ads/C1-1.mov" type="video/quicktime">
                 </video>
               </div>
               <p class="concept-shot__cap">High intent &rarr; Install now CTA</p>
@@ -2055,7 +2075,6 @@
               <div class="media-container media-container--phone">
                 <video autoplay loop muted playsinline>
                   <source src="assets/images/projects/playable-ads/C1-2.mp4" type="video/mp4">
-                  <source src="assets/images/projects/playable-ads/C1-2.mov" type="video/quicktime">
                 </video>
               </div>
               <p class="concept-shot__cap">Low intent &rarr; Try demo CTA &rarr; App Store</p>
@@ -2082,7 +2101,6 @@
               <div class="media-container media-container--phone">
                 <video autoplay loop muted playsinline>
                   <source src="assets/images/projects/playable-ads/C2.mp4" type="video/mp4">
-                  <source src="assets/images/projects/playable-ads/C2.mov" type="video/quicktime">
                 </video>
               </div>
               <p class="concept-shot__cap">Attribution pill on the Reel</p>
@@ -2109,7 +2127,6 @@
               <div class="media-container media-container--phone">
                 <video autoplay loop muted playsinline>
                   <source src="assets/images/projects/playable-ads/C3-1.mp4" type="video/mp4">
-                  <source src="assets/images/projects/playable-ads/C3-1.mov" type="video/quicktime">
                 </video>
               </div>
               <p class="concept-shot__cap">High intent &rarr; CTA Install, pill Demo</p>
@@ -2118,7 +2135,6 @@
               <div class="media-container media-container--phone">
                 <video autoplay loop muted playsinline>
                   <source src="assets/images/projects/playable-ads/C3-2.mp4" type="video/mp4">
-                  <source src="assets/images/projects/playable-ads/C3-2.mov" type="video/quicktime">
                 </video>
               </div>
               <p class="concept-shot__cap">Low intent &rarr; CTA Demo, pill Install</p>
@@ -2145,7 +2161,6 @@
               <div class="media-container media-container--phone">
                 <video autoplay loop muted playsinline>
                   <source src="assets/images/projects/playable-ads/C4.mp4" type="video/mp4">
-                  <source src="assets/images/projects/playable-ads/C4.mov" type="video/quicktime">
                 </video>
               </div>
               <p class="concept-shot__cap">Mid-scene dual CTA</p>
@@ -2172,7 +2187,6 @@
               <div class="media-container media-container--phone">
                 <video autoplay loop muted playsinline>
                   <source src="assets/images/projects/playable-ads/C5.mp4" type="video/mp4">
-                  <source src="assets/images/projects/playable-ads/C5.mov" type="video/quicktime">
                 </video>
               </div>
               <p class="concept-shot__cap">SKOverlay install</p>
@@ -2198,13 +2212,13 @@
 
       <!-- PR2b: Mid-scene dual CTA pattern explorations -->
       <div class="media-container media-container--full media-container--inline" style="background: #fff;">
-        <img src="assets/images/projects/playable-ads/PR2b.png" alt="Different mid-scene dual CTA patterns explored for Reels" style="width: 100%; height: 100%; object-fit: contain;">
+        <img loading="lazy" src="assets/images/projects/playable-ads/PR2b.webp" alt="Different mid-scene dual CTA patterns explored for Reels" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
       <p class="media-caption">Different variants of Dual CTA in mid-scene</p>
 
       <!-- PR3: Before/after — single CTA control vs the dual CTA we shipped -->
       <div class="media-container media-container--full media-container--inline" style="background: #fff;">
-        <img src="assets/images/projects/playable-ads/PR3.png" alt="Single CTA control vs the dual-CTA design that shipped, mobile screens compared" style="width: 100%; height: 100%; object-fit: contain;">
+        <img loading="lazy" src="assets/images/projects/playable-ads/PR3.webp" alt="Single CTA control vs the dual-CTA design that shipped, mobile screens compared" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
       <p class="media-caption">Before and after. Left: the single-CTA control that removed the install path. Right: the dual-CTA design we took live, keeping both options in one ad unit.</p>
 
@@ -2226,7 +2240,7 @@
 
       <!-- E1: Happy path — full width -->
       <div class="media-container media-container--full media-container--inline" style="background: #fff; aspect-ratio: 5710/2176;">
-        <img src="assets/images/projects/playable-ads/E1.png" alt="End-to-end happy path: Reel, dwell, dual CTA, playable demo, install" style="width: 100%; height: 100%; object-fit: contain;">
+        <img loading="lazy" src="assets/images/projects/playable-ads/E1.webp" alt="End-to-end happy path: Reel, dwell, dual CTA, playable demo, install" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
       <p class="media-caption">End to End Flow</p>
 
@@ -2241,7 +2255,7 @@
 
       <!-- E2: iOS vs Android — SKOverlay comparison -->
       <div class="media-container media-container--full media-container--inline" style="background: #fff; aspect-ratio: 3840/1368;">
-        <img src="assets/images/projects/playable-ads/E2.png" alt="iOS Apple SKOverlay vs Android custom overlay comparison" style="width: 100%; height: 100%; object-fit: contain;">
+        <img loading="lazy" src="assets/images/projects/playable-ads/E2.webp" alt="iOS Apple SKOverlay vs Android custom overlay comparison" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
       <p class="media-caption">Apple's native install overlay on iOS, and the custom equivalent I designed for Android.</p>
 
@@ -2252,7 +2266,7 @@
 
       <!-- E5: Rejected concept — full width -->
       <div class="media-container media-container--full media-container--inline" style="background: #fff;">
-        <img src="assets/images/projects/playable-ads/E5.png" alt="Rejected concept: playables on impression iterations" style="width: 100%; height: 100%; object-fit: contain;">
+        <img loading="lazy" src="assets/images/projects/playable-ads/E5.webp" alt="Rejected concept: playables on impression iterations" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
       <p class="media-caption">Playables on impression. Rejected.</p>
 
@@ -2303,13 +2317,13 @@
 
       <div class="tab-panel is-active" id="tab-browser" role="tabpanel">
         <div class="media-container media-container--full" style="background: #fff;">
-          <img src="assets/images/projects/playable-ads/X1.png" alt="In-app browser and loading state for the playable HTML experience" style="width:100%;height:100%;object-fit:contain;display:block;">
+          <img loading="lazy" src="assets/images/projects/playable-ads/X1.webp" alt="In-app browser and loading state for the playable HTML experience" style="width:100%;height:100%;object-fit:contain;display:block;">
         </div>
       </div>
 
       <div class="tab-panel" id="tab-ads-manager" role="tabpanel">
         <div class="media-container media-container--full" style="background: #fff;">
-          <img src="assets/images/projects/playable-ads/X2.png" alt="Ads Manager flow for uploading playable HTML and configuring campaigns" style="width:100%;height:100%;object-fit:contain;display:block;">
+          <img loading="lazy" src="assets/images/projects/playable-ads/X2.webp" alt="Ads Manager flow for uploading playable HTML and configuring campaigns" style="width:100%;height:100%;object-fit:contain;display:block;">
         </div>
       </div>
 
@@ -2462,7 +2476,7 @@
       <h2 class="pw-modal__title">These case studies are private.</h2>
       <p class="pw-modal__sub">They go deep on live work at Meta. The password is in my CV, or email me at <a href="mailto:ngvictor11@gmail.com">ngvictor11@gmail.com</a> and I’ll send it over.</p>
       <div class="pw-modal__field">
-        <input class="pw-modal__input" id="pw-input" type="password" placeholder="Password" autocomplete="off">
+        <input class="pw-modal__input" id="pw-input" type="password" placeholder="Password" aria-label="Password" autocomplete="off">
         <button class="pw-modal__submit" id="pw-submit">Unlock</button>
       </div>
       <p class="pw-modal__error" id="pw-error"></p>
@@ -2493,6 +2507,7 @@
           sessionStorage.setItem(SESSION_KEY, '1');
           overlay.classList.remove('is-open');
           document.body.style.overflow = '';
+          var m = document.getElementById('main'); if (m) m.focus();
         } else {
           input.classList.add('is-error');
           error.textContent = 'Incorrect password. Try again.';
@@ -2510,6 +2525,12 @@
       closeBtn.addEventListener('click', dismiss);
       overlay.addEventListener('click', function (e) { if (e.target === overlay) dismiss(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dismiss(); });
+      overlay.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab' || !overlay.classList.contains('is-open')) return;
+        var first = closeBtn, last = submit;
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      });
     })();
   </script>
 
@@ -2778,7 +2799,7 @@
       var btns = row.querySelectorAll('.hero-row__btn');
 
       var DIR = 'assets/images/projects/playable-ads/H1/';
-      var EXT = '.png';
+      var EXT = '.webp';
       var STEPS = ['feed', 'story', 'reel', 'load', 'game'];
       var PREFIX = { instagram: 'ig', facebook: 'fb' };
       var LOGOS = {
