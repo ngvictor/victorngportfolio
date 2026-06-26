@@ -4,40 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>Victor Ng | AI Workflows Case Study</title>
+  <title>Victor Ng | From AI Testing to Designers Shipping the Fix</title>
   <meta name="description" content="Case study: Building an AI Dogfooding Skill for App Promotion Objective Flow at Meta.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
   <style>
+    /* ===== Accessibility: keyboard focus, skip-link, reduced-motion ===== */
+    :focus-visible { outline: 2px solid #2c4a3e; outline-offset: 2px; }
+    :focus:not(:focus-visible) { outline: none; }
+    .skip-link {
+      position: fixed; top: 10px; left: 10px; z-index: 100000;
+      background: #1a1814; color: #fff; padding: 10px 18px; border-radius: 8px;
+      font-family: var(--sans); font-size: 0.9rem; font-weight: 600; text-decoration: none;
+      transform: translateY(-180%); transition: transform 0.2s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
     /* ========================================
        SELF-HOSTED FONT — Instagram Sans
        ======================================== */
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Light.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Light.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Light.ttf') format('truetype');
       font-weight: 300;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Regular.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Regular.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Regular.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Medium.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Medium.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Medium.ttf') format('truetype');
       font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Bold.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Bold.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Bold.ttf') format('truetype');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
@@ -49,7 +72,7 @@
     :root {
       --ink: #1a1814;
       --ink-secondary: #5c574f;
-      --ink-muted: #8b8780;
+      --ink-muted: #74706a;
       --ink-faint: #d8d4cc;
       --surface: #ffffff;
       --surface-raised: #f7f5f2;
@@ -1655,6 +1678,7 @@
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "46812fba28814386916d78b3cddc404c"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- NAVIGATION — with section label slot -->
   <!-- SCROLL PROGRESS -->
@@ -1669,7 +1693,7 @@
     </a>
   </nav>
 
-  <main class="case-wrapper">
+  <main class="case-wrapper" id="main" tabindex="-1">
 
     <!-- HERO STAGE -->
     <div class="hero-stage" id="heroStage">
@@ -1680,7 +1704,7 @@
           <div class="hero-content__text">
             <div class="hero-content__top">
               <div class="hero-content__left">
-                <h1 class="cs-hero__title" style="color: var(--ink);">Streamlining Usability<br>Workflows with AI</h1>
+                <h1 class="cs-hero__title" style="color: var(--ink);">From AI Testing to<br>Designers Shipping the Fix</h1>
                 <p class="cs-hero__tldr" style="color: var(--ink-secondary);">
                   As Usability Lead for Ads Manager, I built an AI workflow that changed how our team dogfoods: from automated persona testing to shipping the frontend fixes myself. It cut our design to ship cycle in half.
                 </p>
@@ -1937,7 +1961,7 @@
           <!-- Priya -->
           <div style="flex: 1; min-width: 300px;">
             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-              <img src="assets/images/projects/ai-workflows/from%20persona/priya.png" alt="First Time Priya" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;">
+              <img loading="lazy" src="assets/images/projects/ai-workflows/from%20persona/priya.webp" alt="First Time Priya" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;">
 
               <div>
                 <div style="font-weight: 600; font-family: var(--sans); font-size: 1.05rem; color: var(--ink); letter-spacing: -0.01em;">First Time Priya</div>
@@ -1971,7 +1995,7 @@
           <!-- Marcus -->
           <div style="flex: 1; min-width: 300px;">
             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-              <img src="assets/images/projects/ai-workflows/from%20persona/marcus.png" alt="Enterprise Marcus" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex: 0 0 auto; box-shadow: 0 8px 24px rgba(0,0,0,0.15);">
+              <img loading="lazy" src="assets/images/projects/ai-workflows/from%20persona/marcus.webp" alt="Enterprise Marcus" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex: 0 0 auto; box-shadow: 0 8px 24px rgba(0,0,0,0.15);">
 
               <div>
                 <div style="font-weight: 600; font-family: var(--sans); font-size: 1.05rem; color: var(--ink); letter-spacing: -0.01em;">Enterprise Marcus</div>
@@ -2045,7 +2069,7 @@
       <!-- Artifact: the agent running live -->
       <figure style="margin: 32px 0 40px;">
         <div style="border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--surface-raised); box-shadow: 0 18px 50px -30px rgba(0,0,0,0.45);">
-          <img src="assets/images/projects/ai-workflows/ai-workflows-agent-live.png" alt="The agent narrating its CAPTURE and EVALUATE reasoning as Enterprise Marcus in the terminal while driving live Ads Manager in the browser" style="display: block; width: 100%; height: auto;">
+          <img loading="lazy" src="assets/images/projects/ai-workflows/ai-workflows-agent-live.webp" alt="The agent narrating its CAPTURE and EVALUATE reasoning as Enterprise Marcus in the terminal while driving live Ads Manager in the browser" style="display: block; width: 100%; height: auto;">
         </div>
         <figcaption style="font-family: var(--sans); font-size: 0.9rem; color: var(--ink-muted); margin-top: 12px; line-height: 1.5; max-width: 760px;">The agent mid-run. On the left it narrates the CAPTURE &rarr; EVALUATE loop in Marcus’s voice (&ldquo;where is the conversion location picker?&rdquo;); on the right it’s driving the real Ads Manager campaign setup. Every issue it files comes out of a live session like this one.</figcaption>
       </figure>
@@ -2082,7 +2106,7 @@
             <p style="font-size: 1rem; color: var(--ink-secondary); margin: 0 0 22px; line-height: 1.55;">The ad set has no SKAdNetwork section, so enterprise advertisers can’t configure their iOS measurement. Wrong defaults quietly degrade reporting, a real risk for advertisers spending <strong style="color: var(--ink); font-weight: 600;">$2M+/month</strong>.</p>
             <div style="background: var(--surface-raised); padding: 18px 20px; border-left: 3px solid var(--accent-gold); border-radius: 0 12px 12px 0;">
               <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                <img src="assets/images/projects/ai-workflows/from%20persona/marcus.png" alt="Enterprise Marcus" style="flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+                <img loading="lazy" src="assets/images/projects/ai-workflows/from%20persona/marcus.webp" alt="Enterprise Marcus" style="flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
                 <span style="font-size: 0.92rem; font-weight: 600; color: var(--ink);">Enterprise Marcus</span>
               </div>
               <p style="font-style: italic; font-size: 1rem; color: var(--ink); line-height: 1.6; margin: 0;">“I scrolled through the entire ad set for my iOS campaign. Where is SKAdNetwork? If the system is making SKAN decisions for me, I need to know what they are.”</p>
@@ -2213,7 +2237,7 @@
       <!-- Committed diff proof -->
       <figure style="margin: 0 0 24px; max-width: 720px;">
         <div style="border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); box-shadow: 0 12px 36px -24px rgba(0,0,0,0.4);">
-          <img src="assets/images/projects/ai-workflows/ai-workflows-fix-diff.png" alt="The committed diff: Convert Attribution model to progressive disclosure pattern, plus 157 minus 87" style="display: block; width: 100%; height: auto;">
+          <img loading="lazy" src="assets/images/projects/ai-workflows/ai-workflows-fix-diff.webp" alt="The committed diff: Convert Attribution model to progressive disclosure pattern, plus 157 minus 87" style="display: block; width: 100%; height: auto;">
         </div>
         <figcaption style="font-family: var(--sans); font-size: 0.9rem; color: var(--ink-muted); margin-top: 12px; line-height: 1.5; max-width: 760px;">Committed and reviewed. A flagged usability issue going all the way to production code, written and shipped by the person who caught it.</figcaption>
       </figure>
@@ -2227,7 +2251,7 @@
             <span style="font-size: 0.72rem; color: var(--ink-muted);">Always-visible dropdown</span>
           </div>
           <div style="padding: 18px;">
-            <img src="assets/images/projects/ai-workflows/ai-workflows-fix-before.png" alt="Attribution model shown as an always-visible dropdown in ad set settings" style="display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border);">
+            <img loading="lazy" src="assets/images/projects/ai-workflows/ai-workflows-fix-before.webp" alt="Attribution model shown as an always-visible dropdown in ad set settings" style="display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border);">
             <p style="font-size: 0.9rem; color: var(--ink-muted); margin: 14px 0 0; line-height: 1.5;">Open by default, adding height to an already long page.</p>
           </div>
         </div>
@@ -2238,7 +2262,7 @@
             <span style="font-size: 0.72rem; color: var(--ink-muted);">Progressive disclosure</span>
           </div>
           <div style="padding: 18px;">
-            <img src="assets/images/projects/ai-workflows/ai-workflows-fix-after.png" alt="Attribution model collapsed to a read-only summary that expands on click" style="display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border);">
+            <img loading="lazy" src="assets/images/projects/ai-workflows/ai-workflows-fix-after.webp" alt="Attribution model collapsed to a read-only summary that expands on click" style="display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border);">
             <p style="font-size: 0.9rem; color: var(--ink-muted); margin: 14px 0 0; line-height: 1.5;">Collapses to a read-only summary, matching the Performance goal field. Expands to the full selector on click.</p>
           </div>
         </div>
@@ -2482,7 +2506,7 @@
       <h2 class="pw-modal__title">These case studies are private.</h2>
       <p class="pw-modal__sub">They go deep on live work at Meta. The password is in my CV, or email me at <a href="mailto:ngvictor11@gmail.com">ngvictor11@gmail.com</a> and I’ll send it over.</p>
       <div class="pw-modal__field">
-        <input class="pw-modal__input" id="pw-input" type="password" placeholder="Password" autocomplete="off">
+        <input class="pw-modal__input" id="pw-input" type="password" placeholder="Password" aria-label="Password" autocomplete="off">
         <button class="pw-modal__submit" id="pw-submit">Unlock</button>
       </div>
       <p class="pw-modal__error" id="pw-error"></p>
@@ -2513,6 +2537,7 @@
           sessionStorage.setItem(SESSION_KEY, '1');
           overlay.classList.remove('is-open');
           document.body.style.overflow = '';
+          var m = document.getElementById('main'); if (m) m.focus();
         } else {
           input.classList.add('is-error');
           error.textContent = 'Incorrect password. Try again.';
@@ -2530,6 +2555,12 @@
       closeBtn.addEventListener('click', dismiss);
       overlay.addEventListener('click', function (e) { if (e.target === overlay) dismiss(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dismiss(); });
+      overlay.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab' || !overlay.classList.contains('is-open')) return;
+        var first = closeBtn, last = submit;
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      });
     })();
   </script>
 

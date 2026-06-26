@@ -17,33 +17,56 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Permanent+Marker&display=swap" rel="stylesheet">
 
   <style>
+    /* ===== Accessibility: keyboard focus, skip-link, reduced-motion ===== */
+    :focus-visible { outline: 2px solid #2c4a3e; outline-offset: 2px; }
+    :focus:not(:focus-visible) { outline: none; }
+    .skip-link {
+      position: fixed; top: 10px; left: 10px; z-index: 100000;
+      background: #1a1814; color: #fff; padding: 10px 18px; border-radius: 8px;
+      font-family: var(--sans); font-size: 0.9rem; font-weight: 600; text-decoration: none;
+      transform: translateY(-180%); transition: transform 0.2s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
     /* ========================================
        SELF-HOSTED FONT — Instagram Sans
        ======================================== */
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Light.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Light.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Light.ttf') format('truetype');
       font-weight: 300;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Regular.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Regular.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Regular.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Medium.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Medium.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Medium.ttf') format('truetype');
       font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Instagram Sans';
-      src: url('assets/fonts/InstagramSans-Bold.ttf') format('truetype');
+      src: url('assets/fonts/InstagramSans-Bold.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Bold.ttf') format('truetype');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
@@ -55,7 +78,7 @@
     :root {
       --ink: #1a1814;
       --ink-secondary: #5c574f;
-      --ink-muted: #8b8780;
+      --ink-muted: #74706a;
       --ink-faint: #d8d4cc;
       --surface: #ffffff;
       --surface-raised: #f7f5f2;
@@ -208,7 +231,7 @@
       background: rgba(244,200,30,0.15);
       border: 1.5px solid rgba(244,200,30,0.6);
       font-size: 1.3rem;
-      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
     }
 
     @keyframes cursor-pulse {
@@ -270,7 +293,7 @@
     }
 
     .header__connect-link:hover {
-      color: var(--ink);
+      color: var(--accent-gold);
     }
 
     /* ========================================
@@ -636,6 +659,34 @@
     }
     .wip-tape--1 { top: 40%; transform: rotate(-9deg); }
     .wip-tape--2 { top: 56%; transform: rotate(7deg); background-color: #efb810; }
+
+    /* Hover reveal on the WIP card */
+    .wip-hover {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 7;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s var(--ease-out-expo);
+    }
+    .project-card--wip:hover .wip-hover { opacity: 1; }
+    .wip-hover span {
+      font-family: var(--sans);
+      font-size: clamp(1rem, 2.2vw, 1.4rem);
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.01em;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 13px 26px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
 
     .project-card__badge-icon--meta svg {
       width: 14px;
@@ -1846,7 +1897,7 @@
     .scroll-vase__layer {
       position: absolute;
       inset: 0;
-      background: url('assets/images/ceramics/scrolling pot asset.png') center / contain no-repeat;
+      background: url('assets/images/ceramics/scrolling pot asset.webp') center / contain no-repeat;
     }
 
     /* Ghost outline layer — always visible (darkened for the white surface) */
@@ -2417,6 +2468,7 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <div class="page-wrapper">
 
@@ -2442,6 +2494,8 @@
       </div>
     </header>
 
+    <main id="main" tabindex="-1">
+
     <!-- ===== HERO ===== -->
     <section class="hero" id="hero">
       <p class="hero__eyebrow hero__line hero__line--1">Victor Ng &middot; Product Designer</p>
@@ -2459,10 +2513,10 @@
         <a href="project-playable-ads.html" class="project-card fade-left" id="project-playable-ads">
           <div class="project-card__hero" style="background-image: radial-gradient(ellipse at 50% 40%, rgba(77,159,255,0.12) 0%, transparent 60%), linear-gradient(160deg, #1a2035 0%, #0d1520 55%, #070b14 100%); background-color: #070b14;"></div>
           <div class="project-card__fan">
-            <img class="fan-phone fan-phone--4" src="assets/images/projects/playable-ads/Hero-4.png" alt="Instagram feed playable ad" loading="lazy">
-            <img class="fan-phone fan-phone--3" src="assets/images/projects/playable-ads/Hero-3.png" alt="Story-format playable ad" loading="lazy">
-            <img class="fan-phone fan-phone--2" src="assets/images/projects/playable-ads/Hero-2.png" alt="Reels playable ad" loading="lazy">
-            <img class="fan-phone fan-phone--1" src="assets/images/projects/playable-ads/Hero-1.png" alt="Royal Match playable demo" loading="lazy">
+            <img class="fan-phone fan-phone--4" src="assets/images/projects/playable-ads/Hero-4.webp" alt="Instagram feed playable ad" loading="lazy">
+            <img class="fan-phone fan-phone--3" src="assets/images/projects/playable-ads/Hero-3.webp" alt="Story-format playable ad" loading="lazy">
+            <img class="fan-phone fan-phone--2" src="assets/images/projects/playable-ads/Hero-2.webp" alt="Reels playable ad" loading="lazy">
+            <img class="fan-phone fan-phone--1" src="assets/images/projects/playable-ads/Hero-1.webp" alt="Royal Match playable demo" loading="lazy">
           </div>
           <div class="project-card__scrim"></div>
           <div class="project-card__arrow">
@@ -2471,7 +2525,7 @@
           <div class="project-card__inner">
             <div class="project-card__badge">
               <span class="project-card__badge-icon project-card__badge-icon--meta">
-                <img src="assets/images/home/timeline logo/meta_PNG5.png" alt="Meta" style="width:14px;height:14px;object-fit:contain;">
+                <img loading="lazy" src="assets/images/home/timeline logo/meta_PNG5.webp" alt="Meta" style="width:14px;height:14px;object-fit:contain;">
               </span>
               <span class="project-card__badge-label">Mobile Feature 0→1</span>
             </div>
@@ -2505,7 +2559,7 @@
           <div class="project-card__inner">
             <div class="project-card__badge">
               <span class="project-card__badge-icon project-card__badge-icon--meta">
-                <img src="assets/images/home/timeline logo/meta_PNG5.png" alt="Meta" style="width:14px;height:14px;object-fit:contain;">
+                <img loading="lazy" src="assets/images/home/timeline logo/meta_PNG5.webp" alt="Meta" style="width:14px;height:14px;object-fit:contain;">
               </span>
               <span class="project-card__badge-label">AI Design Tools</span>
             </div>
@@ -2519,10 +2573,11 @@
           <div class="project-card__scrim"></div>
           <div class="wip-tape wip-tape--1">WORK IN PROGRESS · WORK IN PROGRESS · WORK IN PROGRESS · WORK IN PROGRESS</div>
           <div class="wip-tape wip-tape--2">COMING SOON · COMING SOON · COMING SOON · COMING SOON · COMING SOON</div>
+          <div class="wip-hover"><span>WIP - Check again later</span></div>
           <div class="project-card__inner">
             <div class="project-card__badge">
               <span class="project-card__badge-icon project-card__badge-icon--meta">
-                <img src="assets/images/home/timeline logo/meta_PNG5.png" alt="Meta" style="width:14px;height:14px;object-fit:contain;">
+                <img loading="lazy" src="assets/images/home/timeline logo/meta_PNG5.webp" alt="Meta" style="width:14px;height:14px;object-fit:contain;">
               </span>
               <span class="project-card__badge-label">VR Spatial Design</span>
             </div>
@@ -2576,7 +2631,7 @@
             <div class="tl-year">2021 – now</div>
             <div class="tl-tile">
               <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/meta_PNG5.png" alt="Meta"></div>
+                <div class="tl-logo-wrap"><img loading="lazy" class="tl-logo" src="assets/images/home/timeline%20logo/meta_PNG5.webp" alt="Meta"></div>
                 <div class="tl-tile__front-text"><h2 class="tl-company">Meta</h2><div class="tl-role">Product Designer</div><div class="tl-tenure">5 years</div></div>
               </div>
               <div class="tl-tile__back"><p class="tl-desc">Ad formats shipping to Facebook &amp; Instagram, B2B (Workplace), and product visions for VR.</p></div>
@@ -2589,7 +2644,7 @@
             <div class="tl-year">2020</div>
             <div class="tl-tile">
               <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/Facebook_f_logo_%282021%29.svg.png" alt="Facebook AI" style="height:38px;"></div>
+                <div class="tl-logo-wrap"><img loading="lazy" class="tl-logo" src="assets/images/home/timeline%20logo/Facebook_f_logo_%282021%29.svg.webp" alt="Facebook AI" style="height:38px;"></div>
                 <div class="tl-tile__front-text"><h2 class="tl-company">Facebook AI</h2><div class="tl-role">Product Design Intern</div></div>
               </div>
               <div class="tl-tile__back"><p class="tl-desc">Before AI went mainstream — prototyped an NLP text-to-speech audio-articles feature.</p></div>
@@ -2601,7 +2656,7 @@
             <div class="tl-year">2020</div>
             <div class="tl-tile">
               <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/ibm-logo-transparent.png" alt="IBM" style="height:22px;"></div>
+                <div class="tl-logo-wrap"><img loading="lazy" class="tl-logo" src="assets/images/home/timeline%20logo/ibm-logo-transparent.webp" alt="IBM" style="height:22px;"></div>
                 <div class="tl-tile__front-text"><h2 class="tl-company">IBM</h2><div class="tl-role">UX Design Intern</div></div>
               </div>
               <div class="tl-tile__back"><p class="tl-desc">Shipped UX improvements to the Cognos Analytics dashboard on IBM’s Carbon design system.</p></div>
@@ -2613,7 +2668,7 @@
             <div class="tl-year">2017</div>
             <div class="tl-tile">
               <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/Accenture-Logo.png" alt="Accenture"></div>
+                <div class="tl-logo-wrap"><img loading="lazy" class="tl-logo" src="assets/images/home/timeline%20logo/Accenture-Logo.webp" alt="Accenture"></div>
                 <div class="tl-tile__front-text"><h2 class="tl-company">Accenture</h2><div class="tl-role">Technology Analyst</div></div>
               </div>
               <div class="tl-tile__back"><p class="tl-desc">Ran daily scrums with dev teams in India and Spain to resolve code defects and UX/UI issues.</p></div>
@@ -2625,7 +2680,7 @@
             <div class="tl-year">2016</div>
             <div class="tl-tile">
               <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/SAP_2011_logo.svg.png" alt="SAP"></div>
+                <div class="tl-logo-wrap"><img loading="lazy" class="tl-logo" src="assets/images/home/timeline%20logo/SAP_2011_logo.svg.webp" alt="SAP"></div>
                 <div class="tl-tile__front-text"><h2 class="tl-company">SAP</h2><div class="tl-role">Operations Analyst</div></div>
               </div>
               <div class="tl-tile__back"><p class="tl-desc">Designed management dashboards tracking backlog items for 30+ software teams.</p></div>
@@ -2637,7 +2692,7 @@
             <div class="tl-year">2014 – 2015</div>
             <div class="tl-tile">
               <div class="tl-tile__front">
-                <div class="tl-logo-wrap"><img class="tl-logo" src="assets/images/home/timeline%20logo/repsol-mark.png" alt="Repsol"></div>
+                <div class="tl-logo-wrap"><img loading="lazy" class="tl-logo" src="assets/images/home/timeline%20logo/repsol-mark.webp" alt="Repsol"></div>
                 <div class="tl-tile__front-text"><h2 class="tl-company">Repsol</h2><div class="tl-role">IT Infrastructure Analyst</div></div>
               </div>
               <div class="tl-tile__back"><p class="tl-desc"><span class="tl-kicker">My first internship</span>Decommissioned 100+ servers from gas plants across northern Canada.</p></div>
@@ -2680,7 +2735,7 @@
             <div class="ceramics__carousel-track" id="carousel-track">
               <div class="ceramics__slide" data-slide="0">
                 <div class="ceramics__slide-img">
-                  <img src="assets/images/ceramics/card-wheel.jpg" alt="At the wheel">
+                  <img loading="lazy" src="assets/images/ceramics/card-wheel.webp" alt="At the wheel">
                 </div>
                 <div class="ceramics__slide-caption">
                   <div class="ceramics__slide-title">The Great Pottery Throwdown Season 8</div>
@@ -2688,7 +2743,7 @@
               </div>
               <div class="ceramics__slide" data-slide="1">
                 <div class="ceramics__slide-img">
-                  <img src="assets/images/ceramics/card-wall.jpg" alt="Wall installation" style="object-position: 35% center;">
+                  <img loading="lazy" src="assets/images/ceramics/card-wall.webp" alt="Wall installation" style="object-position: 35% center;">
                 </div>
                 <div class="ceramics__slide-caption">
                   <div class="ceramics__slide-title">Selected works in various glaze patterns</div>
@@ -2696,7 +2751,7 @@
               </div>
               <div class="ceramics__slide" data-slide="2">
                 <div class="ceramics__slide-img">
-                  <img src="assets/images/ceramics/card-market.jpg" alt="Market stall">
+                  <img loading="lazy" src="assets/images/ceramics/card-market.webp" alt="Market stall">
                 </div>
                 <div class="ceramics__slide-caption">
                   <div class="ceramics__slide-title">Local ceramics market in Peckham, London</div>
@@ -2704,7 +2759,7 @@
               </div>
               <div class="ceramics__slide" data-slide="3">
                 <div class="ceramics__slide-img">
-                  <img src="assets/images/ceramics/card-throwdown-cast.jpg" alt="The Great Pottery Throwdown cast" style="object-fit: contain;">
+                  <img loading="lazy" src="assets/images/ceramics/card-throwdown-cast.webp" alt="The Great Pottery Throwdown cast" style="object-fit: contain;">
                 </div>
                 <div class="ceramics__slide-caption">
                   <div class="ceramics__slide-title">Throwdown Season 8 group pic (I didn’t win)</div>
@@ -2712,7 +2767,7 @@
               </div>
               <div class="ceramics__slide ceramics__slide--video" data-slide="4">
                 <div class="ceramics__slide-img">
-                  <video id="throwdown-video" poster="assets/images/ceramics/card-throwdown-poster.jpg" preload="none" playsinline>
+                  <video id="throwdown-video" poster="assets/images/ceramics/card-throwdown-poster.webp" preload="none" playsinline>
                     <source src="assets/images/ceramics/card-throwdown.mp4" type="video/mp4">
                   </video>
                   <button class="ceramics__play" id="throwdown-play" aria-label="Play video">
@@ -2771,6 +2826,8 @@
       </div>
     </section>
 
+    </main>
+
     <footer class="site-footer">
       <p>Built by me, with a touch of Claude &middot; Last updated June 2026</p>
     </footer>
@@ -2782,7 +2839,7 @@
     (function () {
       if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
       var dot = document.createElement('div');
-      dot.className = 'cursor-dot';
+      dot.className = 'cursor-dot'; dot.setAttribute('aria-hidden', 'true');
       dot.textContent = 'VIEW';
       document.body.appendChild(dot);
       document.documentElement.classList.add('cursor-active');

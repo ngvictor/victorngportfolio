@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Optimized-video temp files (if any re-encode is interrupted)
+*.opt.mp4

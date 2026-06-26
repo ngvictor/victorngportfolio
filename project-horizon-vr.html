@@ -11,13 +11,36 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
   <style>
+    /* ===== Accessibility: keyboard focus, skip-link, reduced-motion ===== */
+    :focus-visible { outline: 2px solid #2c4a3e; outline-offset: 2px; }
+    :focus:not(:focus-visible) { outline: none; }
+    .skip-link {
+      position: fixed; top: 10px; left: 10px; z-index: 100000;
+      background: #1a1814; color: #fff; padding: 10px 18px; border-radius: 8px;
+      font-family: var(--sans); font-size: 0.9rem; font-weight: 600; text-decoration: none;
+      transform: translateY(-180%); transition: transform 0.2s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
     /* ========================================
        SELF-HOSTED FONT — Instagram Sans
        ======================================== */
-    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Light.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Regular.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Medium.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Instagram Sans'; src: url('assets/fonts/InstagramSans-Bold.woff2') format('woff2'),
+           url('assets/fonts/InstagramSans-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
 
     /* ========================================
        DESIGN TOKENS — Light Premium
@@ -25,7 +48,7 @@
     :root {
       --ink: #1a1814;
       --ink-secondary: #5c574f;
-      --ink-muted: #8b8780;
+      --ink-muted: #74706a;
       --ink-faint: #d8d4cc;
       --surface: #ffffff;
       --surface-raised: #f7f5f2;
@@ -261,6 +284,7 @@
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "46812fba28814386916d78b3cddc404c"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- SCROLL PROGRESS -->
   <div class="scroll-progress" aria-hidden="true">
@@ -274,7 +298,7 @@
     </a>
   </nav>
 
-  <main class="case-wrapper">
+  <main class="case-wrapper" id="main" tabindex="-1">
 
     <!-- ============================================
          HERO
@@ -729,7 +753,7 @@
       <h2 class="pw-modal__title">These case studies are private.</h2>
       <p class="pw-modal__sub">They go deep on live work at Meta. The password is in my CV, or email me at <a href="mailto:ngvictor11@gmail.com">ngvictor11@gmail.com</a> and I’ll send it over.</p>
       <div class="pw-modal__field">
-        <input class="pw-modal__input" id="pw-input" type="password" placeholder="Password" autocomplete="off">
+        <input class="pw-modal__input" id="pw-input" type="password" placeholder="Password" aria-label="Password" autocomplete="off">
         <button class="pw-modal__submit" id="pw-submit">Unlock</button>
       </div>
       <p class="pw-modal__error" id="pw-error"></p>
@@ -753,6 +777,7 @@
           sessionStorage.setItem(SESSION_KEY, '1');
           overlay.classList.remove('is-open');
           document.body.style.overflow = '';
+          var m = document.getElementById('main'); if (m) m.focus();
         } else {
           input.classList.add('is-error');
           error.textContent = 'Incorrect password. Try again.';
@@ -765,6 +790,12 @@
       closeBtn.addEventListener('click', dismiss);
       overlay.addEventListener('click', function (e) { if (e.target === overlay) dismiss(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dismiss(); });
+      overlay.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab' || !overlay.classList.contains('is-open')) return;
+        var first = closeBtn, last = submit;
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      });
     })();
   </script>
 
