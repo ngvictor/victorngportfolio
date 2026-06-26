@@ -673,6 +673,10 @@
       transition: opacity 0.35s var(--ease-out-expo);
     }
     .project-card--wip:hover .wip-hover { opacity: 1; }
+    /* Placeholder card: suppress the live-card hover choreography (scale, brightness,
+       sheen) so the glass pill sits over a static backdrop and can't flicker. */
+    .project-card--wip:hover .project-card__hero { transform: none; filter: grayscale(0.4) brightness(0.7); }
+    .project-card--wip:hover .project-card__hero::after { animation: none; }
     .wip-hover span {
       font-family: var(--sans);
       font-size: clamp(1rem, 2.2vw, 1.4rem);
@@ -682,6 +686,8 @@
       background: rgba(0,0,0,0.5);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
       padding: 13px 26px;
       border-radius: 100px;
       border: 1px solid rgba(255,255,255,0.25);
