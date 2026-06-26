@@ -671,20 +671,21 @@
     .stakes-stat {
       margin: 0 0 56px;
       padding: 56px 48px;
-      background: var(--surface-card);
-      border: 1px solid var(--border);
+      background: linear-gradient(150deg, #2d6a4f 0%, #244e3a 100%);
+      border: none;
       border-radius: 24px;
       display: flex;
       align-items: center;
       gap: 56px;
       flex-wrap: wrap;
+      box-shadow: 0 16px 40px rgba(36,78,58,0.2);
     }
     .stakes-stat__num {
       font-family: var(--serif);
       font-size: clamp(3.25rem, 7vw, 5.5rem);
       line-height: 1;
       letter-spacing: -0.02em;
-      color: var(--accent-gold);
+      color: #ffffff;
       white-space: nowrap;
       display: flex;
       align-items: center;
@@ -693,8 +694,11 @@
     .stakes-stat__arrow {
       width: clamp(28px, 4vw, 44px);
       height: auto;
-      color: var(--ink-faint);
+      color: rgba(255,255,255,0.5);
       flex: 0 0 auto;
+    }
+    .stakes-stat__down {
+      color: #ff9d9d;
     }
     .stakes-stat__body {
       flex: 1;
@@ -704,7 +708,7 @@
       font-family: var(--serif);
       font-size: clamp(1.25rem, 2.2vw, 1.75rem);
       line-height: 1.4;
-      color: var(--ink);
+      color: rgba(255,255,255,0.9);
       margin: 0;
     }
     @media (max-width: 768px) {
@@ -1602,38 +1606,37 @@
 
     .metric-card {
       position: relative;
-      background: var(--surface-card);
-      border: 1px solid var(--border);
+      background: linear-gradient(150deg, #2d6a4f 0%, #244e3a 100%);
+      border: none;
       border-radius: 16px;
       padding: 30px 28px 26px;
       text-align: left;
       overflow: hidden;
-    }
-    /* static forest-green accent keyline across the top */
-    .metric-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 3px;
-      width: 100%;
-      background: var(--accent-gold);
+      box-shadow: 0 12px 30px rgba(36,78,58,0.18);
     }
 
     .metric-card__value {
       font-family: var(--serif);
-      font-size: 3rem;
-      color: var(--accent-gold);
+      font-size: clamp(2.25rem, 3.4vw, 3rem);
+      color: #ffffff;
       letter-spacing: -0.02em;
       margin-bottom: 14px;
       line-height: 1;
+      white-space: nowrap;
+    }
+    .metric-card__unit {
+      font-size: 0.4em;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-left: 0.35em;
+      color: rgba(255,255,255,0.85);
     }
 
     .metric-card__label {
       font-family: var(--sans);
       font-size: 0.9375rem;
       font-weight: 500;
-      color: var(--ink-secondary);
+      color: rgba(255,255,255,0.82);
       line-height: 1.45;
     }
 
@@ -1816,11 +1819,11 @@
           <div class="metric-card__label">Campaigns outperformed standard video ads</div>
         </div>
         <div class="metric-card">
-          <div class="metric-card__value">$200k+</div>
-          <div class="metric-card__label">Daily ad spend within the first months of launch</div>
+          <div class="metric-card__value">$200k+<span class="metric-card__unit">Daily</span></div>
+          <div class="metric-card__label">Ad spend after launch</div>
         </div>
         <div class="metric-card">
-          <div class="metric-card__value">All</div>
+          <div class="metric-card__value">All formats</div>
           <div class="metric-card__label">Live on every Meta placement: Feed, Stories &amp; Reels on Facebook &amp; Instagram</div>
         </div>
         <div class="metric-card">
@@ -1869,7 +1872,7 @@
         <div class="stakes-stat__num">
           21%
           <svg class="stakes-stat__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          13.6%
+          <span class="stakes-stat__down">13.6%</span>
         </div>
         <div class="stakes-stat__body">
           <p>Gaming's share of Meta's app ad revenue, lost in two years. Playables were the format to regain that share, and the one Meta hadn't cracked.</p>
