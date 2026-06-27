@@ -78,17 +78,17 @@
     :root {
       --ink: #1a1814;
       --ink-secondary: #5c574f;
-      --ink-muted: #74706a;
+      --ink-muted: #6a655a;
       --ink-faint: #d8d4cc;
-      --surface: #ffffff;
-      --surface-raised: #f7f5f2;
-      --surface-card: #f5f3ef;
-      --surface-card-hover: #efece6;
+      --surface: #f1ead8;
+      --surface-raised: #ebe3cf;
+      --surface-card: #e7dec9;
+      --surface-card-hover: #ddd2bb;
       --border: rgba(0,0,0,0.08);
       --border-hover: rgba(0,0,0,0.15);
-      --accent-craft: #2c4a3e;
-      --accent-green: #5eaa8d;
-      --accent-gold: #2d6a4f;
+      --accent-craft: #6b6217;
+      --accent-green: #2f2ce8;
+      --accent-gold: #2f2ce8;
       --accent-blue: #2f6fd6;
       --serif: 'Instagram Sans', 'DM Sans', system-ui, sans-serif;
       --sans: 'Instagram Sans', 'DM Sans', system-ui, sans-serif;
@@ -169,7 +169,7 @@
       width: 64px;
       height: 64px;
       border-radius: 50%;
-      background: #1a4d2e;
+      background: #6b6217;
       border: 1px solid var(--border);
       display: flex;
       align-items: center;
@@ -319,9 +319,17 @@
       font-family: var(--sans);
       font-size: clamp(1.1rem, 2vw, 1.5rem);
       font-weight: 500;
-      color: var(--ink-muted);
+      color: var(--accent-gold);
       letter-spacing: -0.01em;
       margin: 0 auto 20px;
+    }
+    .hero__eyebrow::before {
+      content: '';
+      display: block;
+      width: 42px;
+      height: 2px;
+      background: var(--accent-gold);
+      margin: 0 auto 18px;
     }
 
     .hero__heading em {
@@ -1414,13 +1422,13 @@
       align-items: center;
       gap: 6px;
       padding: 8px 14px;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(236,231,217,0.22);
       border-radius: 100px;
-      background: rgba(0,0,0,0.03);
+      background: rgba(236,231,217,0.06);
       font-family: var(--sans);
       font-size: 0.8125rem;
       font-weight: 500;
-      color: var(--ink-secondary);
+      color: #d8cfbc;
       text-decoration: none;
       transition: var(--transition-smooth);
       z-index: 6;
@@ -1438,9 +1446,9 @@
     }
 
     .ceramics__arrow:hover {
-      border-color: var(--accent-green);
-      background: rgba(44,74,62,0.10);
-      color: var(--accent-craft);
+      border-color: var(--accent-gold);
+      background: var(--accent-gold);
+      color: #fff;
     }
 
     .ceramics__arrow:hover svg {
@@ -1448,9 +1456,9 @@
     }
 
     .ceramics__card.is-expanded .ceramics__arrow {
-      border-color: var(--accent-green);
-      background: rgba(44,74,62,0.10);
-      color: var(--accent-craft);
+      border-color: rgba(47,44,232,0.55);
+      background: rgba(47,44,232,0.16);
+      color: #b9b6ff;
     }
 
     /* ========================================
@@ -1467,6 +1475,21 @@
         0 10px 40px rgba(0,0,0,0.06),
         inset 0 1px 1px rgba(255,255,255,0.7);
     }
+
+    .ceramics__card.glass,
+    .connect__block.glass {
+      background: linear-gradient(135deg, rgba(36,23,18,0.93), rgba(26,17,12,0.88)) !important;
+      box-shadow: 0 12px 44px rgba(0,0,0,0.22), inset 0 1px 1px rgba(236,231,217,0.08) !important;
+    }
+    .ceramics__card .ceramics__title,
+    .ceramics__card.is-expanded .ceramics__title { color: #f4f1e8; }
+    .ceramics__card .ceramics__subtitle { color: #c7bda9; }
+    .ceramics__card .cstat__num { color: #cdbb60; }
+    .ceramics__card .cstat__label { color: #ada48f; }
+    .ceramics__card .ceramics__badge { background: rgba(236,231,217,0.08); border-color: rgba(236,231,217,0.16); color: #ece7d9; }
+    .connect__block .connect__block-label { color: #ada48f; }
+    .connect__block .connect__value { color: #f4f1e8; }
+    .connect__block a.connect__value:hover { color: #8b88ff; }
     .glass::before,
     .glass::after {
       content: "";
@@ -2028,12 +2051,12 @@
       transition: transform 0.5s var(--ease), background 0.4s var(--ease);
     }
     .tl-node.is-in .tl-dot { transform: translateX(-50%) scale(1); }
-    .tl-node.is-flipped .tl-tile ~ .tl-dot { transform: translateX(-50%) scale(1.5); background: #56BC7E; }
+    .tl-node.is-flipped .tl-tile ~ .tl-dot { transform: translateX(-50%) scale(1.5); background: var(--accent-gold); }
 
     /* Current role marker (Meta) */
     .tl-node--current .tl-dot {
       background: var(--accent-green);
-      box-shadow: 0 0 0 5px rgba(94,170,141,0.22);
+      box-shadow: 0 0 0 5px rgba(47,44,232,0.20);
     }
     .tl-node--current .tl-year { color: var(--accent-craft); font-weight: 700; }
 
@@ -2517,7 +2540,7 @@
 
         <!-- Project 01: Meta Playable Ads -->
         <a href="project-playable-ads.html" class="project-card fade-left" id="project-playable-ads">
-          <div class="project-card__hero" style="background-image: radial-gradient(ellipse at 50% 40%, rgba(77,159,255,0.12) 0%, transparent 60%), linear-gradient(160deg, #1a2035 0%, #0d1520 55%, #070b14 100%); background-color: #070b14;"></div>
+          <div class="project-card__hero" style="background-image: radial-gradient(ellipse at 50% 40%, rgba(47,44,232,0.16) 0%, transparent 60%), linear-gradient(160deg, #2c1d14 0%, #1d130c 55%, #140c07 100%); background-color: #140c07;"></div>
           <div class="project-card__fan">
             <img class="fan-phone fan-phone--4" src="assets/images/projects/playable-ads/Hero-4.webp" alt="Instagram feed playable ad" loading="lazy">
             <img class="fan-phone fan-phone--3" src="assets/images/projects/playable-ads/Hero-3.webp" alt="Story-format playable ad" loading="lazy">
@@ -2541,7 +2564,7 @@
 
         <!-- Project 02: AI-Native Design Workflows -->
         <a href="project-ai-workflows.html" class="project-card fade-right" id="project-ai-workflows">
-          <div class="project-card__hero" style="background: radial-gradient(ellipse at 60% 25%, rgba(120,80,255,0.18) 0%, transparent 55%), radial-gradient(ellipse at 20% 75%, rgba(0,180,255,0.12) 0%, transparent 50%), linear-gradient(155deg, #12101e 0%, #0c0c1a 60%, #080810 100%);"></div>
+          <div class="project-card__hero" style="background: radial-gradient(ellipse at 60% 25%, rgba(47,44,232,0.20) 0%, transparent 55%), radial-gradient(ellipse at 20% 75%, rgba(107,98,23,0.18) 0%, transparent 50%), linear-gradient(155deg, #261810 0%, #1a110b 60%, #120b07 100%);"></div>
           <div class="project-card__terminal" aria-hidden="true">
             <div class="pterm__bar">
               <span class="pterm__dot pterm__dot--r"></span><span class="pterm__dot pterm__dot--y"></span><span class="pterm__dot pterm__dot--g"></span>
@@ -2575,7 +2598,7 @@
 
         <!-- Project 03: Horizon VR Work Events — not yet built -->
         <div class="project-card project-card--wip fade-left" id="project-horizon-vr">
-          <div class="project-card__hero" style="background: radial-gradient(ellipse at 50% 20%, rgba(80,200,255,0.15) 0%, transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(150,100,255,0.12) 0%, transparent 50%), linear-gradient(145deg, #0a1520 0%, #080f1a 60%, #060a12 100%);"></div>
+          <div class="project-card__hero" style="background: radial-gradient(ellipse at 50% 20%, rgba(47,44,232,0.18) 0%, transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(107,98,23,0.16) 0%, transparent 50%), linear-gradient(145deg, #251710 0%, #19100b 60%, #110a06 100%);"></div>
           <div class="project-card__scrim"></div>
           <div class="wip-tape wip-tape--1">WORK IN PROGRESS · WORK IN PROGRESS · WORK IN PROGRESS · WORK IN PROGRESS</div>
           <div class="wip-tape wip-tape--2">COMING SOON · COMING SOON · COMING SOON · COMING SOON · COMING SOON</div>
@@ -2749,7 +2772,7 @@
               </div>
               <div class="ceramics__slide" data-slide="1">
                 <div class="ceramics__slide-img">
-                  <img loading="lazy" src="assets/images/ceramics/card-wall.webp" alt="Wall installation" style="object-position: 35% center;">
+                  <img loading="lazy" src="assets/images/ceramics/card-wall.webp" alt="Selected works in various glazes" style="object-position: center 72%;">
                 </div>
                 <div class="ceramics__slide-caption">
                   <div class="ceramics__slide-title">Selected works in various glaze patterns</div>
