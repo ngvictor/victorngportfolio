@@ -214,7 +214,7 @@
     }
 
     .cursor-dot.is-view {
-      width: 66px;
+      width: 86px;
       height: 40px;
       background: var(--accent-craft);
       font-size: 0.78rem;
@@ -322,14 +322,6 @@
       color: var(--accent-gold);
       letter-spacing: -0.01em;
       margin: 0 auto 20px;
-    }
-    .hero__eyebrow::before {
-      content: '';
-      display: block;
-      width: 42px;
-      height: 2px;
-      background: var(--accent-gold);
-      margin: 0 auto 18px;
     }
 
     .hero__heading em {
@@ -723,7 +715,9 @@
       color: rgba(255,255,255,0.6);
       letter-spacing: 0.04em;
       text-transform: uppercase;
+      transition: color 0.3s var(--ease-out-expo);
     }
+    .project-card:hover .project-card__badge-label { color: #8ab4ff; }
 
     /* Card title */
     .project-card__title {
@@ -2745,7 +2739,7 @@
         </a>
         <div class="ceramics__card-inner">
           <h3 class="ceramics__title">I make pots</h3>
-          <p class="ceramics__subtitle">Victor Ng Ceramics is my solo studio practice: wonky, one of a kind wheel thrown pieces. It’s where I exercise my creativity, and where I taught myself to run a business, from marketing and campaigns to Shopify and email.</p>
+          <p class="ceramics__subtitle">Victor Ng Ceramics is my solo studio practice: wonky, one of a kind wheel thrown pieces. It’s where I exercise my creativity, and where I taught myself the business behind the craft, from content creation to building demand to sold-out drops.</p>
 
           <!-- Stat infographic -->
           <div class="ceramics__stats">
@@ -2869,7 +2863,7 @@
       if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
       var dot = document.createElement('div');
       dot.className = 'cursor-dot'; dot.setAttribute('aria-hidden', 'true');
-      dot.textContent = 'VIEW';
+      dot.textContent = 'VIEW ↗';
       document.body.appendChild(dot);
       document.documentElement.classList.add('cursor-active');
 
@@ -2888,7 +2882,7 @@
       var wipCard = document.querySelector('.project-card--wip');
       if (wipCard) {
         wipCard.addEventListener('mouseenter', function () { dot.classList.add('is-hammer'); dot.textContent = '🔨'; });
-        wipCard.addEventListener('mouseleave', function () { dot.classList.remove('is-hammer'); dot.textContent = 'VIEW'; });
+        wipCard.addEventListener('mouseleave', function () { dot.classList.remove('is-hammer'); dot.textContent = 'VIEW ↗'; });
       }
 
       // Pressable elements pulse in darker green (project cards use the VIEW pill)
