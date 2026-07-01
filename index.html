@@ -71,6 +71,13 @@
       font-style: normal;
       font-display: swap;
     }
+    @font-face {
+      font-family: 'Instagram Sans Headline';
+      src: url('assets/fonts/InstagramSansHeadline.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
 
     /* ========================================
        DESIGN TOKENS — Light Premium
@@ -96,6 +103,7 @@
       --cream-muted: #c7bda9;
       --serif: 'Instagram Sans', 'DM Sans', system-ui, sans-serif;
       --sans: 'Instagram Sans', 'DM Sans', system-ui, sans-serif;
+      --display: 'Instagram Sans Headline', 'Instagram Sans', system-ui, sans-serif;
 
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
       --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -309,10 +317,10 @@
     }
 
     .hero__heading {
-      font-family: var(--sans);
+      font-family: var(--display);
       font-size: clamp(1.6rem, 4.2vw, 3rem);
       line-height: 1.12;
-      font-weight: 700;
+      font-weight: 400;
       color: var(--ink);
       letter-spacing: -0.03em;
       max-width: none;
